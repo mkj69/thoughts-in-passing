@@ -27,7 +27,7 @@ The history of information technology can be read as a sequence of shifting cogn
 - **The internet and search engines** outsourced more of the addressing function. Experiments published in 2011 found that when people expected information to remain accessible, they remembered less of the information itself but were better at remembering where to find it. The researchers described the internet as a form of external transactive memory. [Sparrow, Liu & Wegner, 2011](https://pubmed.ncbi.nlm.nih.gov/21764755/)
 - **Large models** begin to externalize not only storage and retrieval, but transformation: summarizing, explaining, comparing, rewriting, generating hypotheses, and organizing action.
 
-Outsourcing, then, is not the same as losing a capacity. Every cognitive technology rearranges what is scarce. Writing made exact verbal recall less valuable while increasing the value of reading, judgment, and recombination. Search reduced the value of remembering addresses while increasing the importance of defining questions, evaluating sources, and integrating knowledge. Large models reduce the cost of producing a plausible answer; verification, taste, purpose, and responsibility therefore become more—not less—important.
+Outsourcing, then, is not the same as losing a capacity. Every cognitive technology rearranges what is scarce. Writing made exact verbal recall less valuable while increasing the value of reading, judgment, and recombination. Search reduced the value of remembering addresses while increasing the importance of defining questions, evaluating sources, and integrating knowledge. Large models reduce the cost of producing a plausible answer, so verification, taste, purpose, and responsibility become more important rather than less.
 
 In 1945, Vannevar Bush imagined the [*memex* in “As We May Think”](https://www.theatlantic.com/magazine/archive/1945/07/as-we-may-think/303881/): a personal knowledge device organized around associative trails rather than rigid filing systems. Near the end of the essay, he even wondered whether neural signals might someday be captured without mechanical input. In 1960, J. C. R. Licklider named the larger ambition [“Man–Computer Symbiosis”](https://man.computer/). Two years later, Douglas Engelbart defined the object of design not as an isolated machine, but as a complete system of people, tools, concepts, and methods. [*Augmenting Human Intellect*](https://dougengelbart.org/pubs/papers/scanned-original/1962-augment-3906-Augmenting-Human-Intellect-a-Conceptual-Framework.pdf)
 
@@ -49,7 +49,7 @@ When I encounter an experimental result, my first response may not be a complete
 
 The bottleneck is not necessarily typing speed. It is **serialization**. A cognitive state that contains several simultaneous tendencies, confidence levels, and half-formed associations must be compressed into a linear sentence.
 
-Nor is language necessarily the only medium through which a model can compute. Work such as Coconut explores using a model's hidden state directly as the input to its next reasoning step, allowing multiple potential paths to persist in a continuous space rather than committing prematurely to a sequence of words. This remains an early research result on bounded tasks—not evidence that machines already possess a fully formed, language-free mode of thought. [Hao et al., *Chain of Continuous Thought*](https://arxiv.org/abs/2412.06769)
+Nor is language necessarily the only medium through which a model can compute. Work such as Coconut explores using a model's hidden state directly as the input to its next reasoning step, allowing multiple potential paths to persist in a continuous space rather than committing prematurely to a sequence of words. This remains an early research result on bounded tasks. It does not show that machines already possess a fully formed, language-free mode of thought. [Hao et al., *Chain of Continuous Thought*](https://arxiv.org/abs/2412.06769)
 
 Still, it suggests an intriguing direction. If some human cognitive states and some machine computational states do not have to be fully verbalized first, then the goal of a future interface may not be to exchange sentences faster. It may be to let two dynamic systems share a small number of consequential state variables.
 
@@ -73,7 +73,7 @@ The interface would therefore be less like a translator discovering a pre-existi
 
 Brain–computer interfaces have made important progress, but the boundaries of that progress matter. In 2023, an invasive speech BCI enabled a participant with ALS who could no longer speak intelligibly to produce text from a large vocabulary at 62 words per minute. The word error rate was still 23.8 percent, and the researchers explicitly described the system as a proof of concept rather than a complete clinical device. [Willett et al., 2023](https://www.nature.com/articles/s41586-023-06377-x) A 2024 study achieved rapid calibration and high accuracy for attempted-speech decoding in another participant, further demonstrating the promise of personalized neural language interfaces while remaining a single-participant result in a medical setting. [Card et al., 2024](https://www.nejm.org/doi/abs/10.1056/NEJMoa2314132)
 
-Non-invasive work has reconstructed the approximate semantics of stories that participants heard or imagined from fMRI data. But it required extensive individual training, depended on the participant's cooperation, and recovered semantic approximations—not arbitrary private thoughts word for word. [Tang et al., 2023](https://www.nature.com/articles/s41593-023-01304-9)
+Non-invasive work has reconstructed the approximate semantics of stories that participants heard or imagined from fMRI data. But it required extensive individual training, depended on the participant's cooperation, and recovered semantic approximations rather than arbitrary private thoughts word for word. [Tang et al., 2023](https://www.nature.com/articles/s41593-023-01304-9)
 
 The obvious extrapolation is to pursue ever greater brain-to-text bandwidth. For cognitive symbiosis, however, the better first question may be:
 
@@ -90,7 +90,7 @@ The model may not need the full sentence in my head. It may need only a few cont
 
 In Shannon's framework, the value of a channel does not depend only on raw bandwidth. It also depends on whether the transmitted variable changes the receiver's uncertainty and decisions. [“A Mathematical Theory of Communication”](https://onlinelibrary.wiley.com/doi/pdf/10.1002/j.1538-7305.1948.tb00917.x) For a system that already has context, personal memory, and a world model, a few bits of directional correction may be more useful than another fully written prompt.
 
-This means near-term research need not wait for consumer brain implants. A first prototype could combine gaze, pupil response, facial EMG, typing rhythm, heart rate, and EEG to estimate a very small set of cognitive states—with explicit user authorization and clear limits. The real question is not whether a machine can “read a mind,” but:
+This means near-term research need not wait for consumer brain implants. A first prototype could combine gaze, pupil response, facial EMG, typing rhythm, heart rate, and EEG to estimate a very small set of cognitive states under explicit user authorization and clear limits. The real question is not whether a machine can “read a mind,” but:
 
 > Can a continuous, implicit, low-bandwidth channel improve joint human–AI reasoning without weakening human agency?
 
@@ -144,10 +144,10 @@ The most fertile computer-science question here may no longer be how to train on
 
 ## From preserving experience to co-producing thought
 
-Writing allowed experience to escape biological memory. Books made it reproducible. The internet made it globally addressable. Large models make it immediately transformable. Each step externalized part of an older capacity while creating higher-level capacities—and new dependencies.
+Writing allowed experience to escape biological memory. Books made it reproducible. The internet made it globally addressable. Large models make it immediately transformable. Each step externalized part of an older capacity while creating higher-level capacities as well as new dependencies.
 
 If the trajectory continues, the next “personal computer” may not primarily be a screen. Its essential asset will not be a *files.zip* archive, but a person's models, memories, adapters, cognitive history, and permission boundaries: a portable, auditable cognitive state that belongs to the individual.
 
 AI may indeed disappear into infrastructure as electricity did. But the decisive questions will not be how large the model is or how many words per minute a brain interface can decode. They will be whether we can build a coupling close enough to expand thought without consuming human agency.
 
-That is the version of human–machine symbiosis worth pursuing: not a machine that thinks for me, and not a mind handed over to a machine, but a system formed by a biological brain and an external cognitive layer that can still answer three questions—who is judging, why, and when the connection should be broken.
+That is the version of human–machine symbiosis worth pursuing: not a machine that thinks for me, and not a mind handed over to a machine, but a system formed by a biological brain and an external cognitive layer that can still answer three questions: who is judging, why, and when the connection should be broken.

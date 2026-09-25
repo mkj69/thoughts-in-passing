@@ -50,7 +50,7 @@ What is compressed, then, is not simply a conversation. It is the agent's **epis
 Suppose the agent has completed and verified a region R. A fold should not produce only a sentence saying “this part is done.” It should transform R into three objects:
 
 - **A contract:** exported interfaces, preconditions, postconditions, invariants, permitted side effects, dependencies, known failure modes, and performance or resource budgets;
-- **A certificate:** the tests, static checks, builds, versions, and configurations that support the contract—in other words, why the system currently believes it;
+- **A certificate:** the tests, static checks, builds, versions, and configurations that support the contract and explain why the system currently believes it;
 - **A reopen handle:** where the hidden implementation lives, which events invalidate the contract, and how much scope and authority are required to unfold it.
 
 Design by Contract makes responsibility between modules explicit instead of forcing callers to infer it from implementation. [Meyer, 1992](https://se.inf.ethz.ch/~meyer/publications/computer/contract.pdf) Proof-Carrying Code offers a stronger metaphor: a consumer need not reconstruct an entire production process if it can cheaply check evidence attached to a claim. [Necula, 1997](https://courses.grainger.illinois.edu/cs421/fa2010/papers/necula-pcc.pdf) In an ordinary coding-agent system, the certificate need not be a formal proof. It might be a replayable test suite, type checks, a dependency snapshot, and an audit trail. The important point is that “finished” cannot be only the agent's linguistic judgment about its own work.
@@ -61,7 +61,7 @@ Only then does progress change the topology of the environment.
 
 ## An agent needs semantic zoom
 
-Human engineers rarely work at every scale simultaneously. We descend into a race condition, repair it, establish a test, and then resume treating that component as a relatively stable unit. At the system level we speak about the queue, cache, or scheduler—not every line inside them. We descend again only when necessary.
+Human engineers rarely work at every scale simultaneously. We descend into a race condition, repair it, establish a test, and then resume treating that component as a relatively stable unit. At the system level we speak about the queue, cache, or scheduler rather than every line inside them. We descend again only when necessary.
 
 Long-horizon agents may need the same form of **semantic zoom**:
 
@@ -74,7 +74,7 @@ There is an analogy here to temporal abstraction in reinforcement learning. The 
 
 ## Who decides when to fold?
 
-An agent should not be allowed to permanently encapsulate its own error merely because it says, “I think I'm done.” World folding needs a control layer independent of the main agent—a **world manager**, for lack of a better name.
+An agent should not be allowed to permanently encapsulate its own error merely because it says, “I think I'm done.” World folding therefore needs a control layer independent of the main agent. For lack of a better name, call it a **world manager**.
 
 Its responsibilities might include:
 
