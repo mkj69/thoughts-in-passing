@@ -7,6 +7,8 @@ tags: [cognitive-augmentation, bci, local-ai, infrastructure]
 related: []
 excerpt: "从文字、书籍到互联网，人类一直把记忆与推理的一部分搬到身体之外。下一步也许不是更快地向 AI 输入语言，而是让一个本地模型成为可持续耦合的外置认知层。"
 placeholder: false
+language: "zh"
+defaultLanguage: "en"
 ---
 
 > 真正的下一代界面，也许既不是 GUI，也不是语音，而是 cognition itself。

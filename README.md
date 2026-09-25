@@ -14,6 +14,7 @@ Live site: <https://mkj69.github.io/thoughts-in-passing/>
 - topic and tag filtering plus lightweight text search;
 - four visible maturity states: `seed`, `sketch`, `evolving`, and `essay`;
 - related thoughts and automatically computed backlinks;
+- per-article language switching with remembered reader preference;
 - permalink-like hash routes for individual notes;
 - responsive, accessible static pages with no framework or third-party runtime;
 - automatic validation and GitHub Pages deployment.
@@ -32,6 +33,8 @@ Live site: <https://mkj69.github.io/thoughts-in-passing/>
 
 5. Open `docs/index.html` through a local web server; direct `file://` viewing cannot fetch the generated JSON.
 
+To add another language for a note, create `content/translations/<slug>.<language>.md` with `title`, `slug`, `language`, and `excerpt` front matter. Set `language` and, when appropriate, `defaultLanguage` on the source note. The generated page keeps both versions under one URL and shows a language switch only when a translation exists.
+
 The machine-readable contract lives in [`schema/thought.schema.json`](schema/thought.schema.json). `related` contains slugs of outgoing connections. Backlinks are derived at runtime, so they should not be entered manually.
 
 ## Maturity guide
@@ -49,6 +52,7 @@ Maturity is descriptive, not a score. An excellent seed does not need to become 
 
 ```text
 content/thoughts/   Markdown source notes
+content/translations/ optional alternate-language versions
 content/template.md reusable authoring template
 schema/             content contract
 scripts/            dependency-free build and validation
