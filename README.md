@@ -6,7 +6,7 @@ The name keeps a family resemblance with [Flow of Thoughts](https://github.com/m
 
 Live site: <https://mkj69.github.io/thoughts-in-passing/>
 
-> Preview status: the initial entries are explicitly labeled `placeholder`. Replace or remove them before presenting the writing as personal work.
+> Preview status: the four initial sample entries are explicitly labeled `placeholder`. Real published notes appear without that label.
 
 ## What the site supports
 
