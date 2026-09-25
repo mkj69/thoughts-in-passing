@@ -1,0 +1,77 @@
+[
+  {
+    "title": "The unfinished idea as an interface",
+    "slug": "unfinished-idea-interface",
+    "date": "2026-09-25",
+    "maturity": "seed",
+    "tags": [
+      "interfaces",
+      "thinking",
+      "tools"
+    ],
+    "related": [
+      "room-for-doubt"
+    ],
+    "excerpt": "What if a note showed not only what it says, but how ready it is to be trusted, extended, or challenged?",
+    "placeholder": true,
+    "html": "<p>This is <strong>placeholder sample content</strong> written only to demonstrate a seed: a small question with more possibility than evidence.</p>\n<p>Most writing interfaces treat every published sentence as equally settled. But ideas have texture. Some are hunches; some have survived a week of objections; some are merely waiting for the right example.</p>\n<p>What would change if the interface made that texture visible?</p>\n<ul><li>could uncertainty invite better responses?</li><li>could revision history feel like growth rather than correction?</li><li>could a reader see the edge of the author&#039;s confidence?</li></ul>\n<p>The seed is not a conclusion. It is an invitation to notice the shape of the question.</p>",
+    "text": "This is placeholder sample content written only to demonstrate a seed: a small question with more possibility than evidence. Most writing interfaces treat every published sentence as equally settled. But ideas have texture. Some are hunches; some have survived a week of objections; some are merely waiting for the right example. What would change if the interface made that texture visible? could uncertainty invite better responses? could revision history feel like growth rather than correction? could a reader see the edge of the author's confidence? The seed is not a conclusion. It is an invitation to notice the shape of the question."
+  },
+  {
+    "title": "What gets remembered when a project sleeps?",
+    "slug": "when-a-project-sleeps",
+    "date": "2026-09-20",
+    "maturity": "sketch",
+    "tags": [
+      "memory",
+      "projects",
+      "agents"
+    ],
+    "related": [
+      "unfinished-idea-interface",
+      "garden-not-archive"
+    ],
+    "excerpt": "A paused project loses more than its latest files. It loses the small reasons that made the next move feel obvious.",
+    "placeholder": true,
+    "html": "<p>This is <strong>placeholder sample content</strong> written only to demonstrate a sketch: an idea with an emerging structure but no finished argument.</p>\n<p>When a project pauses, the files remain. The momentum does not. A future person—or agent—can recover the artifact and still miss the decision trail that made it coherent.</p>\n<h2>Three kinds of project memory</h2>\n<ul><li><strong>State:</strong> what exists now.</li><li><strong>Rationale:</strong> why it exists in this form.</li><li><strong>Tension:</strong> what still felt unresolved when work stopped.</li></ul>\n<p>The third kind may matter most. A task list remembers intended actions, but not the live uncertainty around them. Perhaps the right handoff is less like a summary and more like a carefully placed set of open loops.</p>\n<blockquote>A useful memory does not merely reconstruct the past. It restores the pressure that was pointing toward a next step.</blockquote>",
+    "text": "This is placeholder sample content written only to demonstrate a sketch: an idea with an emerging structure but no finished argument. When a project pauses, the files remain. The momentum does not. A future person—or agent—can recover the artifact and still miss the decision trail that made it coherent. Three kinds of project memory State: what exists now. Rationale: why it exists in this form. Tension: what still felt unresolved when work stopped. The third kind may matter most. A task list remembers intended actions, but not the live uncertainty around them. Perhaps the right handoff is less like a summary and more like a carefully placed set of open loops. A useful memory does not merely reconstruct the past. It restores the pressure that was pointing toward a next step."
+  },
+  {
+    "title": "Interfaces that leave room for doubt",
+    "slug": "room-for-doubt",
+    "date": "2026-09-13",
+    "maturity": "evolving",
+    "tags": [
+      "interfaces",
+      "uncertainty",
+      "research"
+    ],
+    "related": [
+      "unfinished-idea-interface",
+      "garden-not-archive"
+    ],
+    "excerpt": "Confidence is easy to draw as a number. Doubt is relational: it depends on what evidence is missing and who is asking.",
+    "placeholder": true,
+    "html": "<p>This is <strong>placeholder sample content</strong> written only to demonstrate an evolving note: more developed than a sketch, still explicitly open to revision.</p>\n<p>Interfaces often compress uncertainty into a scalar: a percentage, a colored badge, a confidence bar. The compression is useful, but it hides the reason for the doubt.</p>\n<h2>Doubt has a direction</h2>\n<p>One claim may be uncertain because the evidence is thin. Another may be well supported in one setting and fragile outside it. A third may depend on a definition that two readers do not share.</p>\n<p>These are not interchangeable states. A better interface could pair uncertainty with its direction:</p>\n<ul><li>missing evidence;</li><li>contested premise;</li><li>scope boundary;</li><li>unresolved measurement;</li><li>plausible alternative explanation.</li></ul>\n<p>This vocabulary would not remove ambiguity. It could make ambiguity discussable.</p>\n<p>The open question is whether extra structure genuinely improves reasoning, or merely gives uncertainty a more polished costume.</p>",
+    "text": "This is placeholder sample content written only to demonstrate an evolving note: more developed than a sketch, still explicitly open to revision. Interfaces often compress uncertainty into a scalar: a percentage, a colored badge, a confidence bar. The compression is useful, but it hides the reason for the doubt. Doubt has a direction One claim may be uncertain because the evidence is thin. Another may be well supported in one setting and fragile outside it. A third may depend on a definition that two readers do not share. These are not interchangeable states. A better interface could pair uncertainty with its direction: missing evidence; contested premise; scope boundary; unresolved measurement; plausible alternative explanation. This vocabulary would not remove ambiguity. It could make ambiguity discussable. The open question is whether extra structure genuinely improves reasoning, or merely gives uncertainty a more polished costume."
+  },
+  {
+    "title": "A garden is not an archive",
+    "slug": "garden-not-archive",
+    "date": "2026-09-01",
+    "maturity": "essay",
+    "tags": [
+      "digital-gardens",
+      "memory",
+      "writing"
+    ],
+    "related": [
+      "when-a-project-sleeps",
+      "room-for-doubt"
+    ],
+    "excerpt": "An archive protects what happened. A garden keeps deciding what should grow next. The difference is not storage, but attention.",
+    "placeholder": true,
+    "html": "<p>This is <strong>placeholder sample content</strong> written only to demonstrate an essay: a note settled enough to stand on its own, while remaining connected to the garden.</p>\n<p>An archive and a garden can contain the same things. Both preserve fragments from the past. Both reward a careful naming system. Both become more valuable as they accumulate history. Yet they ask different questions.</p>\n<p>An archive asks: <em>How can this remain findable?</em></p>\n<p>A garden asks: <em>What deserves attention now?</em></p>\n<h2>Attention changes the collection</h2>\n<p>The garden metaphor matters because it makes maintenance part of the work. Notes are not inert records. Some need pruning. Some should be connected across a gap. Some are allowed to remain seeds for a long time without pretending to be conclusions.</p>\n<p>Backlinks help because they show how later ideas reinterpret earlier ones. Maturity labels help because they resist the visual sameness of a chronological feed. Neither feature makes a garden by itself. The garden appears only when the author returns.</p>\n<p>That is why a digital garden should not optimize solely for capture. Capture makes a larger archive. A living collection also needs rituals of revisiting: wandering, resurfacing, linking, and occasionally letting an idea go.</p>",
+    "text": "This is placeholder sample content written only to demonstrate an essay: a note settled enough to stand on its own, while remaining connected to the garden. An archive and a garden can contain the same things. Both preserve fragments from the past. Both reward a careful naming system. Both become more valuable as they accumulate history. Yet they ask different questions. An archive asks: How can this remain findable? A garden asks: What deserves attention now? Attention changes the collection The garden metaphor matters because it makes maintenance part of the work. Notes are not inert records. Some need pruning. Some should be connected across a gap. Some are allowed to remain seeds for a long time without pretending to be conclusions. Backlinks help because they show how later ideas reinterpret earlier ones. Maturity labels help because they resist the visual sameness of a chronological feed. Neither feature makes a garden by itself. The garden appears only when the author returns. That is why a digital garden should not optimize solely for capture. Capture makes a larger archive. A living collection also needs rituals of revisiting: wandering, resurfacing, linking, and occasionally letting an idea go."
+  }
+]

@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A lightweight stream of unfinished ideas, sketches, and essays by Kaijing Ma.">
+  <meta name="theme-color" content="#f8f7f2">
+  <title>Thoughts, in Passing — Kaijing Ma</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,650&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#stream">Skip to the stream</a>
+
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Thoughts, in Passing home">
+      <span class="brand-mark" aria-hidden="true">↝</span>
+      <span>Thoughts, in Passing</span>
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="https://mkj69.github.io/">Kaijing Ma</a>
+      <a href="https://github.com/mkj69/thoughts-in-passing" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="intro wrap" aria-labelledby="site-title">
+      <div class="intro-copy">
+        <p class="eyebrow">A small digital garden</p>
+        <h1 id="site-title">Ideas do not arrive <em>finished.</em></h1>
+        <p class="lede">
+          A time-ordered stream of questions, fragments, working sketches, and the occasional essay.
+          Notes may grow, fork, contradict one another, or stay small.
+        </p>
+      </div>
+      <aside class="garden-key" aria-label="Maturity legend">
+        <p>How notes grow</p>
+        <ol>
+          <li><span class="stage-dot seed"></span><b>seed</b><small>a question or fragment</small></li>
+          <li><span class="stage-dot sketch"></span><b>sketch</b><small>a shape begins to appear</small></li>
+          <li><span class="stage-dot evolving"></span><b>evolving</b><small>still changing in public</small></li>
+          <li><span class="stage-dot essay"></span><b>essay</b><small>settled enough to stand</small></li>
+        </ol>
+      </aside>
+    </section>
+
+    <section class="placeholder-banner wrap" role="note">
+      <span>Preview note</span>
+      <p>Every entry in this first version is sample content and is clearly marked <strong>placeholder</strong>. Replace it with real notes before treating the garden as published writing.</p>
+    </section>
+
+    <section class="garden wrap" aria-label="Thought garden">
+      <aside class="controls" aria-label="Filter thoughts">
+        <div class="control-head">
+          <div>
+            <span class="micro-label">The stream</span>
+            <p id="result-count" aria-live="polite">Loading thoughts…</p>
+          </div>
+          <button id="random-thought" class="quiet-button" type="button">Wander ↝</button>
+        </div>
+
+        <label class="search-field" for="search-input">
+          <span>Find a phrase</span>
+          <input id="search-input" type="search" placeholder="memory, doubt, interfaces…" autocomplete="off">
+        </label>
+
+        <fieldset class="maturity-filter">
+          <legend>Maturity</legend>
+          <div id="maturity-options" class="filter-row"></div>
+        </fieldset>
+
+        <fieldset class="tag-filter">
+          <legend>Topics</legend>
+          <div id="tag-options" class="tag-list"></div>
+        </fieldset>
+
+        <button id="clear-filters" class="clear-button" type="button" hidden>Clear filters</button>
+      </aside>
+
+      <div id="stream" class="stream" aria-live="polite" aria-busy="true"></div>
+    </section>
+
+    <section id="thought-view" class="thought-view" hidden aria-live="polite">
+      <div class="wrap reading-wrap">
+        <button id="back-to-stream" class="back-button" type="button">← Back to the stream</button>
+        <article id="thought-article"></article>
+        <div class="connections-grid">
+          <section aria-labelledby="related-heading">
+            <p class="micro-label" id="related-heading">Related thoughts</p>
+            <div id="related-list" class="connection-list"></div>
+          </section>
+          <section aria-labelledby="backlinks-heading">
+            <p class="micro-label" id="backlinks-heading">Backlinks</p>
+            <div id="backlinks-list" class="connection-list"></div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer wrap">
+    <p>Some thoughts are paths. Some are weather.</p>
+    <div>
+      <a href="https://mkj69.github.io/">Home</a>
+      <a href="https://github.com/mkj69/thoughts-in-passing" target="_blank" rel="noreferrer">Source</a>
+    </div>
+  </footer>
+
+  <template id="thought-card-template">
+    <article class="thought-card">
+      <div class="timeline-node" aria-hidden="true"></div>
+      <div class="card-meta">
+        <time></time>
+        <span class="maturity-badge"></span>
+        <span class="placeholder-badge">placeholder</span>
+      </div>
+      <h2><button class="thought-link" type="button"></button></h2>
+      <p class="excerpt"></p>
+      <div class="card-foot">
+        <ul class="card-tags" aria-label="Tags"></ul>
+        <button class="read-link" type="button">Open note <span aria-hidden="true">→</span></button>
+      </div>
+    </article>
+  </template>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
