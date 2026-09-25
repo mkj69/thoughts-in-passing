@@ -203,6 +203,7 @@ elements.random.addEventListener("click", () => {
 
 elements.back.addEventListener("click", () => closeThought());
 window.addEventListener("popstate", () => syncRoute({ instant: true }));
+window.addEventListener("hashchange", () => syncRoute({ instant: true }));
 document.addEventListener("click", (event) => {
   const connection = event.target.closest("a[href^='#thought/']");
   if (!connection) return;
@@ -210,7 +211,7 @@ document.addEventListener("click", (event) => {
   openThought(decodeURIComponent(connection.hash.replace("#thought/", "")));
 });
 
-fetch("data/thoughts.json")
+fetch("data/thoughts.json", { cache: "no-store" })
   .then((response) => {
     if (!response.ok) throw new Error(`Could not load thoughts (${response.status})`);
     return response.json();
