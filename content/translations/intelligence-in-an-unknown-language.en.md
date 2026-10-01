@@ -67,21 +67,63 @@ A model might contain latent objects that are extremely natural for prediction b
 
 This does not imply that a clean secret science already exists inside every model. It makes a narrower point. Failure to find a human-readable label is not logically equivalent to absence of abstraction.
 
-## This may be more like learning a foreign language without a bilingual dictionary
+## From Chinese to English: translation is not word substitution
 
-Learning Chinese from English is not a matter of replacing dog with 狗 and then aligning every word one by one. To begin thinking in Chinese is to acquire different expectations about word order, context, omitted subjects, semantic boundaries, and habitual expression. Fluency is not a larger translation table. It is the ability to enter another way of dividing meaning.
+As a native Chinese speaker learning English, it is easy at first to imagine the task as finding corresponding words. 狗 becomes dog, 桌子 becomes table, and the words are rearranged into a new order. The real difficulty quickly appears outside vocabulary.
 
-Understanding a model's internals may resemble this kind of language learning, only under much harder conditions. There is no native speaker who can explain the grammar, no ready-made parallel corpus, and the model's primitives may not be discrete like words. A latent object could combine something like lexical meaning, grammatical relation, context, and reasoning tendency.
+Chinese and English do not always require speakers to make the same information explicit. Chinese can rely heavily on context, omit an already established subject, and frequently organize sentences around a topic. English more often requires the subject, tense, articles, and syntactic roles to appear in the surface form. Research on Chinese learners of English has observed the transfer of topic-prominent structures from Chinese into English, with that influence changing across the learning process. [Gong, 2019](https://www.benjamins.com/catalog/jsls.17016.gon)
 
-Interpretability should therefore seek more than word-for-word translation:
+Translating “这件事，我昨天已经处理好了” is therefore not a matter of moving each fragment into a fixed slot. The translator must reconstruct who becomes the grammatical subject, which information must be encoded explicitly, and which structure feels like a natural thought in the target language.
 
-> feature X = deception
+This does not mean that a language determines which concepts its speakers can think. A more careful claim is that different languages ask speakers to attend to different information at the moment of speaking. Slobin calls this process **thinking for speaking**. When experience is organized into speakable form, grammar influences which features must be selected and encoded. [Slobin, 1987](https://spot.colorado.edu/~michaeli/courses/LAM5430/5430e_reserves/Thinking_for_Speaking.pdf)
 
-It may need to work more like field linguistics or the decipherment of an unknown script. We collect examples of how the model uses a structure across contexts, construct minimal pairs, alter one internal variable and observe behavior, search for recurring rules of combination, and gradually form hypotheses about its grammar.
+Fluency is therefore not possession of a larger Chinese-English dictionary. It is the ability to reconstruct the same scene under two representational systems. Translation is not substitution. It is representation change.
 
-In this analogy, a causal intervention resembles asking a speaker a targeted question. An invariant across models and tasks resembles confirming the same grammatical pattern in different texts. The English label arrives only when we are finally ready to begin writing the dictionary.
+## Programming languages amplify the difference
 
-Neural representations may not literally constitute a language. The analogy is useful because it changes the order of inquiry: **first learn how the system organizes differences and relations, then translate its parts into words we already possess.**
+Natural languages still share a large body of physical experience and social reality. Programming languages show more sharply how abstraction can change capability.
+
+Python, SQL, Lean, and assembly can all participate in complex computation, but they make entirely different objects primitive. SQL turns relations, selections, and joins into short expressions. Lean makes propositions, types, and proof obligations manipulable. Assembly exposes machine state while making high-level intention painfully long.
+
+The fact that all of them compute does not give them the same practical capabilities. If a task must first be translated into thousands of low-level operations, it may be computable in theory while remaining almost undiscoverable to a real cognitive system.
+
+Programming languages suggest a stronger analogy. A model's internal representation may be not only the language in which it describes the world, but also the programming language that determines which capabilities it can acquire naturally.
+
+## Different capabilities may require different abstractions
+
+The capability cost introduced earlier can be turned into a selection problem:
+
+> R*(f) = argmin_R C_R(f)
+
+For a task f, which representation R minimizes the combined cost of description, search, execution, and verification?
+
+The crucial point is that R* probably depends on f. Primitives suited to formal proof may be poor tools for understanding social relationships. A state space suited to molecular dynamics may not support long-horizon planning. A token sequence suited to language generation may not be the best representation for controlling a body.
+
+The future of AI may therefore involve more than scaling one foundation model indefinitely. Knowledge may share a broad foundation, while different capabilities require different forms of memory, tools, world models, time scales, training loops, and abstraction.
+
+What emerges may not be one unified machine mind but many substantially different machine ontologies. An AI formed around mathematics, an AI that learns alongside cells and laboratories, and an AI that acts persistently in the physical world may possess not only different knowledge but different primitives for dividing reality.
+
+Their relationship to current models might be more than that of stronger successors. They may resemble new **cognitive species**, distinguished not by appearance but by what counts as primitive, which regularities are easy to discover, and which explanations feel natural inside them.
+
+## We may need a translator between humans and AI
+
+If humans and different AIs use different ontologies, interpretability cannot stop at attaching English labels to activations. We may need a bidirectional conceptual compiler:
+
+> human intention ↔ translator ↔ machine ontology
+
+It would translate a human question into a representation that an AI can search naturally, then translate the discovered structure back into concepts that humans can inspect, contest, and act upon. It would also need to state what was lost in translation instead of merely producing a plausible explanation.
+
+The future may require more than human-to-AI translation. Different AIs may need translators between one another:
+
+> O_human ↔ O_math-AI ↔ O_biology-AI ↔ O_embodied-AI
+
+Multilingual machine translation has already explored interlingua-like representations that allow different languages to communicate through a shared latent space. [Lu et al., 2018](https://arxiv.org/abs/1804.08198) The interlingua imagined here would go deeper. It would connect not Chinese and English sentences, but the primitives through which different cognitive systems construct concepts, evidence, and causal relations.
+
+Such a translator could itself become a new kind of AI. Its defining capability would not be solving one domain problem. It would preserve structure across ontologies, expose translation loss, and discover invariants shared by otherwise different minds.
+
+The result may be neither humans finally decoding one machine language nor every machine converging on the same language. It may be an ecology of cognitive languages. Humans, mathematical AIs, biological AIs, and embodied AIs could collaborate through an evolving interlingua while retaining their most powerful abstractions.
+
+That would be something new: not a single superintelligence, but a **plural intelligence ecology**.
 
 ## Existing evidence supports two opposing intuitions
 
