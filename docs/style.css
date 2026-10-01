@@ -162,7 +162,7 @@ fieldset legend { margin-bottom: 12px; }
 .article-language-switch button { min-width: 68px; padding: 5px 11px; border: 0; border-radius: 999px; color: var(--muted); background: transparent; cursor: pointer; font-family: var(--sans); font-size: 11px; transition: color 150ms ease, background 150ms ease, box-shadow 150ms ease; }
 .article-language-switch button:hover { color: var(--ink); }
 .article-language-switch button[aria-pressed="true"] { color: white; background: var(--ink); box-shadow: 0 1px 3px rgba(34,39,45,.18); }
-.thought-view h1 { max-width: 820px; font-size: clamp(45px, 7vw, 78px); }
+.thought-view h1 { max-width: 820px; font-size: clamp(45px, 7vw, 78px); text-wrap: balance; }
 .article-excerpt { max-width: 750px; margin: 24px 0 0; color: var(--text); font-family: var(--serif); font-size: 21px; line-height: 1.55; }
 .article-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 50px; padding: 0 0 28px; border-bottom: 1px solid var(--line); list-style: none; color: var(--muted); font-family: var(--mono); font-size: 10px; }
 .article-tags li::before { content: "#"; color: var(--green); }
