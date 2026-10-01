@@ -11,7 +11,7 @@ placeholder: true
 
 This is **placeholder sample content** written only to demonstrate a sketch: an idea with an emerging structure but no finished argument.
 
-When a project pauses, the files remain. The momentum does not. A future person—or agent—can recover the artifact and still miss the decision trail that made it coherent.
+When a project pauses, the files remain. The momentum does not. A future person or agent can recover the artifact while still missing the decision trail that made it coherent.
 
 ## Three kinds of project memory
 

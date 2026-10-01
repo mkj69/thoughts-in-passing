@@ -134,7 +134,7 @@ function openThought(slug, options = {}) {
   elements.thoughtView.hidden = false;
   elements.article.lang = activeLanguage;
   document.documentElement.lang = activeLanguage;
-  document.title = `${version.title} — Thoughts, in Passing`;
+  document.title = `${version.title} | Thoughts, in Passing`;
 
   const tags = thought.tags.map((tag) => `<li>${escapeHtml(tag)}</li>`).join("");
   const languageOptions = Object.keys(versions);
@@ -176,7 +176,7 @@ function closeThought(options = {}) {
   elements.thoughtView.hidden = true;
   elements.article.removeAttribute("lang");
   document.documentElement.lang = "en";
-  document.title = "Thoughts, in Passing — Kaijing Ma";
+  document.title = "Thoughts, in Passing | Kaijing Ma";
   if (options.updateHash !== false) history.pushState({}, "", `${location.pathname}${location.search}#stream`);
   if (!options.instant) document.querySelector("#stream").scrollIntoView({ behavior: "smooth", block: "start" });
 }
