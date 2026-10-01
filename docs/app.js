@@ -8,6 +8,93 @@ const state = {
   query: "",
 };
 
+const mindMaps = {
+  "machine-native-language": {
+    zh: {
+      label: "思维导图",
+      title: "学习一种没有双语词典的语言",
+      caption: "从中心假设向外展开。点击任一分支，查看它在整篇论证中的作用。",
+      rootLabel: "中心假设",
+      root: "模型正在用另一种语言抽象世界",
+      outcomeLabel: "可能的结果",
+      outcome: "人类与机器共同创造新的抽象语言",
+      branches: [
+        {
+          id: "analogy",
+          title: "语言学习类比",
+          points: ["不是逐词替换", "先找语法", "意义来自使用"],
+          detail: "从英语学习中文时，真正的流利不是扩大翻译表，而是进入另一套语序、语境与意义边界。理解模型也可能需要相同的转换。",
+        },
+        {
+          id: "human",
+          title: "人类 ontology",
+          points: ["变量 · 对象 · 因果", "数学作为可读压缩", "偏好 English label"],
+          detail: "人类已经拥有一套经过数学与科学长期塑造的概念坐标。我们天然会用这套坐标解释模型，也因此可能把自己的结构投射进去。",
+        },
+        {
+          id: "machine",
+          title: "机器 ontology",
+          points: ["distributed features", "loss-shaped primitives", "latent geometry"],
+          detail: "模型只被要求降低 loss，没有义务使用人类概念。它的 primitive 可能把语法、语义、因果和不确定性组合成我们尚未命名的对象。",
+        },
+        {
+          id: "translation",
+          title: "如何学习它",
+          points: ["minimal pairs", "causal intervention", "关系先于命名"],
+          detail: "研究过程更像 field linguistics：比较最小差异，主动干预内部结构，观察行为变化，先恢复组合规则，再编写人类可读的词典。",
+        },
+        {
+          id: "tests",
+          title: "什么算理解",
+          points: ["稳定与因果", "组合与压缩", "迁移与翻译损失"],
+          detail: "漂亮的标签还不够。候选 ontology 必须跨语境稳定，支持可预测干预，形成可组合规律，压缩行为，并迁移到没有参与发现的新任务。",
+        },
+      ],
+    },
+    en: {
+      label: "Mind map",
+      title: "Learning a language with no bilingual dictionary",
+      caption: "Follow the central hypothesis outward. Select a branch to see its role in the argument.",
+      rootLabel: "Central hypothesis",
+      root: "The model abstracts the world in another language",
+      outcomeLabel: "Possible result",
+      outcome: "A new abstraction language created jointly by humans and machines",
+      branches: [
+        {
+          id: "analogy",
+          title: "Language-learning analogy",
+          points: ["Not word substitution", "Grammar before labels", "Meaning through use"],
+          detail: "Fluency in Chinese does not come from enlarging an English translation table. It comes from entering another system of word order, context, and semantic boundaries. Model understanding may require the same shift.",
+        },
+        {
+          id: "human",
+          title: "Human ontology",
+          points: ["Variables · objects · causes", "Math as readable compression", "Preference for English labels"],
+          detail: "Humans inherit conceptual coordinates shaped by mathematics and science. We naturally interpret models through those coordinates, which means we may also project our preferred structure onto them.",
+        },
+        {
+          id: "machine",
+          title: "Machine ontology",
+          points: ["Distributed features", "Loss-shaped primitives", "Latent geometry"],
+          detail: "A model is trained to reduce loss, not to preserve human concepts. Its primitives may combine syntax, semantics, causality, and uncertainty into objects for which we have no name.",
+        },
+        {
+          id: "translation",
+          title: "How to learn it",
+          points: ["Minimal pairs", "Causal intervention", "Relations before names"],
+          detail: "The method resembles field linguistics. Compare minimal differences, intervene on internal structure, observe behavioral changes, recover rules of combination, and only then begin writing a human-readable dictionary.",
+        },
+        {
+          id: "tests",
+          title: "What counts as understanding",
+          points: ["Stability and causality", "Composition and compression", "Transfer and translation loss"],
+          detail: "An attractive label is not enough. A candidate ontology should remain stable across contexts, support predictable interventions, compose into rules, compress behavior, and transfer to tasks that did not help discover it.",
+        },
+      ],
+    },
+  },
+};
+
 const elements = {
   stream: document.querySelector("#stream"),
   count: document.querySelector("#result-count"),
@@ -70,6 +157,67 @@ function rememberLanguage(thought, language) {
 
 function languageLabel(language) {
   return ({ en: "English", zh: "中文" })[language] || language.toUpperCase();
+}
+
+function mindMapVersion(mapId, language) {
+  const versions = mindMaps[mapId];
+  if (!versions) return null;
+  return versions[language] || versions.en || Object.values(versions)[0];
+}
+
+function mindMapMarkup(mapId, language) {
+  const map = mindMapVersion(mapId, language);
+  if (!map) return "";
+  const titleId = `mind-map-title-${mapId}`;
+  const branches = map.branches.map((branch) => `
+    <button class="mind-map-node" type="button" data-mind-map-branch="${escapeHtml(branch.id)}" aria-pressed="false">
+      <strong>${escapeHtml(branch.title)}</strong>
+      <span>${branch.points.map((point) => escapeHtml(point)).join("<br>")}</span>
+    </button>
+  `).join("");
+
+  return `
+    <section class="thought-mind-map" aria-labelledby="${escapeHtml(titleId)}">
+      <p class="micro-label">${escapeHtml(map.label)}</p>
+      <h2 id="${escapeHtml(titleId)}">${escapeHtml(map.title)}</h2>
+      <p class="mind-map-caption">${escapeHtml(map.caption)}</p>
+      <div class="mind-map-canvas">
+        <div class="mind-map-root">
+          <small>${escapeHtml(map.rootLabel)}</small>
+          <strong>${escapeHtml(map.root)}</strong>
+        </div>
+        <div class="mind-map-branches">${branches}</div>
+        <div class="mind-map-outcome">
+          <small>${escapeHtml(map.outcomeLabel)}</small>
+          <strong>${escapeHtml(map.outcome)}</strong>
+        </div>
+      </div>
+      <p class="mind-map-detail" aria-live="polite">
+        <strong class="mind-map-detail-title"></strong>
+        <span class="mind-map-detail-copy"></span>
+      </p>
+    </section>
+  `;
+}
+
+function activateMindMap(mapId, language) {
+  const map = mindMapVersion(mapId, language);
+  const container = elements.article.querySelector(".thought-mind-map");
+  if (!map || !container) return;
+  const buttons = [...container.querySelectorAll("[data-mind-map-branch]")];
+  const detailTitle = container.querySelector(".mind-map-detail-title");
+  const detailCopy = container.querySelector(".mind-map-detail-copy");
+
+  function selectBranch(id) {
+    const branch = map.branches.find((item) => item.id === id);
+    if (!branch) return;
+    buttons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.mindMapBranch === id)));
+    detailTitle.textContent = branch.title;
+    detailCopy.textContent = branch.detail;
+  }
+
+  buttons.forEach((button) => button.addEventListener("click", () => selectBranch(button.dataset.mindMapBranch)));
+  selectBranch(map.branches[0].id);
 }
 
 function makeButton(label, value, type, count) {
@@ -144,6 +292,7 @@ function openThought(slug, options = {}) {
       .map((language) => `<button type="button" data-article-language="${escapeHtml(language)}" aria-pressed="${language === activeLanguage}" lang="${escapeHtml(language)}">${escapeHtml(languageLabel(language))}</button>`)
       .join("")}</div>`
     : "";
+  const mindMap = thought.mindMap ? mindMapMarkup(thought.mindMap, activeLanguage) : "";
   elements.article.innerHTML = `
     <header>
       <div class="article-meta">
@@ -157,6 +306,7 @@ function openThought(slug, options = {}) {
       <ul class="article-tags" aria-label="Tags">${tags}</ul>
     </header>
     ${thought.placeholder ? '<div class="placeholder-callout"><strong>Placeholder:</strong> this sample note demonstrates the content model and should be replaced with real writing.</div>' : ""}
+    ${mindMap}
     <div class="article-body">${version.html}</div>
   `;
   elements.article.querySelectorAll("[data-article-language]").forEach((button) => {
@@ -167,6 +317,7 @@ function openThought(slug, options = {}) {
       openThought(slug, { updateHash: false, language, preserveScroll: true });
     });
   });
+  if (thought.mindMap) activateMindMap(thought.mindMap, activeLanguage);
   renderConnections(thought);
   if (!options.preserveScroll) window.scrollTo({ top: 0, behavior: options.instant ? "auto" : "smooth" });
 }

@@ -67,6 +67,22 @@ A model might contain latent objects that are extremely natural for prediction b
 
 This does not imply that a clean secret science already exists inside every model. It makes a narrower point. Failure to find a human-readable label is not logically equivalent to absence of abstraction.
 
+## This may be more like learning a foreign language without a bilingual dictionary
+
+Learning Chinese from English is not a matter of replacing dog with 狗 and then aligning every word one by one. To begin thinking in Chinese is to acquire different expectations about word order, context, omitted subjects, semantic boundaries, and habitual expression. Fluency is not a larger translation table. It is the ability to enter another way of dividing meaning.
+
+Understanding a model's internals may resemble this kind of language learning, only under much harder conditions. There is no native speaker who can explain the grammar, no ready-made parallel corpus, and the model's primitives may not be discrete like words. A latent object could combine something like lexical meaning, grammatical relation, context, and reasoning tendency.
+
+Interpretability should therefore seek more than word-for-word translation:
+
+> feature X = deception
+
+It may need to work more like field linguistics or the decipherment of an unknown script. We collect examples of how the model uses a structure across contexts, construct minimal pairs, alter one internal variable and observe behavior, search for recurring rules of combination, and gradually form hypotheses about its grammar.
+
+In this analogy, a causal intervention resembles asking a speaker a targeted question. An invariant across models and tasks resembles confirming the same grammatical pattern in different texts. The English label arrives only when we are finally ready to begin writing the dictionary.
+
+Neural representations may not literally constitute a language. The analogy is useful because it changes the order of inquiry: **first learn how the system organizes differences and relations, then translate its parts into words we already possess.**
+
 ## Existing evidence supports two opposing intuitions
 
 Interpretability research has recovered structures that are more stable than individual neurons. Sparse autoencoders can decompose dense activations into sparser and relatively more monosemantic features. In some settings, the resulting features identify directions with causal roles in model behavior. [Cunningham et al., 2024](https://proceedings.iclr.cc/paper_files/paper/2024/hash/1fa1ab11f4bd5f94b2ec20e794dbfa3b-Abstract-Conference.html) Anthropic later scaled a related approach to Claude 3 Sonnet and extracted a very large dictionary of recognizable features. [Templeton et al., 2024](https://transformer-circuits.pub/2024/scaling-monosemanticity/)

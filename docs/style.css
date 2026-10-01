@@ -166,6 +166,40 @@ fieldset legend { margin-bottom: 12px; }
 .article-excerpt { max-width: 750px; margin: 24px 0 0; color: var(--text); font-family: var(--serif); font-size: 21px; line-height: 1.55; }
 .article-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 50px; padding: 0 0 28px; border-bottom: 1px solid var(--line); list-style: none; color: var(--muted); font-family: var(--mono); font-size: 10px; }
 .article-tags li::before { content: "#"; color: var(--green); }
+.thought-mind-map { max-width: 900px; margin: 0 0 64px; padding: 0 0 42px; border-bottom: 1px solid var(--line); }
+.thought-mind-map > h2 { max-width: 700px; margin: 0; font-family: var(--serif); font-size: 31px; line-height: 1.15; text-wrap: balance; }
+.mind-map-caption { max-width: 680px; margin: 9px 0 0; color: var(--muted); font-size: 13px; }
+.mind-map-canvas { margin-top: 30px; padding-inline: 6px; }
+.mind-map-root,
+.mind-map-outcome { position: relative; display: grid; gap: 4px; width: min(100%, 470px); margin-inline: auto; padding: 15px 18px; border: 1px solid var(--line-strong); border-radius: 12px; text-align: center; background: var(--green-soft); }
+.mind-map-root small,
+.mind-map-outcome small { color: var(--green); font-family: var(--mono); font-size: 9px; letter-spacing: .09em; text-transform: uppercase; }
+.mind-map-root strong,
+.mind-map-outcome strong { font-family: var(--serif); font-size: 17px; font-weight: 650; line-height: 1.25; }
+.mind-map-root::after { content: ""; position: absolute; top: 100%; left: 50%; height: 27px; border-left: 1px solid var(--line-strong); }
+.mind-map-branches { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; padding-top: 27px; }
+.mind-map-branches::before { content: ""; position: absolute; top: 26px; left: 10%; right: 10%; border-top: 1px solid var(--line-strong); }
+.mind-map-node { --node-color: var(--green); --node-soft: var(--green-soft); position: relative; z-index: 1; min-height: 148px; padding: 15px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); text-align: left; cursor: pointer; transition: border-color 150ms ease, background 150ms ease, transform 150ms ease; }
+.mind-map-node::before { content: ""; position: absolute; bottom: 100%; left: 50%; height: 27px; border-left: 1px solid var(--line-strong); }
+.mind-map-node:nth-child(2) { --node-color: var(--blue); --node-soft: var(--blue-soft); }
+.mind-map-node:nth-child(3) { --node-color: var(--gold); --node-soft: var(--gold-soft); }
+.mind-map-node:nth-child(4) { --node-color: var(--red); --node-soft: var(--red-soft); }
+.mind-map-node:nth-child(5) { --node-color: var(--blue); --node-soft: var(--blue-soft); }
+.mind-map-node:hover { border-color: var(--node-color); transform: translateY(-2px); }
+.mind-map-node[aria-pressed="true"] { border-color: var(--node-color); background: var(--node-soft); box-shadow: inset 0 0 0 1px var(--node-color); }
+.mind-map-node strong { display: block; color: var(--ink); font-family: var(--serif); font-size: 14px; font-weight: 650; line-height: 1.25; }
+.mind-map-node span { display: block; margin-top: 11px; color: var(--muted); font-family: var(--mono); font-size: 9px; line-height: 1.7; }
+.mind-map-outcome { margin-top: 35px; background: var(--blue-soft); }
+.mind-map-outcome::before { content: ""; position: absolute; bottom: 100%; left: 50%; height: 35px; border-left: 1px solid var(--line-strong); }
+.mind-map-outcome small { color: var(--blue); }
+.mind-map-detail { display: grid; gap: 4px; max-width: 700px; min-height: 104px; margin: 18px auto 0; padding: 14px 16px; border-left: 2px solid var(--green); background: rgba(255,255,255,.36); }
+.mind-map-detail-title { font-family: var(--serif); font-size: 15px; font-weight: 650; }
+.mind-map-detail-copy { color: var(--text); font-size: 12px; line-height: 1.65; }
+#thought-article[lang="zh"] .thought-mind-map > h2,
+#thought-article[lang="zh"] .mind-map-root strong,
+#thought-article[lang="zh"] .mind-map-outcome strong,
+#thought-article[lang="zh"] .mind-map-node strong,
+#thought-article[lang="zh"] .mind-map-detail-title { font-family: var(--serif-zh); }
 .article-body { max-width: 700px; font-family: var(--serif); font-size: 18px; line-height: 1.82; }
 .article-body h2 { margin: 2.2em 0 .6em; font-size: 28px; line-height: 1.2; }
 .article-body p, .article-body ul, .article-body blockquote { margin: 0 0 1.25em; }
@@ -203,6 +237,10 @@ body.detail-open .garden { display: none; }
   .search-field { grid-column: 1 / -1; }
   .tag-filter { max-height: 215px; overflow: auto; }
   .clear-button { justify-self: start; }
+  .mind-map-branches { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-top: 18px; }
+  .mind-map-branches::before,
+  .mind-map-node::before { display: none; }
+  .mind-map-node:last-child { grid-column: 1 / -1; min-height: 116px; }
 }
 
 @media (max-width: 560px) {
@@ -224,6 +262,12 @@ body.detail-open .garden { display: none; }
   .thought-card h2 { font-size: 31px; }
   .excerpt { font-size: 16px; }
   .thought-view { padding-top: 42px; }
+  .thought-mind-map { margin-bottom: 52px; }
+  .mind-map-canvas { padding-inline: 0; }
+  .mind-map-branches { grid-template-columns: 1fr; }
+  .mind-map-node,
+  .mind-map-node:last-child { grid-column: auto; min-height: 0; }
+  .mind-map-detail { min-height: 0; }
   .connections-grid { grid-template-columns: 1fr; }
   .site-footer { flex-direction: column; }
 }
