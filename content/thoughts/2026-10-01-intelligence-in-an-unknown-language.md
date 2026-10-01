@@ -14,151 +14,317 @@ mindMap: "machine-native-language"
 
 > 模型内部也许并不混乱。真正的问题可能是，那里的规律写在一种我们还没有学会的语言里。
 
-最近我越来越觉得，我们谈论“智能”时，常常把几个不同的问题混在了一起：**知识、能力、抽象、可计算性与可理解性。**
+最近我越来越觉得，我们谈论“智能”时，可能把几个本来不同的问题混在了一起：**知识、能力、抽象、可计算性，以及可理解性。**
 
-今天的大模型很容易制造一种直觉。只要参数、数据和推理时间继续增加，最终似乎就会出现一个统一的超级智能，把所有任务都做好。这个想象暗含了一个并不显然的等式：既然知识可以被统一进一个模型，能力也应该能够被统一。
+今天的大模型很容易制造一种直觉。只要参数继续增加，数据继续扩大，推理时间继续延长，最终似乎就会出现一个统一的超级智能，把所有任务都做好。这个想象暗含了一个并不显然的等式：既然知识可以被统一进一个模型，能力也应该能够被统一。
 
-我怀疑这个等式并不成立。知识可以共享一个广泛底座，但能力取决于系统用什么 primitive 切分问题，用什么坐标组织搜索，又用什么接口把结果变成可验证的行动。更进一步，模型也许已经拥有 abstraction，只是这些 abstraction 没有按照人类熟悉的 ontology 排列。
+但知识的统一和能力的统一，可能是两件完全不同的事。
 
-这不是“模型内部一定藏着一套外星科学”的宣言。它是一个可以被比较、被证伪的研究假设。
+## 知识可以共享底座，能力却依赖表示
 
-## 能力依赖表示，但“表示”不是一个分数
+人类公开记录下来的知识，确实很适合被一个大模型进行广泛而有损的统计压缩。书籍、论文、网页、代码和对话虽然结构各异，最终都能转化成训练信号。Foundation model 的意义正在于训练于广泛数据，并能够被适配到许多下游任务。[Bommasani et al., 2021](https://arxiv.org/abs/2108.07258)
 
-人类记录下来的知识确实很适合被一个大模型进行广泛而有损的统计压缩。书籍、论文、网页、代码与对话虽然结构不同，最终都能转化为训练信号。Foundation model 的意义正在于训练于广泛数据，并能被适配到许多下游任务。[Bommasani et al., 2021](https://arxiv.org/abs/2108.07258)
+但 capability 不只是“参数里有没有相关信息”。它还取决于一个任务在当前系统中是否容易被表达、搜索、执行和验证。
 
-但 capability 不只是“参数里有没有相关信息”。它还取决于任务在当前系统中是否容易被表达、发现、执行和验证。
+Python、SQL、Lean 和汇编语言都能描述复杂计算，但它们为问题提供的 primitive 完全不同。SQL 直接提供 relation、selection 和 join。Lean 直接提供 proposition、type 和 proof obligation。一个 coding agent 的 repo browser、shell、filesystem、test runner 和 patch tool，则把“修复代码库中的 bug”从一段含糊意图变成一组可执行操作。
 
-Python、SQL、Lean 与汇编语言都能描述复杂计算，却提供了完全不同的 primitive。SQL 让 relation、selection 与 join 成为短表达，Lean 让 proposition、type 与 proof obligation 成为可操作对象。Matthias Felleisen 对 programming language expressiveness 的经典分析指出，两种语言即使原则上能计算同样的函数，也不意味着一种语言的构造能在另一种语言里被局部而自然地表达。[Felleisen, 1991](https://www.sciencedirect.com/science/article/pii/016764239190036W)
+Matthias Felleisen 对 programming language expressiveness 的经典分析正是在区分两件事：两种语言也许原则上能计算相同函数，却不意味着一种语言的构造可以在另一种语言中被局部、自然地表达，而不需要重写整个程序。[Felleisen, 1991](https://www.sciencedirect.com/science/article/pii/016764239190036W)
 
-因此，与其把 capability 写成一个看似精确的总分，不如把它看成一个成本轮廓：
+所以 capability 的核心问题也许不只是：
+
+> 这个系统理论上能不能完成任务 f？
+
+更有用的问题是：
+
+> 在 representation R 下，任务 f 有多容易被描述、发现、执行和验证？
+
+可以先用一个并非标准定义的记号来保存这个直觉。与其把不同量纲的成本直接相加，不如把它们看成一组需要共同比较的坐标：
 
 > C_R(f) := (L_R(f), S_R(f), E_R(f), V_R(f))
 
-其中，L 是描述任务与解法所需的长度，S 是搜索成本，E 是执行成本，V 是验证成本。它们单位不同，也未必能直接相加。一种表示可能让答案更短，却让验证更难；另一种表示可能执行更慢，却更适合证明。真正有意义的是比较这些维度上的支配关系与 Pareto trade-off。
+其中 L 是描述任务所需的长度，S 是找到解法的搜索成本，E 是执行成本，V 是验证成本。它们不能被轻易压成一个总分，因为一种表示可能让答案更短，却让验证更难；另一种表示可能执行得慢，却更容易证明。真正值得比较的，是不同表示怎样重新分配这些困难。
 
-这也解释了为什么“都是 universal computer”是一个过于宽松的共同点。可计算性只回答原则上能不能实现，不回答需要多少资源，也不回答一个规律是否容易被发现。Turing 的不可判定性结果进一步说明，universal computation 并不带来 universal prediction。[Turing, 1936](https://londmathsoc.onlinelibrary.wiley.com/doi/abs/10.1112/plms/s2-42.1.230)
+这也许就是 intelligence 的一部分几何结构。智能不只是“能算什么”，而是**哪些计算在一种表示下变得短、自然、可发现并且可复用。**
 
-所以必须保留几条分界：
+## 算法是写在人类 ontology 里的压缩
 
-> computable ≠ efficiently computable
->
-> compressible ≠ discoverable
->
-> represented ≠ understandable
+很多数学公式、算法和科学理论都可以被理解为一种压缩。F = ma 用一个短关系概括大量可能的运动情形。Quicksort 的核心结构覆盖了无数具体输入。Rissanen 的 minimum description length 原则把一个相关思想变成统计建模准则：好的模型应当在模型本身的长度与用模型描述数据的长度之间取得最短的总描述。[Rissanen, 1978](https://www.sciencedirect.com/science/article/pii/0005109878900055)
 
-智能的差别也许很大一部分存在于一种“计算的几何”中：**哪些计算在某种表示下变得短、自然、可发现、可验证并且可复用。**
+但人类可读的算法有一个特殊属性。它们不只是短，还使用了一套与人类认知高度匹配的 conceptual language。变量、函数、集合、递归、对象、因果、概率和证明，并不是宇宙强制规定的唯一坐标系。它们是人类经过数学、逻辑和科学实践逐步发明出来的抽象。
 
-## 最强的反论证：LLM 本来就在学习人类 ontology
+当我们说一个算法“可解释”时，真正发生的过程也许是：
 
-如果 LLM 的训练数据主要是人类文本，那么“它形成了完全异质的 ontology”并不是默认结论。文本本身已经是人类概念、分类与因果叙述的产物，训练目标又要求模型继续生成可被人类理解的 token。相比 AlphaZero 这类主要通过 self-play 学习的系统，语言模型受到的人类语义约束显然更强。
+> computation → human mathematical ontology → understanding
 
-因此，这篇文章需要一个更窄也更可信的主张：
+它容易被理解，不只因为代码行数少，也因为它已经被翻译到我们熟悉的 primitive 里。
 
-> LLM 的输入输出 ontology 很大程度上来自人类，但实现这些语义行为的内部 computational factorization 不一定复制人类的概念边界。
+## 模型也在压缩，但没有义务使用我们的概念
 
-编译器能接受人类写下的程序，也能输出符合人类 specification 的结果，却可能在中间表示里合并、拆分或重排我们的高层对象。类似地，一个模型可以流利地使用“因果”“讽刺”或“欺骗”等词，而不必在内部为每个词保留一个边界清楚的对应物。
+神经网络同样在做某种压缩。训练数据中的统计结构被吸收到参数与激活中，但 optimization objective 从来没有要求模型使用“变量”“物体”“递归”“欺骗”或“因果”这些人类概念来组织规律。它只要求某种 loss 下降。
 
-异质 ontology 的先验会在一些条件下变强：训练信号主要来自图像、传感器或科学仪器，而不是语言；系统通过 self-play 或长期 reinforcement learning 自己发现策略；它拥有与人类不同的 body、memory 与 time scale；或者多个 AI 为了效率发展出人类不参与的通信协议。也就是说，这个假设对所有 AI 并不应当同样强。
+于是一个更强的假设出现了：
 
-## 三个竞争假设，以及什么能让它们失败
+> 模型不是没有 abstraction，而是它的 abstraction 与人类 abstraction 异质。
 
-“我们暂时看不懂模型内部”至少兼容三种不同解释。把它们分开，才能让讨论离开黑箱隐喻。
+所谓黑箱，也许并不只是缺乏结构。它可能包含结构，但结构所使用的 primitive 不在我们的词典里。
 
-**H1：模型形成了异质但稳定的 abstraction。** 如果成立，我们应该能找到跨输入、训练 seed 或邻近模型仍然稳定的 machine-native relation。它们在压缩、迁移或因果干预上会优于人类预设的 basis，同时又不容易被少数现成标签穷尽。某些结构还可能被转化为人类可以学习的 bridge concept。
+想象一个在合适坐标系中只有一行表达式的几何对象。经过复杂的非线性坐标变换以后，它会显得异常混乱。类似地，一部分 neural complexity 也许是 coordinate complexity，而不是 intrinsic complexity。
 
-**H2：模型根本没有可复用的稳定 abstraction。** 在这种情况下，我们会看到脆弱、分散而强烈依赖上下文的机制。干预效果难以局部化，候选 feature 无法跨任务迁移，不同训练运行之间也找不到稳定关系。所谓“机器语言”只是一种浪漫化投射。
+模型可能拥有一些对预测极其自然、却从未被人类命名的 latent object。它们也许同时混合我们分别称为语法、语义、因果结构、社会关系和不确定性的东西。对人类而言，这些属于不同学科。对模型而言，它们可能本来就是一个统一对象。
 
-**H3：模型使用的仍是近似人类式 abstraction，只是我们尚未解码。** 如果更好的 nonlinear decoder、representation alignment 或 causal test 最终能恢复一组接近人类概念、而且对行为具有充分解释力的变量，那么没有必要诉诸异质 ontology。
+这不是说模型一定已经拥有一套整洁的秘密科学。它只是指出“我们没有找到人类可读标签”与“内部不存在抽象”之间没有逻辑等价关系。
 
-这三种假设要求不同的证据。发现一个可以被命名的 neuron 不能自动证明 H3，发现一个难以命名的 feature 也不能自动证明 H1。关键在于比较哪一种表示更稳定、更能压缩行为、更能跨情境迁移，并在干预后给出更准确的预测。
+## 但 LLM 并不是完全陌生的智能
 
-## 表示不只描述答案，它还塑造搜索
+这里有一个必须正面回应的反论证：LLM 学习的主要材料，本来就是人类写下来的语言。文本已经经过人类概念的筛选，训练目标又要求模型继续产生人类能够理解的 token。与主要通过 self-play 学习的 AlphaZero 相比，语言模型显然受到更强的人类 ontology 约束。
 
-同一条周期规律，用一串逐时刻采样值表示时，修改频率可能需要同时改动许多数字；用 amplitude、frequency 与 phase 表示时，它只需要改变一个变量。两个坐标系描述同一个信号，却为学习制造了不同的 neighborhood。
+所以，“LLM 内部形成了一套完全异质的 ontology”不应该是默认结论。更准确的说法是：模型的输入与输出很大程度上属于人类语言，但实现这些语义行为的内部 computational factorization，不一定复制人类概念的边界。
 
-搜索成本因此不仅取决于任务与表示，也取决于搜索算法与预算：
+这有点像编译器。它接收人类写下的程序，也输出满足人类 specification 的结果，但中间表示可以合并、拆分或重新安排源代码里的高层对象。类似地，一个模型可以熟练使用“讽刺”或“欺骗”这些词，却不必在内部为每个词保留一个边界清楚、位置固定的对应物。
+
+而且，越是离开纯文本，异质抽象的可能性就越大。一个主要从实验数据学习的科学模型，一个通过 self-play 形成策略的 agent，或者一个在物理世界中长期行动的 embodied AI，都可能找到人类语言从未需要过的切分方式。真正值得问的不是“模型有没有外星语言”，而是：**在什么训练条件下，机器表示会与人类表示收敛，又在什么条件下开始分叉？**
+
+## 从中文学习英文：翻译不是逐词搬运
+
+作为中文母语者学习英文，一开始很容易把任务想成寻找对应词。“狗”是 dog，“桌子”是 table，然后把词按照另一种顺序重新排列。但真正的困难很快会出现在词汇之外。
+
+中文与英文并不总是要求说话者显式表达同样的信息。中文可以高度依赖语境、省略已经明确的主语，并经常围绕 topic 组织句子；英文通常更强地要求 subject、时态、冠词和句法角色出现在表面结构中。关于中国学习者英语的研究也观察到 topic-prominent 结构从中文向英文迁移，而且这种影响会随着学习过程逐渐变化。[Gong, 2019](https://www.benjamins.com/catalog/jsls.17016.gon)
+
+因此，把“这件事，我昨天已经处理好了”翻译成英文，并不是把每个片段放进固定槽位。译者需要重新决定谁成为 grammatical subject，什么信息需要被明确编码，以及目标语言里哪种结构听起来像一种自然的 thought。
+
+这并不意味着语言决定了人能不能思考某个概念。更谨慎的说法是，不同语言会在说话的瞬间要求人注意不同的信息。Slobin 把这个过程称为 **thinking for speaking**：当经验被组织成可说出的语言时，grammar 会影响哪些特征必须被选择和编码。[Slobin, 1987](https://spot.colorado.edu/~michaeli/courses/LAM5430/5430e_reserves/Thinking_for_Speaking.pdf)
+
+流利因而不是拥有一张更大的中英词典，而是能够在两种表示之间重建同一个场景。Translation 不是 substitution，而是 representation change。
+
+## 不同能力也许需要不同的抽象
+
+前面的 capability cost 还暗示了一件事：不存在脱离任务的“最佳表示”。适合形式证明的 primitive 未必适合理解社会关系；适合分子动力学的状态空间未必适合长期规划；适合生成语言的 token sequence 也未必是控制机器人身体的最佳表示。
+
+这意味着未来 AI 的方向未必只是把一个 foundation model 持续放大。知识也许可以共享一个广泛底座，但不同 capability 可能需要不同的 memory、tool、world model、time scale、training loop 和 abstraction。
+
+我们最终看到的可能不是一个统一的机器心智，而是许多彼此差异很大的 machine ontology。一个为数学形成的 AI、一个与细胞和实验室共同学习的 AI、一个在物理世界中长期行动的 AI，可能不仅拥有不同知识，也会用不同 primitive 切分现实。
+
+它们与今天模型的关系，或许不只是“更强的下一代”。它们可能更像新的 **cognitive species**：差异不由外表定义，而由什么对它而言是 primitive、什么规律容易发现、什么解释算自然来定义。
+
+## 表示不只压缩答案，它还塑造搜索空间
+
+这里还可以再向前走一步。Representation 不只是把已经找到的答案写得更短。它会改变哪些候选答案彼此“接近”，什么修改算一步，以及搜索过程最容易向哪里移动。
+
+同一条周期规律，用一串逐时刻采样值表示时，修改频率可能需要同时改动许多数字；用 amplitude、frequency 和 phase 表示时，它只需要改变一个变量。两个表示可以描述同一个信号，但它们为学习和推理制造了完全不同的 neighborhood。
+
+所以搜索成本更准确地应该写成：
 
 > S_R(f; A, B)
 
-一个 abstraction 的力量，不只是把已经找到的答案写短，而是把原本相距很远的候选解放进同一个局部邻域，让有限的 agent 可以用几步变化到达它们。Information geometry 提供了一个具体例子。普通 gradient descent 的“最陡方向”依赖参数坐标，natural gradient 则使用 Fisher geometry，让更新更接近模型分布本身的局部结构。[Amari, 1998](https://direct.mit.edu/neco/article/10/2/251/6143/Natural-Gradient-Works-Efficiently-in-Learning)
+它不仅取决于任务 f 和表示 R，也取决于搜索算法 A 与可用预算 B。一个 abstraction 的力量，在于它把原本相距很远的解放到同一个局部邻域里，让一个有限的 agent 能通过几步变化到达它们。
 
-神经网络里的 superposition 又解释了为什么人类概念未必会整齐地对齐单个 neuron。当潜在 feature 很稀疏，而可用维度有限时，模型可以把多个 feature 叠加在共享方向中。[Elhage et al., 2022](https://www.transformer-circuits.pub/2022/toy_model/) 于是，一个 neuron 的 polysemanticity 可能部分来自坐标选择，而不代表内部没有结构。
+Information geometry 给出了一个很具体的提醒。在普通 gradient descent 中，所谓“最陡的方向”会受参数坐标影响；Amari 的 natural gradient 使用 Fisher geometry，试图让更新反映模型分布本身的局部结构，而不是任意 parameterization。[Amari, 1998](https://direct.mit.edu/neco/article/10/2/251/6143/Natural-Gradient-Works-Efficiently-in-Learning) 这并不能证明认知中的所有表示问题都等价于 optimization geometry，但它展示了一个关键事实：坐标系不只是事后解释，它能够改变学习轨迹。
 
-但这项结果只提供了一种 coordinate complexity 的机制，不能单独证明完整的 machine ontology。我们仍然需要区分：notation 只是符号不同；representation 改变坐标、分解与邻近关系；ontology 则连什么算对象、关系、原因与可干预变量都改变了。
+因此最好区分三个层次：
 
-中文母语者学习英文可以提供一个有限的类比。流利并不是把“狗”替换为 dog，再逐词搬运句子，而是重新决定哪些信息必须显式表达、谁成为 grammatical subject、一个场景怎样才会在目标语言里显得自然。Translation 不是 substitution，而是 representation change。不过中文和英文仍共享人的身体与世界，所以它们之间的距离通常小于人类与真正 machine-native ontology 之间可能存在的距离。
+- **notation**：primitive 基本相同，只是表面符号不同；
+- **representation**：对象相同，但坐标、分解方式与“邻近关系”不同；
+- **ontology**：连什么算对象、关系、原因和可干预变量都不同。
 
-## AlphaZero 同时展示了收敛与新概念
+中文与英文的差异通常主要位于前两个层次。Python 与 SQL 已经更接近第二层。一个 machine-native cognitive system 与人类之间的差异，可能深入第三层。
 
-现有证据并不只支持“机器与人不同”。McGrath 等人研究 self-play 训练的 AlphaZero，发现许多人类棋类概念可以从其网络中被线性解码，而且这些概念会随着训练逐渐出现。[McGrath et al., 2022](https://pmc.ncbi.nlm.nih.gov/articles/PMC9704706/) 这是一个重要的收敛证据：即使没有人类棋谱监督，共享的任务结构也可能推动机器重新发现人类认识到的对象。
+智能系统通常不是只解决一个任务，而是在某个任务分布上反复工作。于是，表示本身也有建立、学习和维护的成本。一个更强的 abstraction 可能最初很昂贵，但如果它能让一整个任务家族在描述、搜索、执行或验证上变短，这笔成本就会被不断摊薄。
 
-但收敛不是全部。Schut 等人进一步从 AlphaZero 中提取了人类棋谱里没有被同样命名的策略性概念，并把其中一部分教给顶尖棋手；学习这些概念后，人类能在相关局面中作出更好的判断。[Schut et al., 2023](https://arxiv.org/abs/2310.16410) 这还不是发现一套完整外星 ontology，却是一个很接近 **operational bilingualism** 的实例：模型内部结构被压缩成一个 bridge concept，人类学会使用它，然后行为发生可测量的改变。
+Wolpert 与 Macready 的 no-free-lunch 结果提醒我们，在对所有可能目标函数做特定平均时，不存在无条件优于其他算法的 optimizer。[Wolpert & Macready, 1997](https://faculty.cc.gatech.edu/~isbell/reading/papers/nfl-optimization.pdf) 这并不是说所有方法在现实中都一样，而是说优势必须来自对问题分布的假设。Representation 正是把这种假设写进系统的地方。它丢弃某些差异，放大另一些差异，并押注未来任务会重复某种结构。
 
-两项结果放在一起更有意思。有效智能可能会因为共享世界而在某些 invariant 上收敛，同时又因为训练过程与表示不同，在这些 invariant 之间形成新的分解方式。我们真正要研究的不是“相同还是不同”这个二选一，而是**在哪里收敛、在哪里分叉，以及分叉能否被翻译成新的公共概念。**
+## 我们与 AI 之间也许需要一种翻译器
 
-## 真正的翻译必须保持干预，而不只是标签
+如果人类与不同 AI 使用不同 ontology，interpretability 就不应只是把 activation 配上 English label。我们需要的可能是一种双向的 conceptual compiler：
 
-常见的 interpretability pipeline 是：
+> human intention ↔ translator ↔ machine ontology
 
-> activation → English label
+它把人类的问题翻译成某种 AI 容易搜索的表示，再把机器发现的结构翻译回人类能够检查、争论和行动的概念。它还必须明确哪些内容在翻译中丢失，而不是只生成一段听起来合理的解释。
 
-标签很有用，因为安全审计与人类交流最终都需要语言。但如果标签来得太早，我们可能只是把陌生结构投影进已有词汇。更完整的路径应该是：
+而且未来不只需要 human-to-AI translation。不同 AI 之间也可能需要 translator：
 
-> activations → candidate primitives → relations → causal tests → human translation
+> O_human ↔ O_math-AI ↔ O_biology-AI ↔ O_embodied-AI
 
-翻译的核心不应是“听起来像”，而应是操作结构是否被保存。若机器概念 m 被翻译成人类概念 T(m)，更强的交换条件是：
+多语言机器翻译已经探索过 interlingua-like representation，让不同语言通过共享的 latent space 发生转换。[Lu et al., 2018](https://arxiv.org/abs/1804.08198) 但这里设想的 interlingua 更深。它连接的不是中文句子与英文句子，而是不同认知系统用来构造概念、证据和因果关系的 primitive。
+
+真正困难的问题是：translation 应该保存什么？
+
+一个映射可能保留预测，却不保留解释；保留相关性，却不保留 intervention；保留短期动作，却不保留长期价值。如果机器概念 m 被翻译成人类概念 h，我们不能只问两者的文本描述是否相似，而要问它们在操作上是否保持同样的关系：
 
 > T(Intervene_M(m, a)) ≈ Intervene_H(T(m), T(a))
 
-也就是说，对机器概念实施操作 a 之后的后果，经过翻译是否仍与在人类高层模型中进行对应干预相符。Causal abstraction 正是在尝试用 intervention 之间的关系，而不是标签相似度，来定义高层解释何时忠实于低层机制。[Geiger et al., 2023](https://arxiv.org/abs/2301.04709)
+也就是说，对机器概念做某种改变之后产生的后果，翻译到人类模型中是否仍然成立。Causal abstraction 的研究正试图把“高层解释忠实于低层机制”形式化为 intervention 之间的结构关系，而不只是标签之间的相似度。[Geiger et al., 2023](https://arxiv.org/abs/2301.04709)
 
-不同 translation 还会保存不同内容。一个映射可能保留 prediction，却不保留 intervention；保留短期 action，却不保留长期 value。因此 translation loss 更适合被写成向量：
+因此 translation loss 不应该只是一个模糊警告。它至少应当拆成一组不同的损失：
 
-> L(T) := (L_prediction, L_intervention, L_action, L_value)
+> L(T) = (L_prediction, L_intervention, L_action, L_value)
 
-所谓 translator 不会是一部万能词典，而更像一份用途明确的 contract，说明它保存什么、牺牲什么，以及在哪些分布外情形会失效。
+某个 translator 也许适合科学预测，却不适合安全控制；适合在两个模型之间传递策略，却不足以向人类解释为什么。所谓“通用翻译器”可能并不存在，只有针对不同目的、明确声明保留什么的 translation contract。
 
-## 从表示相似到有限的 translator
+我们已经有了一些很早期的工具。Centered Kernel Alignment 可以比较两个网络的 representation 在多大程度上相似。[Kornblith et al., 2019](https://proceedings.mlr.press/v97/kornblith19a.html) Model stitching 则尝试在两个网络片段之间学习一个连接层，再看拼接后的系统能否继续完成任务。[Csiszárik et al., 2021](https://proceedings.neurips.cc/paper/2021/hash/2cb274e6ce940f47beb8011d8ecb1462-Abstract.html)
 
-我们已经有一些早期工具。Centered Kernel Alignment 可以比较不同网络的 representation space 在多大程度上相似，同时对某些无关变换保持稳定。[Kornblith et al., 2019](https://proceedings.mlr.press/v97/kornblith19a.html) Model stitching 则在两个网络片段之间学习一个连接层，并检验接在一起的系统是否仍能完成任务。[Csiszárik et al., 2021](https://proceedings.neurips.cc/paper/2021/hash/2cb274e6ce940f47beb8011d8ecb1462-Abstract.html)
+它们还不是 ontology translator。相似度不会自动生成概念词典，两个网络能够拼接也不等于人类理解了中间发生什么。但这些方法至少把“两个系统的内部语言能否对接”变成了一个可以实验的问题，而不再只是一种比喻。
 
-它们还不是 ontology translator。CKA 测量相似性，却不直接给出概念字典；stitching 显示某些计算可以被功能性替换，也不保证人类能理解连接层。但它们把“两个系统是否在说同一种内部语言”变成了可测量的问题。再结合 causal intervention、跨任务 transfer 与人类学习实验，我们才可能得到有限而可检验的翻译。
+## 真正的翻译也许要求我们成为双语者
 
-这种理解也许要求人类真正成为部分双语者。Kuhn 所讨论的 incommensurability 并不只是新旧理论用了不同词，而是哪些分类自然、哪些问题重要、哪些观测算证据都发生了重组。[Kuhn, 1962](https://press.uchicago.edu/ucp/books/book/chicago/S/bo13179781.html) 从 Newtonian mass 到 Einsteinian mass，困难不是替换一个词，而是学习概念所在的新关系网。
+自然语言翻译之所以可能，是因为说话者共享身体、环境、社会实践和大量可以反复校正的情境。面对 machine ontology，我们甚至可能没有这层共同背景。
 
-同样，人类理解一个 machine-native concept，可能不能止于读一段浅显解释。我们需要学会在新例子中使用它，用它作预测，知道什么干预会破坏它，并观察它在哪些地方比旧概念更有力量。
+科学史提供了一个更接近的类比。Kuhn 所讨论的 incommensurability 并不只是新旧理论使用了不同单词，而是它们重新组织了哪些问题重要、哪些分类自然、哪些观测算证据。[Kuhn, 1962](https://press.uchicago.edu/ucp/books/book/chicago/S/bo13179781.html) 从 Newtonian mass 到 Einsteinian mass，困难不在于找一个替换词，而在于相关概念所在的整张关系网发生了变化。
 
-## Machine ontology 不会自动显现
+所以人类理解 machine-native concept 的过程，也许不会结束于生成一段浅显英文。我们可能需要学习如何使用这个概念，在新例子上判断它何时适用，用它做预测，并亲自看到它在哪些 intervention 下失败。最终目标不是让机器永远迁就人类已有 ontology，而是让人类获得有限但真正可操作的 bilingualism。
 
-“只要找到正确 basis，一切都会变简单”也可能过于乐观。同一函数可以通过许多可逆坐标变换实现，每一种都可能产生不同的 sparsity 与可解释性。Locatello 等人的结果提醒我们，如果没有额外 inductive bias，unsupervised disentanglement 在一般情形下不可识别，观察分布本身并不决定哪一种 factorization 才是真正因素。[Locatello et al., 2019](https://proceedings.mlr.press/v97/locatello19a)
+这样的 translator 也许本身会成为一种新的 AI。它不以解决某个领域问题为主要能力，而以跨 ontology 保存结构、提出判别实验、标记 translation loss、寻找共同 invariant 为能力。它不是一本 dictionary，更像一位同时做 linguist、compiler writer 和 experimental scientist 的合作者。
 
-另一方向的 Platonic Representation Hypothesis 则提出，越来越强的模型可能因为共享现实而趋向相似的统计表示。[Huh et al., 2024](https://proceedings.mlr.press/v235/huh24a.html) 如果这种收敛广泛成立，machine ontology 不会完全异质。世界本身会对任何有效表示施加共同约束。
+它还可能创造 **bridge concepts**。这些概念既不完全属于人类语言，也不是机器内部 primitive 的直接复制，而是为了协作形成的中间对象。就像数学符号并不等于自然语言，却让不同语言的人共享证明，未来的人机共同语言也可能是一种新造出来的公共层。
 
-因此，“模型自己的 ontology”不能定义成最漂亮的一组 feature。一个候选 ontology 至少需要通过四类检验：
+## 多种智能会分化，还是最终收敛？
 
-1. **稳定性：** 关系是否跨输入、seed、模型与 modality 重现？
-2. **因果性：** 干预是否产生可预测、相对局部且可重复的行为变化？
-3. **压缩与迁移：** 它是否比人类预设 basis 更短地解释行为，并预测未用于发现它的任务？
-4. **可教学性：** 人或另一个模型能否学习一个近似接口，而且在新问题上真正受益？
+这里存在两种相反的压力。
 
-这四项测试也让前面的三个假设能够竞争。稳定的非人类结构支持 H1；持续缺乏可迁移因素支持 H2；越来越完整的人类概念对齐支持 H3。我们不需要先决定哪一个故事最迷人，而应该设计能让其中某些故事失败的实验。
+分化压力来自不同的 objective、sensor、body、memory、time scale 与行动环境。多智能体研究已经发现，agent 可以发展出任务上有效、却并不自然地具有人类可解释性或 compositionality 的通信协议。[Kottur et al., 2017](https://aclanthology.org/D17-1321/) 如果数学 AI 只和 theorem prover 共同进化，生物 AI 只和实验装置共同进化，它们的 private language 很可能越来越专业。
 
-## 结论：更深的智能也许是发明表示
+收敛压力则来自共享的现实。任何想预测同一颗行星、同一种细胞或同一个社会的系统，都必须受到某些稳定结构约束。它们未必使用相同 primitive，却可能在对称性、守恒关系、因果不变量或可重复实验上相遇。
 
-大多数 benchmark 固定了输入、问题格式与评价标准，然后询问系统能否在给定表示里找到答案。但许多人类最重要的认知进展，并不是在旧空间里搜索得更快，而是改变了问题所在的空间。负数、微积分、概率、向量、基因与熵都引入了新的 primitive，使一整类问题突然变得可表达、可计算、可验证。
+因此更可能的未来不是“只有一种 universal language”，也不是“每种智能完全不可交流”，而是分层的语言结构：
 
-因此可以区分两种能力：
+> private latent language → domain bridge language → public interlingua
+
+最内层为了本系统的效率而存在；中间层连接相邻的专业 ontology；公共层只保存协作、验证和治理真正需要的结构。它有点像今天的计算机系统：transistor、machine code、programming language、API 与自然语言并没有合并成一种表示，而是通过多个 interface 协作。
+
+最终形成的可能不是“人类终于读懂了机器语言”，也不是所有机器都收敛到同一种语言，而是一个由许多认知语言组成的生态。人类、数学 AI、生物 AI 和 embodied AI 通过不断演化的 interlingua 合作，同时保留各自最有力量的抽象。
+
+那会是一种新的东西：不是单一的超级智能，而是一种 **plural intelligence ecology**。
+
+## 已有证据同时支持两种相反的直觉
+
+Superposition 提供了一个很具体的机制，说明为什么人类概念未必会整齐地对齐单个 neuron。当潜在 feature 很稀疏、而可用维度有限时，模型可以把多个 feature 叠加在共享方向中。[Elhage et al., 2022](https://www.transformer-circuits.pub/2022/toy_model/) 这能解释一部分 polysemanticity，也支持 coordinate complexity 的直觉；但它本身还不能证明模型拥有一整套异质 ontology。
+
+Interpretability 研究已经发现了一些比单个 neuron 更稳定的结构。Sparse autoencoder 可以把密集激活分解成更稀疏、相对更 monosemantic 的 feature，并在一些任务上定位具有因果作用的方向。[Cunningham et al., 2024](https://proceedings.iclr.cc/paper_files/paper/2024/hash/1fa1ab11f4bd5f94b2ec20e794dbfa3b-Abstract-Conference.html) Anthropic 随后把类似方法扩展到 Claude 3 Sonnet，并提取了数量巨大的可识别 feature。[Templeton et al., 2024](https://transformer-circuits.pub/2024/scaling-monosemanticity/)
+
+另一些工作发现，某些高层概念可以表现为 activation space 中的方向，但“线性表示”究竟意味着什么，取决于 counterfactual 定义和所采用的 inner product。[Park, Choe & Veitch, 2023](https://arxiv.org/abs/2311.03658) 对空间和时间的研究也在多个模型中找到了跨 prompt 与实体类型相对稳定的线性结构。[Gurnee & Tegmark, 2024](https://openreview.net/forum?id=jE8xbmvFin)
+
+这些结果说明模型内部并非完全没有可恢复结构。但它们还不能证明这些结构与模型真正使用的 primitive 完全一致。Sparse feature 是通过特定 dictionary learning objective 得到的，linear direction 又依赖所选择的几何。工具可能发现了模型的结构，也可能同时把我们偏好的结构施加给了模型。
+
+还有一个有趣的反方向假设。Platonic Representation Hypothesis 认为，随着不同架构与模态的模型变强，它们的 representation 可能逐渐趋向一个共享的统计现实模型。[Huh et al., 2024](https://proceedings.mlr.press/v235/huh24a.html) 如果这种收敛广泛成立，机器 ontology 就未必完全“外星”。现实世界本身可能对有效表示施加共同约束。
+
+AlphaZero 的研究把这两种直觉放到了同一个系统里。McGrath 等人发现，许多人类熟悉的棋类概念可以从 self-play 训练的 AlphaZero 中被线性解码出来，而且会随着训练逐渐出现。[McGrath et al., 2022](https://pmc.ncbi.nlm.nih.gov/articles/PMC9704706/) 这说明共享任务本身会制造收敛压力，即使没有人类棋谱监督，机器也可能重新发现人类认识到的结构。
+
+但 Schut 等人也从 AlphaZero 中提取了一些没有在人类棋谱里以同样方式被命名的策略性概念，并把其中一部分教给顶尖棋手。棋手学会这些概念后，在相关局面里的判断真的变好了。[Schut et al., 2023](https://arxiv.org/abs/2310.16410) 这还不是一套完整的外星棋学，却已经很接近有限而可操作的 bilingualism：机器先形成结构，人类再把它整理成可以学习的 bridge concept。
+
+因此真正的问题可能不是“模型表示与人类表示相同还是不同”。更可能的情况是：它们在某些 invariant 上收敛，在如何切分、组合和使用这些 invariant 时仍然不同。真正值得寻找的，是这种分叉能否被转化成一个人类此前没有、但可以学会使用的新概念。
+
+## Interpretability 不应该过早结束在 English label
+
+今天一种常见流程是：
+
+> activation → English label
+
+我们找到一个 feature，然后问它是不是 deception、France、quotation marks 或某一种语法结构。这当然有用，因为安全审计和人类沟通最终都需要语言。但如果标签给得太早，我们可能会把一个更奇怪、更丰富的结构强行投影成已有概念。
+
+另一条路线可以是：
+
+> activations → machine-native primitives → relations → machine-native theory → human translation
+
+在这条路线里，interpretability 的目标不是先给每个 feature 起名字，而是先恢复一套具有预测力与因果效力的 ontology。我们想知道哪些 primitive 稳定出现，它们如何组合，哪些关系跨 layer、prompt、model seed 和 architecture 保持不变，以及对它们进行 intervention 时，模型行为如何改变。
+
+之后才研究映射：
+
+> O_machine ↔ O_human
+
+这更像第一次接触一种真正陌生的科学语言。我们不应该先问“哪个词对应我们的 noun”，而应该先问“这套系统用什么基本单位切分世界”。
+
+## 但 machine ontology 并不会自动显现
+
+“只要找到正确 basis，一切都会变简单”本身也可能过于乐观。Representation 通常不是唯一的。同一函数可以在许多可逆变换后的内部坐标中实现，而每个坐标系都可能提供不同的稀疏性和可解释性。
+
+Locatello 等人的结果给出了重要警告。在没有额外 inductive bias 的情况下，仅从观测分布中进行 unsupervised disentanglement 在一般情形下不可识别。[Locatello et al., 2019](https://proceedings.mlr.press/v97/locatello19a) 换句话说，数据本身未必能告诉我们哪一种 factorization 才是“真正的因素”。
+
+因此，“我们暂时看不懂模型”至少包含三种完全不同的可能：模型形成了异质但稳定的 abstraction；模型根本没有可复用的稳定 abstraction；或者模型仍在使用近似人类的 abstraction，只是我们尚未找到合适的 decoder。发现一个难以命名的 feature 不能自动证明第一种，找到一个漂亮的 English label 也不能自动证明第三种。
+
+也正因为如此，“模型自己的 ontology”不能只意味着最漂亮的一组 latent feature。它至少需要通过几个更严格的测试：
+
+- **稳定性：** 相同关系是否跨输入、训练 seed、层和相邻模型持续出现；
+- **因果性：** intervention 是否产生可预测且局部的行为变化；
+- **组合性：** primitive 是否能构成更高层规律，而不只是相关性标签；
+- **压缩性：** 这套表示是否让模型行为或外部数据获得更短、更准确的描述；
+- **迁移性：** 结构是否能预测未参与发现的新任务；
+- **可翻译性：** 人类能否学习一个保留关键信息的近似接口，并明确知道翻译损失在哪里。
+
+Machine-native 不等于不需要人类标准。恰恰相反，一个 ontology 是否有意义，必须靠预测、干预、压缩和迁移来约束，而不能只靠一张看起来合理的 feature visualization。
+
+## 可计算性是一个过于宽松的共同点
+
+如果人脑与模型最终都可以被视为 computation，是否意味着它们的表示差异终究无关紧要？答案可能恰好相反。
+
+Universal computation 只说明某个过程原则上能否被实现。它没有说明需要多少时间与 memory，也没有说明哪一种表示让规律容易发现、证明和复用。计算复杂性理论从一开始就在研究这层差别。[Hartmanis & Stearns, 1965](https://dl.acm.org/doi/10.1145/321250.321266)
+
+而且，可计算世界内部本身就存在一般性限制。Turing 的经典结果表明，不存在一个适用于任意程序与输入的通用判定过程，可以总是正确解决相应的停止问题。[Turing, 1936](https://londmathsoc.onlinelibrary.wiley.com/doi/abs/10.1112/plms/s2-42.1.230)
+
+所以：
+
+> universal computation ≠ universal prediction
+
+与抽象更直接相关的是最短程序的思想。对对象 x，可以问在给定 universal machine U 下，生成它的最短程序有多长：
+
+> K_U(x) = min |p| such that U(p) = x
+
+这把“最优压缩”变成了一个数学对象。Chaitin 对有限二进制序列的 program size 研究是这一理论的奠基工作之一。[Chaitin, 1966](https://dl.acm.org/doi/10.1145/321356.321363) 但 Kolmogorov complexity 本身不可计算。不存在一个普遍算法，能够为任意对象保证找到其最短描述。
+
+更微妙的是，K_U(x) 还相对于描述语言 U。Invariance theorem 告诉我们，更换通用语言只会带来一个依赖于语言的加法常数，但在现实中的有限任务上，这个常数可以非常重要。所谓“短解释”从来不是脱离表示而存在的。
+
+因此几组概念必须保持分离：
+
+> computable ≠ efficiently computable
+
+> computable ≠ predictable
+
+> compressible ≠ able to discover the compression
+
+> internally represented ≠ humanly understandable
+
+一个系统能够执行某个计算，不代表它能在可接受资源内完成；一个规律存在短描述，不代表学习系统能找到它；一个模型内部存在结构，也不代表人类已有的 ontology 足以说出它。
+
+## 一个关于 machine-native science 的研究议程
+
+这个想法可以被转化成比“给 neuron 起名字”更具体的研究问题。
+
+第一步不是寻找最有趣的 English label，而是寻找 **invariant structure**。对同一任务训练不同模型，改变 seed、architecture、modality 和 objective，观察哪些几何关系、composition rule 或 intervention effect 保留下来。
+
+第二步是把 feature discovery 与 relation discovery 分开。Primitive 可能并不重要，重要的也许是 primitive 之间的代数、图结构或动态变换。一个 ontology 不只是一份词表，也是一套允许哪些组合与推理的 grammar。
+
+第三步是构建双向 translator。人类概念应能投影到 machine-native structure，机器结构也应能被近似翻译回来。两种方向都要报告 information loss，而不是只给一个流畅说明。
+
+第四步是用干预而不是美感验证。一个候选 primitive 如果真的属于模型的计算结构，改变它应该在多种上下文中产生可预测结果，同时尽量不扰动无关能力。
+
+最后一步是检验它能否创造**新概念**。如果一组 latent structure 能让科学数据获得更短描述，提出此前没有的实验区分，或者让人类在学习后更快解决新问题，那么它才可能不仅是模型的内部捷径，而是一个值得进入共同语言的 abstraction。
+
+## 更深一层的智能，也许是发明表示的能力
+
+如果前面的推论成立，那么我们通常测量的 intelligence 仍然只覆盖了一半。Benchmark 大多固定问题格式、输入空间和评价标准，再观察系统能否在这个既定表示中找到答案。
+
+但许多人类最重要的认知跃迁并不是在旧空间里搜索得更快，而是改变了问题所在的空间。负数、微积分、概率、向量、基因、熵和算法复杂度都不只是更多事实。它们创造了新的 primitive，使一整类原本笨重甚至无法提出的问题突然变得可操作。
+
+因此可以把两种能力分开：
 
 > object-level intelligence：在给定 R 中解决 f
->
-> meta-intelligence：发现、发明或学习更好的 R
 
-如果 recursive self-improvement 真正发生，最关键的跃迁也许不是同一种推理被执行得越来越快，而是系统发明新的内部 primitive、memory organization、proof language 与 translation interface。上一代需要漫长搜索的区域，可能被下一代压缩成一步。
+> meta-intelligence：发现、发明或学习一个更好的 R
 
-这时 interpretability 的终点就不应只是给 neuron 起名字。它应当比较候选表示，检验因果结构，测量 translation loss，并帮助人类学习那些值得进入公共语言的 bridge concept。
+后者的目标不是立即减少某一道题的 loss，而是支付一次 representation cost，换取未来大量任务的共同缩短。它甚至会改变系统可以看见什么问题。
 
-AI for science 最重要的产物也许不只是一条 theorem、一个 molecule 或一次 prediction。它可能是一个新概念，先被机器发现，后来才被人类学会。真正值得期待的，不只是机器替我们回答更多旧问题，而是它与我们共同扩大可以提出的问题空间。
+如果 recursive self-improvement 真的发生，它最重要的阶段也许不会表现为同一个模型把同一段推理运行得越来越快。更大的跃迁可能来自模型发明新的内部 primitive、新的 memory organization、新的证明语言或新的 human-machine interface。每一次成功的 representation change，都可能把上一代需要长时间搜索的区域压缩成下一代的一步。
 
-那时，AI 不再只是帮助我们在已有数学里计算。它开始参与创造一种新的语言：
+这也解释了 translator 为什么不是附属的解释工具。一个只能在自己的 ontology 内不断优化的系统，也许非常强，却无法把新能力带入共同世界。Translator 让新抽象能够被检验、传播、组合和继承。它可能成为不同 cognitive species 之间的 epistemic infrastructure。
+
+## Intelligence 也许是计算的几何
+
+人类数学是一种极其强大的 compression language。算法是用这套语言写下来的、可以被共享和检查的压缩。大模型则可能是另一类 compression machine。它从数据中形成表示，却没有义务重新发现我们的概念边界。
+
+所以模型不可解释，未必意味着内部一团混乱。另一个更有趣、也更令人不安的可能性是：那里存在规律，只是规律使用的语言还没有被翻译。
+
+未来 interpretability 最重要的任务，可能不是持续把机器压回人类已经知道的概念，而是让机器向我们展示：我们切分世界的方式并不是唯一的。
+
+那时 AI for science 最重要的产物或许不只是一个 theorem、一种 molecule 或一条 prediction。它可能是一个新的概念，一个由机器首先发现、再由人类慢慢学会使用的 conceptual primitive。真正重要的不是机器替我们回答了多少旧问题，而是它是否扩展了人类能够提出的问题空间。
+
+如果这一天到来，AI 就不只是在帮助我们计算已有的数学。它开始参与创造一种新的语言：
 
 > 一种属于人类与机器之间的共同抽象语言。
