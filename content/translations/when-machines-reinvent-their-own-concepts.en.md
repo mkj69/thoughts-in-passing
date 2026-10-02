@@ -122,7 +122,7 @@ If a problem requires searching \(10^{12}\) states, more compute may visit more 
 
 An intelligence explosion may therefore appear first not as more computation per second, but as an abstraction cascade. Each layer of concepts makes a class of earlier computations unnecessary while providing the primitives for another layer. What grows is not one capability axis, but the system's ability to construct problem spaces.
 
-This does not mean conceptual recursion must accelerate without bound. New ontologies still need verification. New primitives can overfit. Translation across frames can discard essential information. Physical experiments and compute budgets do not disappear. As “When Intelligence Is No Longer Scarce” argues, intelligence growth is more likely to move bottlenecks than to abolish them. [“When Intelligence Is No Longer Scarce”](#thought/when-intelligence-is-no-longer-scarce)
+This does not mean conceptual recursion must accelerate without bound. New ontologies still need verification. New primitives can overfit. Translation across frames can discard essential information. Physical experiments and compute budgets do not disappear. Intelligence growth is more likely to move bottlenecks than to abolish them.
 
 ## Machines may gradually build another language of science
 

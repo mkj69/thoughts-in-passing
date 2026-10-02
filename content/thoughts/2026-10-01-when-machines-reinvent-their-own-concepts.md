@@ -4,7 +4,7 @@ slug: "when-machines-reinvent-their-own-concepts"
 date: "2026-10-01"
 maturity: "evolving"
 tags: [recursive-self-improvement, machine-ontology, abstraction, interpretability]
-related: [intelligence-in-an-unknown-language, when-intelligence-is-no-longer-scarce]
+related: [intelligence-in-an-unknown-language]
 excerpt: "真正深的递归自我改进，也许不是让模型在同一个问题空间里搜索得更快，而是让它逐渐重写自己使用的表示、基本对象和概念生成方法。当新的抽象又能帮助机器发现下一层抽象时，智能增长可能变成一场概念的递归。"
 placeholder: false
 language: "zh"
@@ -128,7 +128,7 @@ $$
 
 因此，所谓 intelligence explosion 未必首先表现为单位时间内执行越来越多计算。它也可能表现为一场 abstraction cascade：每一层新概念都让过去的一批计算不再需要，同时为下一层概念提供新的基本单位。增长的不是一根单一能力轴，而是系统能够构造的问题空间。
 
-但这并不意味着概念递归必然无限加速。新的本体仍然需要被验证，新的 primitive 可能过度拟合，框架之间的迁移可能丢失关键信息，物理实验和计算预算也不会消失。正如《当智能不再稀缺》讨论的那样，智能增长更可能移动瓶颈，而不是取消瓶颈。[《当智能不再稀缺》](#thought/when-intelligence-is-no-longer-scarce)
+但这并不意味着概念递归必然无限加速。新的本体仍然需要被验证，新的 primitive 可能过度拟合，框架之间的迁移可能丢失关键信息，物理实验和计算预算也不会消失。智能增长更可能移动瓶颈，而不是取消瓶颈。
 
 ## 机器可能逐渐建立另一套科学语言
 
