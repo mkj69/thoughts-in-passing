@@ -8,93 +8,6 @@ const state = {
   query: "",
 };
 
-const mindMaps = {
-  "machine-native-language": {
-    zh: {
-      label: "思维导图",
-      title: "从语言差异到表示的发明",
-      caption: "从中英翻译进入搜索空间、machine ontology 与多种智能的共同语言。点击分支，展开完整论证。",
-      rootLabel: "核心问题",
-      root: "智能只是在解题，还是也在发明让问题变得可解的表示？",
-      outcomeLabel: "可能的未来",
-      outcome: "能够发明新表示，并在多种 ontology 之间翻译的 meta-intelligence",
-      branches: [
-        {
-          id: "natural-language",
-          title: "中文 → 英文",
-          points: ["同一经验", "不同显式信息", "翻译是重建"],
-          detail: "中文与英文不只是给同一批概念换词。它们要求说话者显式编码不同信息，并以不同结构组织同一个场景。这是 representation change 的日常入口。",
-        },
-        {
-          id: "programming-language",
-          title: "表示塑造搜索",
-          points: ["不同 neighborhood", "坐标改变路径", "短描述 ≠ 易发现"],
-          detail: "Representation 决定候选解之间的邻近关系，以及一次局部修改能到达哪里。相同答案在一个坐标系里可能需要漫长搜索，在另一个坐标系里可能只需一步。",
-        },
-        {
-          id: "capability",
-          title: "能力依赖任务分布",
-          points: ["不同任务需要不同表示", "表示本身也有成本", "没有万能 basis"],
-          detail: "不存在脱离任务的最佳表示。一个 abstraction 的价值，在于支付建立成本之后，让一整类反复出现的问题在描述、搜索、执行或验证上变得更容易。",
-        },
-        {
-          id: "machine-species",
-          title: "分化 ↔ 收敛",
-          points: ["私有 latent language", "共享现实 invariant", "多层 cognitive ecology"],
-          detail: "Objective、body 与工具推动不同 AI 形成专业 ontology，共享现实又迫使它们在某些 invariant 上相遇。未来更可能是分层语言生态，而不是一种 universal language。",
-        },
-        {
-          id: "translator",
-          title: "翻译要保持结构",
-          points: ["prediction · intervention", "bridge concepts", "明确 translation loss"],
-          detail: "Translator 不能只生成相似的自然语言标签。它必须说明预测、干预、行动和价值中哪些关系被保留，并通过 bridge concepts 帮助人类获得可操作的 bilingualism。",
-        },
-      ],
-    },
-    en: {
-      label: "Mind map",
-      title: "From linguistic difference to invented representation",
-      caption: "Move from Chinese-English translation into search spaces, machine ontologies, and a shared language among multiple intelligences.",
-      rootLabel: "Central question",
-      root: "Does intelligence only solve problems, or also invent representations that make them solvable?",
-      outcomeLabel: "Possible future",
-      outcome: "Meta-intelligence that invents representations and translates among multiple ontologies",
-      branches: [
-        {
-          id: "natural-language",
-          title: "Chinese → English",
-          points: ["The same experience", "Different explicit information", "Translation reconstructs"],
-          detail: "Chinese and English do more than rename one set of concepts. They require different information to become explicit and organize the same scene differently. This is an everyday entry into representation change.",
-        },
-        {
-          id: "programming-language",
-          title: "Representation shapes search",
-          points: ["Different neighborhoods", "Coordinates change paths", "Short does not mean discoverable"],
-          detail: "A representation determines which candidates are neighbors and where a local modification can move. The same answer may require a long search in one coordinate system and a single step in another.",
-        },
-        {
-          id: "capability",
-          title: "Capability follows task distributions",
-          points: ["Different tasks need different representations", "Representations have costs", "No universal basis"],
-          detail: "There is no best representation apart from a task. An abstraction earns its value by paying a construction cost once, then making description, search, execution, or verification easier across a recurring family of problems.",
-        },
-        {
-          id: "machine-species",
-          title: "Divergence ↔ convergence",
-          points: ["Private latent languages", "Shared-world invariants", "Layered cognitive ecology"],
-          detail: "Objectives, bodies, and tools push AIs toward specialized ontologies, while a shared reality forces contact at some invariants. The future may be a layered linguistic ecology rather than one universal language.",
-        },
-        {
-          id: "translator",
-          title: "Translation must preserve structure",
-          points: ["Prediction · intervention", "Bridge concepts", "Explicit translation loss"],
-          detail: "A translator cannot stop at a similar natural-language label. It must state which relations in prediction, intervention, action, and value survive, then use bridge concepts to give humans an operational bilingualism.",
-        },
-      ],
-    },
-  },
-};
-
 const elements = {
   stream: document.querySelector("#stream"),
   count: document.querySelector("#result-count"),
@@ -157,67 +70,6 @@ function rememberLanguage(thought, language) {
 
 function languageLabel(language) {
   return ({ en: "English", zh: "中文" })[language] || language.toUpperCase();
-}
-
-function mindMapVersion(mapId, language) {
-  const versions = mindMaps[mapId];
-  if (!versions) return null;
-  return versions[language] || versions.en || Object.values(versions)[0];
-}
-
-function mindMapMarkup(mapId, language) {
-  const map = mindMapVersion(mapId, language);
-  if (!map) return "";
-  const titleId = `mind-map-title-${mapId}`;
-  const branches = map.branches.map((branch) => `
-    <button class="mind-map-node" type="button" data-mind-map-branch="${escapeHtml(branch.id)}" aria-pressed="false">
-      <strong>${escapeHtml(branch.title)}</strong>
-      <span>${branch.points.map((point) => escapeHtml(point)).join("<br>")}</span>
-    </button>
-  `).join("");
-
-  return `
-    <section class="thought-mind-map" aria-labelledby="${escapeHtml(titleId)}">
-      <p class="micro-label">${escapeHtml(map.label)}</p>
-      <h2 id="${escapeHtml(titleId)}">${escapeHtml(map.title)}</h2>
-      <p class="mind-map-caption">${escapeHtml(map.caption)}</p>
-      <div class="mind-map-canvas">
-        <div class="mind-map-root">
-          <small>${escapeHtml(map.rootLabel)}</small>
-          <strong>${escapeHtml(map.root)}</strong>
-        </div>
-        <div class="mind-map-branches">${branches}</div>
-        <div class="mind-map-outcome">
-          <small>${escapeHtml(map.outcomeLabel)}</small>
-          <strong>${escapeHtml(map.outcome)}</strong>
-        </div>
-      </div>
-      <p class="mind-map-detail" aria-live="polite">
-        <strong class="mind-map-detail-title"></strong>
-        <span class="mind-map-detail-copy"></span>
-      </p>
-    </section>
-  `;
-}
-
-function activateMindMap(mapId, language) {
-  const map = mindMapVersion(mapId, language);
-  const container = elements.article.querySelector(".thought-mind-map");
-  if (!map || !container) return;
-  const buttons = [...container.querySelectorAll("[data-mind-map-branch]")];
-  const detailTitle = container.querySelector(".mind-map-detail-title");
-  const detailCopy = container.querySelector(".mind-map-detail-copy");
-
-  function selectBranch(id) {
-    const branch = map.branches.find((item) => item.id === id);
-    if (!branch) return;
-    buttons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.mindMapBranch === id)));
-    detailTitle.textContent = branch.title;
-    detailCopy.textContent = branch.detail;
-  }
-
-  buttons.forEach((button) => button.addEventListener("click", () => selectBranch(button.dataset.mindMapBranch)));
-  selectBranch(map.branches[0].id);
 }
 
 function makeButton(label, value, type, count) {
@@ -292,7 +144,6 @@ function openThought(slug, options = {}) {
       .map((language) => `<button type="button" data-article-language="${escapeHtml(language)}" aria-pressed="${language === activeLanguage}" lang="${escapeHtml(language)}">${escapeHtml(languageLabel(language))}</button>`)
       .join("")}</div>`
     : "";
-  const mindMap = thought.mindMap ? mindMapMarkup(thought.mindMap, activeLanguage) : "";
   elements.article.innerHTML = `
     <header>
       <div class="article-meta">
@@ -306,9 +157,19 @@ function openThought(slug, options = {}) {
       <ul class="article-tags" aria-label="Tags">${tags}</ul>
     </header>
     ${thought.placeholder ? '<div class="placeholder-callout"><strong>Placeholder:</strong> this sample note demonstrates the content model and should be replaced with real writing.</div>' : ""}
-    ${mindMap}
     <div class="article-body">${version.html}</div>
   `;
+  const articleBody = elements.article.querySelector(".article-body");
+  if (articleBody && window.renderMathInElement) {
+    window.renderMathInElement(articleBody, {
+      delimiters: [
+        { left: "\\[", right: "\\]", display: true },
+        { left: "\\(", right: "\\)", display: false },
+      ],
+      throwOnError: false,
+    });
+  }
+
   elements.article.querySelectorAll("[data-article-language]").forEach((button) => {
     button.addEventListener("click", () => {
       const language = button.dataset.articleLanguage;
@@ -317,7 +178,6 @@ function openThought(slug, options = {}) {
       openThought(slug, { updateHash: false, language, preserveScroll: true });
     });
   });
-  if (thought.mindMap) activateMindMap(thought.mindMap, activeLanguage);
   renderConnections(thought);
   if (!options.preserveScroll) window.scrollTo({ top: 0, behavior: options.instant ? "auto" : "smooth" });
 }

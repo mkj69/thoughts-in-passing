@@ -52,6 +52,8 @@ export function markdownToHtml(markdown) {
   const lines = markdown.split("\n");
   let paragraph = [];
   let list = [];
+  let displayMath = [];
+  let inDisplayMath = false;
 
   function flushParagraph() {
     if (paragraph.length) blocks.push(`<p>${inlineMarkdown(paragraph.join(" "))}</p>`);
@@ -63,8 +65,20 @@ export function markdownToHtml(markdown) {
     list = [];
   }
 
+  function flushDisplayMath() {
+    blocks.push(`<div class="math-display">\\[${escapeHtml(displayMath.join("\n"))}\\]</div>`);
+    displayMath = [];
+  }
+
   for (const line of lines) {
-    if (!line.trim()) {
+    if (line.trim() === "$$") {
+      flushParagraph();
+      flushList();
+      if (inDisplayMath) flushDisplayMath();
+      inDisplayMath = !inDisplayMath;
+    } else if (inDisplayMath) {
+      displayMath.push(line);
+    } else if (!line.trim()) {
       flushParagraph();
       flushList();
     } else if (line.startsWith("## ")) {
@@ -83,6 +97,7 @@ export function markdownToHtml(markdown) {
       paragraph.push(line.trim());
     }
   }
+  if (inDisplayMath) throw new Error("Unclosed display math block");
   flushParagraph();
   flushList();
   return blocks.join("\n");
@@ -91,6 +106,10 @@ export function markdownToHtml(markdown) {
 export function plainText(markdown) {
   return markdown
     .replace(/\[([^\]]+)\]\([^\)]+\)/g, "$1")
+    .replace(/\\text\{([^}]*)\}/g, "$1")
+    .replace(/\$\$|\\\(|\\\)/g, " ")
+    .replace(/\\(?:left|right|longrightarrow|longleftrightarrow|begin|end|,)/g, " ")
+    .replace(/[{}]/g, " ")
     .replace(/[#>*_`-]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
