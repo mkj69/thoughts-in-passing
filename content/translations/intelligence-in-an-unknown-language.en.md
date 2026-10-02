@@ -7,23 +7,31 @@ excerpt: "Programs are written inside conceptual systems invented by humans, whi
 
 > The regularities inside a model may be written in a language we have not yet learned.
 
-I increasingly suspect that discussions of intelligence collapse several different questions into one: **knowledge, capability, abstraction, computability, and understandability.** Large models invite a seductive picture of unified intelligence. Keep adding parameters, data, and inference time, and perhaps we will eventually obtain one system capable of solving every problem. Yet no matter how large a model becomes, it is still a computational process. Whether a problem can be solved depends first on whether some computational process can represent and solve it. It does not depend only on how many parameters the model has, how much data it has seen, or how long it is allowed to think. There is a hidden leap here. Because more and more knowledge can be compressed into one model, we begin to assume that more and more capabilities can be unified as well. We may even start to treat every problem as something that will eventually yield to more computation.
+I increasingly suspect that discussions of intelligence collapse several different questions into one: **knowledge, capability, abstraction, computability, and understandability.** Large models invite a seductive picture of unified intelligence. Keep adding parameters, data, and inference time, and perhaps we will eventually obtain one system capable of solving every problem. Yet no matter how large a model becomes, it is still a computational process. Whether a problem can be solved depends first on whether it can be formulated and solved by some computational process. It does not depend only on how many parameters the model has, how much data it has seen, or how long it is allowed to think. There is a hidden leap here. Because more and more knowledge can be compressed into one model, we begin to assume that more and more capabilities can be unified as well. We may even start to treat every problem as something that will eventually yield to more computation.
 
-But these are three different claims: that knowledge can share a representation, that capabilities can share an implementation, and that a problem is computationally solvable in the first place. The deeper question may not be how universal a model can become. It may be:
+But these are three different claims: that large bodies of knowledge can be compressed into one model, that many capabilities can be naturally realized within one computational frame, and that a problem is computationally solvable in the first place. The deeper question may not be how universal a model can become. It may be:
 
 > **How much of the capability space can one computational paradigm cover? What determines its boundary? When we reach that boundary, what new structures, representations, and ways of interacting with the world will be required?**
 
-## Knowledge can share a foundation while capability depends on representation
+## Knowledge can share a foundation while capability belongs to a computational frame
 
 One of the most fascinating things about foundation models is that they seem to demonstrate how much heterogeneous knowledge can fit inside one shared base. Books, papers, webpages, code, and conversations have very different structures, yet all can become training signals and flow into one set of parameters. In a sense, this is the central promise of a foundation model: train one broad base, then adapt it across many downstream tasks. [1] But there is an easy mistake to make:
 
-> **Knowledge can share a foundation without every capability naturally sharing the same representation.**
+> **Knowledge can share a foundation without every capability becoming equally natural inside the same computational frame.**
 
-Whether a system knows something is not the same as whether it can perform a task efficiently. Capability depends not only on whether relevant information exists somewhere in the parameters. It also depends on whether a task is easy to **represent, search, execute, and verify** within the current system. Programming languages make this especially clear. Many languages can support complex computation, but they do not offer the same basic operations. A database language makes relations, filtering, and joins primitive. A proof language gives direct access to propositions, types, and proof goals. A coding agent with a repository browser, shell, filesystem, tests, and patch tools turns the vague intention to fix a bug into a sequence of local, executable, and checkable operations.
+Whether a system knows something is not the same as whether it can perform a task efficiently. Capability depends not only on whether relevant information exists somewhere in the parameters. It also depends on whether a task is easy to **represent, search, execute, and verify** within the current system. But this is where one terminological shortcut becomes dangerous. Programming languages, proof systems, and coding agents are not merely different representations. A database language changes the operations that are directly available. A proof language also specifies its objects, inference rules, and standards of verification. A coding agent's repository, shell, filesystem, tests, and patch tools change the actions the system can take. Calling every one of these differences representation makes the term too broad to remain useful.
+
+To keep the rest of the argument consistent, I will call the whole arrangement a **computational frame**, denoted by \(\Gamma\):
+
+$$
+\Gamma = (O, R, A, T, J, B)
+$$
+
+Here \(O\) is the ontology, meaning what counts as an object, relation, or variable available for intervention; \(R\) is the representation in which those objects are encoded and organized; \(A\) is the search or reasoning procedure; \(T\) is the set of available operations and tools; \(J\) is the mechanism that judges whether a result is valid; and \(B\) is the budget of time, memory, and computation. This notation is not meant as a standard theory. It is a reminder not to let representation stand in for task, algorithm, tool, verification, and implementation all at once. Marr's distinction among computational theory, algorithm and representation, and physical implementation makes a similar methodological point: these levels interact, but they are not the same question. [7]
 
 The important difference is not simply what these systems can compute. It is:
 
-> **Which computations become natural under this representation?**
+> **Which computations become natural inside this frame?**
 
 Classic work on programming-language expressiveness already makes this distinction. Two languages may compute the same functions in principle while a construct in one still cannot be expressed locally and naturally in the other without reorganizing the whole program. [2] For an intelligent system, a more useful question is therefore not:
 
@@ -31,34 +39,34 @@ Classic work on programming-language expressiveness already makes this distincti
 
 It is:
 
-> Under representation \(R\), how easy is task \(f\) to describe, discover, execute, and verify?
+> Under computational frame \(\Gamma\), how easy is task \(f\) to describe, discover, execute, and verify?
 
 We can preserve this intuition with a provisional cost profile:
 
 $$
-C_R(f) = \left(L_R(f),\, S_R(f),\, E_R(f),\, V_R(f)\right)
+C_\Gamma(f) = \left(L_\Gamma(f),\, S_\Gamma(f),\, E_\Gamma(f),\, V_\Gamma(f)\right)
 $$
 
 Here:
 
-- \(L_R(f)\) is the length required to describe the task or solution under representation \(R\);
-- \(S_R(f)\) is the cost of searching for a solution;
-- \(E_R(f)\) is the computational cost of executing it;
-- \(V_R(f)\) is the cost of verifying that the result is correct.
+- \(L_\Gamma(f)\) is the length required to describe the task or solution inside this frame;
+- \(S_\Gamma(f)\) is the cost of searching for a solution;
+- \(E_\Gamma(f)\) is the computational cost of executing it;
+- \(V_\Gamma(f)\) is the cost of verifying that the result is correct.
 
-These quantities should not be collapsed too quickly into one score, because a representation redistributes difficulty. One representation may make an answer very short while leaving search almost impossible. Another may execute more slowly but make verification easy. A third may introduce a new primitive that turns a large combinatorial search into one direct, local operation. The meaningful comparison is not only which system is stronger. It is:
+These quantities should not be collapsed too quickly into one score, because computational frames redistribute difficulty. An encoding may make an answer very short while leaving search almost impossible. A tool may execute more slowly but make verification easy. A new primitive may turn a large combinatorial search into one direct, local operation. The meaningful comparison is not only which system is stronger. It is:
 
-> **How does each representation reshape the difficulty structure of a task?**
+> **How do the different parts of a computational frame jointly reshape the difficulty structure of a task?**
 
-A Fourier transform does not enlarge the set of computable functions, but it turns some complicated operations into simple relations. Dynamic programming does not cross a boundary of computability, but it reorganizes repeated search into reusable states. A proof assistant does not create new logical truths, but it turns proofs into objects that can be constructed and checked mechanically. New capability, in other words, does not always come from more parameters, more data, or more computation. Sometimes it comes from a new coordinate system. This may reveal something basic about intelligence:
+A Fourier transform, dynamic programming, and a proof assistant change different parts of this frame. The Fourier transform mainly changes \(R\), the coordinates used for the same class of objects. Dynamic programming changes both the decomposition of state and the search procedure, so it involves \(R\) and \(A\). A proof assistant also changes the available operations \(T\) and the verification mechanism \(J\), and it may even change what counts as a legitimate object in \(O\). Their common feature is not that all three are merely changes of representation. Each reorganizes a computational frame so that a family of problems becomes easier to describe, discover, execute, or verify. New capability therefore does not always come from more parameters, more data, or more computation. It can also come from redesigning the level at which the bottleneck actually lives. This may reveal something basic about intelligence:
 
-> **Intelligence is not only what a system can compute. It is also the ability to find a representation in which important computations become short, natural, discoverable, executable, verifiable, and reusable.**
+> **Intelligence is not only what a system can compute. It also includes the ability to locate whether difficulty lies in ontology, representation, search, tools, or verification, and to reorganize the relevant part of the computational frame.**
 
 ## Algorithms are compressions written in a human ontology
 
 Many formulas, algorithms, and scientific theories can be understood as forms of compression. \(F = ma\) condenses a large family of possible motions into one short relation. Quicksort covers indefinitely many inputs with a simple recursive structure. The minimum description length principle formalizes a related intuition: a good model should minimize the combined complexity of the model and the data described through it. [3] Human-readable algorithms, however, have a special property: **They are not only short. They are written in a conceptual language that fits human cognition.**
 
-Variables, functions, sets, recursion, objects, causality, probability, and proof are not the only coordinate system permitted by the universe. They are abstractions that humans gradually invented through mathematics, logic, and scientific practice. When we call an algorithm interpretable, the path may therefore look like this:
+Variables, functions, sets, recursion, objects, causality, probability, and proof are more than another coordinate system. They form a collection of basic objects, relations, and operations that humans gradually invented through mathematics, logic, and scientific practice. They are part of a human mathematical ontology. When we call an algorithm interpretable, the path may therefore look like this:
 
 $$
 \text{computation} \longrightarrow \text{human mathematical ontology} \longrightarrow \text{understanding}
@@ -74,7 +82,7 @@ It asks only for better performance. The black box may therefore not be empty of
 
 Temperature is not a property of one particle. It becomes a natural object only after many microscopic degrees of freedom have been coarse-grained in the right way. Neural networks may have a similar problem of scale. We often search for explanations at the level of one neuron, one local feature, or one named concept. The model's natural abstractions may instead live in higher-order subspaces, population activity, cross-layer computations, or dynamic trajectories.
 
-Model opacity may therefore contain two different mismatches. The first is an **ontological mismatch**. The objects through which a model organizes computation may not follow familiar human boundaries. The second is a **scale mismatch**. The scale at which we inspect the model may not be the scale at which its abstractions actually emerge. A large model may be computing through a representational system unlike human mathematical ontology, while we have not even found the right resolution at which to observe it.
+Model opacity may therefore contain two different mismatches. The first is an **ontological mismatch**. The objects through which a model organizes computation may not follow familiar human boundaries. The second is a **scale mismatch**. The scale at which we inspect the model may not be the scale at which its abstractions actually emerge. A large model's internal representations may not be organized along the conceptual boundaries of human mathematical ontology, while we have not even found the right resolution at which to observe them.
 
 If so, interpretability should not stop at assigning a human label to an activation. It needs to search for two things:
 
@@ -116,51 +124,51 @@ A structure that requires several human concepts to describe may be one directly
 
 Is it the data, objective, architecture, form of interaction, or the environment in which the system persists?
 
-## Different capabilities may require different abstractions
+## Different capabilities may require different computational frames
 
 The preceding argument suggests something else:
 
-> **There is no best representation independent of a task.**
+> **There is no best computational frame independent of a task, and no representation that is best for every task.**
 
-Primitives that support formal proof may be poor tools for understanding social relationships. A state space suited to molecular dynamics may not support long-horizon planning. A token sequence suited to language generation may not be the best representation for controlling a body. The future of AI may therefore involve more than making one foundation model larger and larger. Knowledge may share a broad base while different capabilities require different memory structures, tools, world models, time scales, training processes, and forms of abstraction. What emerges may not be one unified machine mind, but many substantially different machine ontologies.
+The objects and operations suited to formal proof may be poor tools for understanding social relationships. A state space suited to molecular dynamics may not support long-horizon planning. A token sequence suited to language generation may not be the best representation for controlling a body. More broadly, different capabilities may require different memory structures, search procedures, tools, world models, time scales, and training processes. The future of AI may therefore involve more than making one foundation model larger and larger.
 
-An AI formed around mathematics, one that learns alongside cells and laboratory instruments, and one that acts persistently in the physical world may possess not only different knowledge, but different basic units for dividing reality. Their relationship to present models may be more than that of stronger successors. They may resemble new **cognitive species**. The distinction would not be a matter of appearance. It would concern what counts as a basic object, which regularities are easy to discover, which explanations feel natural, and which questions are worth asking.
+Different computational frames, however, do not automatically imply different ontologies. Two systems may accept the same objects and relations while encoding and searching them differently. Representational divergence becomes ontological divergence only when tasks, bodies, and environments repeatedly push systems toward different basic objects, relations, and intervenable variables. An AI formed around mathematics, one that learns alongside cells and laboratory instruments, and one that acts persistently in the physical world may therefore come to differ not only in knowledge and representation, but in the basic units through which each divides reality. Only at that point does their relationship to present models begin to resemble new **cognitive species** rather than merely stronger successors. The distinction would not be a matter of appearance. It would concern what counts as a basic object, which regularities are easy to discover, which explanations feel natural, and which questions are worth asking.
 
 ## From representation to ontology: how intelligence reshapes a problem space
 
-A representation does more than shorten an answer after it has been found. It changes how a system searches for the answer. When the same problem is expressed differently, the meaning of one small step can change. Candidate solutions that were far apart may become neighbors. Regularities that were hidden may become easy to see. Consider one periodic signal. It can be represented as a long list of sampled values, or through amplitude, frequency, and phase.
+For the moment, hold the ontology \(O\) fixed and consider only the representation \(R\). A representation does more than shorten an answer after it has been found. It changes the geometry through which a system searches for that answer. When the same problem is expressed differently, the meaning of one small step can change. Candidate solutions that were far apart may become neighbors. Regularities that were hidden may become easy to see. Consider one periodic signal. It can be represented as a long list of sampled values, or through amplitude, frequency, and phase.
 
-In the first representation, changing the frequency requires coordinated changes to many values. In the second, it requires changing one variable. The signal is the same, but the geometry of search is not. Search difficulty is therefore not a fixed property of task \(f\). It depends on the task, representation, search procedure, and computational budget together:
+In the first representation, changing the frequency requires coordinated changes to many values. In the second, it requires changing one variable. The signal is the same, but the geometry of search is not. Search difficulty is therefore not a fixed property of task \(f\). It depends on the task and the computational frame together:
 
 $$
-S_R(f; A, B)
+S(f \mid O, R, A, T, B)
 $$
 
-Here \(R\) is the representation, \(A\) is the search procedure, and \(B\) is the available budget. A good abstraction often does not help a system search the old space faster. It reorganizes the space. Solutions that were distant may become local neighbors. A transformation that required many operations may become one direct operation because the new representation treats it as primitive. Many important cognitive transitions work this way. They do not accelerate the old search. They make the old search unnecessary in its previous form.
+Here \(O\) is the ontology, \(R\) is the representation, \(A\) is the search procedure, \(T\) is the set of available operations, and \(B\) is the computational budget. To isolate the contribution of representation, we should compare different choices of \(R\) while holding \(O\), \(A\), \(T\), and \(B\) as fixed as possible. A new representation can make formerly distant solutions become neighbors. A new tool is different because it directly adds an action the system can take. A new ontology goes deeper still by changing what enters the problem in the first place. Many important cognitive transitions do not merely accelerate search in an old space.
 
-Dynamic programming is a simple example. It does not change whether a problem is computable. By introducing states and subproblems, it rewrites repeated search as reusable local structure. A Fourier transform does something similar. It does not create new regularities in a signal. It turns relations that are complicated in the time domain into simpler ones in the frequency domain. Representation is therefore not merely the language used to describe an answer. It also specifies how search happens.
+A Fourier transform is relatively close to a pure change of representation. The signal remains the same while the coordinates and locality change. Dynamic programming is not a pure representational change. It introduces a state decomposition and a recursive procedure for reuse, so it modifies both \(R\) and \(A\). This distinction lets us ask whether an improvement came from a coordinate change, a search algorithm, or a new tool and verifier. Representation itself is not merely the language used to describe an answer. It shapes how search unfolds.
 
-It determines:
+With the ontology held broadly fixed, it affects:
 
-- what counts as a variable;
+- which coordinates or features encode a given object;
 - what counts as a local change;
 - which states are near one another;
-- which structures can be reused;
-- which directions are easy to explore.
+- which regularities appear in linear, sparse, or compositional form;
+- which intermediate results a search procedure can easily reuse.
 
-At this point, a finer distinction becomes important. When we say that a system uses a different representation, we may be referring to changes of very different depths. The first level is **notation**. The underlying objects and relations stay the same. Only the symbols change. Renaming \(x\) as \(z\) usually does not change the problem. The second level is **representation**.
+At this point, a finer distinction becomes important. I will use the following terms consistently through the rest of the essay, but as analytical tools rather than as three perfectly sealed layers. The first is **notation** \(N\). The underlying structure remains unchanged while the symbols differ. Renaming \(x\) as \(z\) usually does not change the problem.
 
-The objects remain broadly similar, but the coordinates, decomposition, and neighborhood relations change. The time and frequency domains describe the same signal, yet some operations are complicated in one and natural in the other. The third level is **ontology**. Now the system changes what counts as an object, relation, relevant factor, or intervenable variable. The three levels affect different things:
+The second is **representation** \(R\). Objects and relations remain broadly stable while their encoding, coordinates, decomposition, and neighborhood relations change. The time and frequency domains describe the same signal, yet some operations are complicated in one and natural in the other. The third is **ontology** \(O\). Now the system changes what counts as an object, relation, factor worth modeling, or variable on which intervention is allowed. The three terms can be summarized this way:
 
 $$
 \begin{aligned}
-\text{notation} &\longrightarrow \text{how something is written} \\
-\text{representation} &\longrightarrow \text{how search happens} \\
-\text{ontology} &\longrightarrow \text{how the world is divided}
+N &: \text{same structure, different symbols} \\
+R &: \text{mostly the same objects, different computational geometry} \\
+O &: \text{different basic objects, relations, or interventions}
 \end{aligned}
 $$
 
-Notation changes expression. Representation changes the geometry of learning and search. Ontology changes the way a system divides the problem itself. Representation asks:
+The boundaries are porous. A representation that repeatedly makes one latent factor stable and operable may eventually encourage us to promote that factor into a new object. Conversely, a high-level ontology may be compiled into a lower-level representation. Abstraction is broader than representation in this essay: it can compress and reorganize existing objects at the level of \(R\), or introduce new basic objects at the level of \(O\). A practical diagnostic is to ask whether a sufficiently faithful, preferably approximately invertible map preserves the objects, relations, questions, and interventions. If it does, the difference is mainly representational. If translation must change what counts as an object, which questions make sense, or which interventions are admissible, the difference has reached the level of ontology. In simplified form, representation asks:
 
 > **How should the same world be organized?**
 
@@ -168,11 +176,11 @@ Ontology asks:
 
 > **What is the world divided into in the first place?**
 
-This makes neural networks more interesting. If the difference between a model and a human remains at the level of representation, then the problem may mainly be one of coordinate transformation. With the right decoder, the model's structure may still map onto concepts that humans already have. If the difference reaches the level of ontology, the problem changes. The model may not be using different coordinates for our objects. It may be deciding differently:
+This makes neural networks more interesting. If the difference between a model and a human is mainly representational, and a sufficiently faithful structure-preserving map exists, then the problem may largely be one of decoding or coordinate transformation. The model's structure may still map onto concepts that humans already have. If every such map loses essential predictive, interventional, or compositional relations, the difference may have reached the level of ontology. The model may not be using different coordinates for our objects. It may be deciding differently:
 
 > **What counts as an object?**
 
-That is where a machine-native ontology becomes a serious possibility. Part of intelligence may therefore consist not in searching a fixed space more powerfully, but in discovering representations that bring distant solutions closer and turn long chains of reasoning into local, natural operations. A deeper intelligence may go further. It may alter the space itself by inventing new basic concepts, deciding that different objects deserve to be represented, and making previously awkward questions natural for the first time. The strongest intelligence may not only find answers faster.
+That is where a machine-native ontology becomes a serious possibility. Part of intelligence may consist in designing a better \(R\) inside a given ontology, bringing distant solutions closer and turning long chains of reasoning into local, natural operations. A deeper intelligence may redesign \(O\) itself by inventing new basic concepts and making previously awkward questions natural for the first time. The strongest intelligence may not only find answers faster.
 
 It may decide again:
 
@@ -210,7 +218,7 @@ Mathematical notation is not natural language, yet it lets people who speak diff
 
 ## Will multiple intelligences diverge or converge?
 
-If tasks, training signals, and forms of interaction shape representation, a larger question follows:
+If tasks, training signals, and forms of interaction first shape different representations, and those differences later stabilize into different basic objects and relations, a larger question follows:
 
 > **Will different kinds of intelligence eventually form different ontologies?**
 
@@ -234,7 +242,7 @@ This also pushes interpretability toward a harder problem. If the future contain
 
 > **How do we understand an intelligence that does not divide the world as humans do?**
 
-The answer may not be to force every machine representation back into our existing concepts. We may first need to discover the basic objects, relations, invariants, and natural scales that remain stable inside the other system. Only then can we decide which parts map onto human concepts and which parts require us to learn something new. The hardest task of future interpretability may not be making machines resemble programs that can be read line by line. It may be:
+The answer may not be to force every kind of machine structure back into our existing concepts. We may first need to determine whether a mismatch lies at the level of representation or ontology, then discover the objects, relations, invariants, and natural scales that remain stable inside the other system. Only then can we distinguish what can be mapped into human concepts through a coordinate transformation from what requires people to learn genuinely new concepts. The hardest task of future interpretability may not be making machines resemble programs that can be read line by line. It may be:
 
 > **Teaching us to understand a cognitive structure unlike our own.**
 
@@ -248,3 +256,4 @@ Perhaps the black box was never without a language. Perhaps it speaks one we hav
 - [4] [Geiger et al., *Causal Abstraction for Faithful Model Interpretation* (2023)](https://arxiv.org/abs/2301.04709)
 - [5] [Kuhn, *The Structure of Scientific Revolutions* (1962)](https://press.uchicago.edu/ucp/books/book/chicago/S/bo13179781.html)
 - [6] [Kottur et al., *Natural Language Does Not Emerge Naturally in Multi-Agent Dialog* (2017)](https://aclanthology.org/D17-1321/)
+- [7] [Marr, *From Computational Theory to Psychology and Neurophysiology: A Case Study from Vision* (1976)](https://dspace.mit.edu/handle/1721.1/41959)
