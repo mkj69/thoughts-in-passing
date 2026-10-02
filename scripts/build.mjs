@@ -12,12 +12,13 @@ const translationsBySlug = new Map();
 
 if (fs.existsSync(translationsDirectory)) {
   for (const file of fs.readdirSync(translationsDirectory).filter((name) => name.endsWith(".md")).sort()) {
-    const { body, slug, language, title, excerpt } = parseThought(path.join(translationsDirectory, file));
+    const { body, slug, language, title, excerpt, tags } = parseThought(path.join(translationsDirectory, file));
     const translations = translationsBySlug.get(slug) || {};
     translations[language] = {
       language,
       title,
       excerpt,
+      ...(Array.isArray(tags) ? { tags } : {}),
       html: markdownToHtml(body),
       text: plainText(body),
     };

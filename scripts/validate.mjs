@@ -39,6 +39,9 @@ for (const translation of translations) {
   if (!slugs.has(translation.slug)) errors.push(`${translation.sourceFile}: source slug does not exist: ${translation.slug}`);
   if ((translation.title || "").length > 120) errors.push(`${translation.sourceFile}: title exceeds 120 characters`);
   if ((translation.excerpt || "").length > 280) errors.push(`${translation.sourceFile}: excerpt exceeds 280 characters`);
+  if ("tags" in translation && (!Array.isArray(translation.tags) || !translation.tags.length)) {
+    errors.push(`${translation.sourceFile}: tags must be a non-empty array when provided`);
+  }
   const key = `${translation.slug}:${translation.language}`;
   if (translationKeys.has(key)) errors.push(`${translation.sourceFile}: duplicate translation ${key}`);
   translationKeys.add(key);

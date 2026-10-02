@@ -2,6 +2,7 @@
 title: "When Machines Begin to Reinvent Their Own Concepts"
 slug: "when-machines-reinvent-their-own-concepts"
 language: "en"
+tags: [recursive-self-improvement, machine-ontology, abstraction, interpretability]
 excerpt: "Deep recursive self-improvement may not mean searching faster inside one problem space. It may mean rewriting the representations, basic objects, and methods of concept formation through which the machine thinks."
 ---
 

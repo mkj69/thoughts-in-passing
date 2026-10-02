@@ -1,5 +1,8 @@
 const maturityOrder = ["seed", "sketch", "evolving", "essay"];
-const dateFormatter = new Intl.DateTimeFormat("en", { year: "numeric", month: "short", day: "numeric" });
+const dateFormatters = {
+  en: new Intl.DateTimeFormat("en", { year: "numeric", month: "short", day: "numeric" }),
+  zh: new Intl.DateTimeFormat("zh-CN", { year: "numeric", month: "long", day: "numeric" }),
+};
 
 const state = {
   thoughts: [],
@@ -20,12 +23,21 @@ const elements = {
   thoughtView: document.querySelector("#thought-view"),
   article: document.querySelector("#thought-article"),
   related: document.querySelector("#related-list"),
+  relatedHeading: document.querySelector("#related-heading"),
   backlinks: document.querySelector("#backlinks-list"),
+  backlinksHeading: document.querySelector("#backlinks-heading"),
   back: document.querySelector("#back-to-stream"),
 };
 
-function formatDate(date) {
-  return dateFormatter.format(new Date(`${date}T12:00:00`));
+function formatDate(date, language = "en") {
+  return (dateFormatters[language] || dateFormatters.en).format(new Date(`${date}T12:00:00`));
+}
+
+function maturityLabel(maturity, language = "en") {
+  const labels = {
+    zh: { seed: "种子", sketch: "草图", evolving: "持续完善", essay: "文章" },
+  };
+  return labels[language]?.[maturity] || maturity;
 }
 
 function thoughtVersions(thought) {
@@ -35,11 +47,16 @@ function thoughtVersions(thought) {
       language: baseLanguage,
       title: thought.title,
       excerpt: thought.excerpt,
+      tags: thought.tags,
       html: thought.html,
       text: thought.text,
     },
     ...(thought.translations || {}),
   };
+}
+
+function thoughtTags(thought, language = preferredLanguage(thought)) {
+  return thoughtVersion(thought, language).tags || thought.tags;
 }
 
 function preferredLanguage(thought) {
@@ -96,7 +113,8 @@ function renderFilters() {
   maturityOrder.forEach((maturity) => elements.maturityOptions.append(makeButton(maturity, maturity, "maturity")));
 
   const counts = state.thoughts.reduce((result, thought) => {
-    thought.tags.forEach((tag) => { result[tag] = (result[tag] || 0) + 1; });
+    thoughtTags(thought, thought.defaultLanguage || thought.language || "en")
+      .forEach((tag) => { result[tag] = (result[tag] || 0) + 1; });
     return result;
   }, {});
   elements.tagOptions.replaceChildren();
@@ -113,10 +131,12 @@ function filteredThoughts() {
   const query = state.query.toLowerCase().trim();
   return state.thoughts.filter((thought) => {
     const matchesMaturity = state.maturity === "all" || thought.maturity === state.maturity;
-    const matchesTag = state.tag === "all" || thought.tags.includes(state.tag);
+    const defaultTags = thoughtTags(thought, thought.defaultLanguage || thought.language || "en");
+    const matchesTag = state.tag === "all" || defaultTags.includes(state.tag);
     const versions = Object.values(thoughtVersions(thought));
     const multilingualText = versions.map((version) => `${version.title} ${version.excerpt} ${version.text}`).join(" ");
-    const haystack = `${multilingualText} ${thought.tags.join(" ")}`.toLowerCase();
+    const multilingualTags = versions.flatMap((version) => version.tags || thought.tags).join(" ");
+    const haystack = `${multilingualText} ${multilingualTags}`.toLowerCase();
     return matchesMaturity && matchesTag && (!query || haystack.includes(query));
   });
 }
@@ -135,8 +155,9 @@ function openThought(slug, options = {}) {
   elements.article.lang = activeLanguage;
   document.documentElement.lang = activeLanguage;
   document.title = `${version.title} | Thoughts, in Passing`;
+  elements.back.textContent = activeLanguage === "zh" ? "← 返回想法流" : "← Back to the stream";
 
-  const tags = thought.tags.map((tag) => `<li>${escapeHtml(tag)}</li>`).join("");
+  const tags = thoughtTags(thought, activeLanguage).map((tag) => `<li>${escapeHtml(tag)}</li>`).join("");
   const languageOptions = Object.keys(versions);
   const languageSwitcher = languageOptions.length > 1
     ? `<div class="article-language-switch" role="group" aria-label="Article language">${languageOptions
@@ -147,8 +168,8 @@ function openThought(slug, options = {}) {
   elements.article.innerHTML = `
     <header>
       <div class="article-meta">
-        <time datetime="${thought.date}">${formatDate(thought.date)}</time>
-        <span class="maturity-badge">${escapeHtml(thought.maturity)}</span>
+        <time datetime="${thought.date}">${formatDate(thought.date, activeLanguage)}</time>
+        <span class="maturity-badge">${escapeHtml(maturityLabel(thought.maturity, activeLanguage))}</span>
         ${thought.placeholder ? '<span class="placeholder-badge">placeholder</span>' : ""}
       </div>
       ${languageSwitcher}
@@ -178,7 +199,7 @@ function openThought(slug, options = {}) {
       openThought(slug, { updateHash: false, language, preserveScroll: true });
     });
   });
-  renderConnections(thought);
+  renderConnections(thought, activeLanguage);
   if (!options.preserveScroll) window.scrollTo({ top: 0, behavior: options.instant ? "auto" : "smooth" });
 }
 
@@ -192,22 +213,25 @@ function closeThought(options = {}) {
   if (!options.instant) document.querySelector("#stream").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-function connectionMarkup(slugs, emptyMessage) {
+function connectionMarkup(slugs, emptyMessage, language) {
   if (!slugs.length) return `<p class="connection-empty">${escapeHtml(emptyMessage)}</p>`;
   return slugs.map((slug) => {
     const thought = state.thoughts.find((item) => item.slug === slug);
     if (!thought) return "";
-    const version = thoughtVersion(thought, thought.defaultLanguage || thought.language || "en");
-    return `<a class="connection-link" href="#thought/${encodeURIComponent(slug)}"><span>${escapeHtml(version.title)}</span><small>${escapeHtml(thought.maturity)} →</small></a>`;
+    const version = thoughtVersion(thought, language);
+    return `<a class="connection-link" href="#thought/${encodeURIComponent(slug)}"><span>${escapeHtml(version.title)}</span><small>${escapeHtml(maturityLabel(thought.maturity, language))} →</small></a>`;
   }).join("");
 }
 
-function renderConnections(thought) {
+function renderConnections(thought, language = "en") {
   const backlinks = state.thoughts
     .filter((candidate) => candidate.related.includes(thought.slug))
     .map((candidate) => candidate.slug);
-  elements.related.innerHTML = connectionMarkup(thought.related, "No related thoughts yet.");
-  elements.backlinks.innerHTML = connectionMarkup(backlinks, "No thoughts point back here yet.");
+  const isChinese = language === "zh";
+  elements.relatedHeading.textContent = isChinese ? "相关想法" : "Related thoughts";
+  elements.backlinksHeading.textContent = isChinese ? "反向链接" : "Backlinks";
+  elements.related.innerHTML = connectionMarkup(thought.related, isChinese ? "还没有相关想法。" : "No related thoughts yet.", language);
+  elements.backlinks.innerHTML = connectionMarkup(backlinks, isChinese ? "还没有其他想法链接到这里。" : "No thoughts point back here yet.", language);
 }
 
 function renderStream() {
@@ -238,7 +262,7 @@ function renderStream() {
     titleButton.addEventListener("click", () => openThought(thought.slug));
     card.querySelector(".excerpt").textContent = version.excerpt;
     const tags = card.querySelector(".card-tags");
-    thought.tags.forEach((tag) => {
+    (version.tags || thought.tags).forEach((tag) => {
       const item = document.createElement("li");
       item.textContent = tag;
       tags.append(item);
