@@ -2,322 +2,473 @@
 title: "Intelligence in a Language We Do Not Yet Understand"
 slug: "intelligence-in-an-unknown-language"
 language: "en"
-excerpt: "Large models may not lack abstraction. They may be compressing the world in a conceptual language unlike our mathematical ontology. Interpretability may need to discover that machine-native language before translating it for us."
+excerpt: "Programs are written inside conceptual systems invented by humans, while neural networks form their own internal representations through optimization. Their opacity may come not only from computational complexity, but from a mismatch of representation, ontology, and scale."
 ---
 
-> The inside of a model may not be chaotic. Its regularities may simply be written in a language we have not yet learned.
+> The regularities inside a model may be written in a language we have not yet learned.
 
 I increasingly suspect that discussions of intelligence collapse several different questions into one: **knowledge, capability, abstraction, computability, and understandability.**
 
-Large models create a powerful intuition. If we keep adding parameters, data, and inference time, perhaps a unified superintelligence will eventually become good at everything. Hidden inside that picture is an equation that deserves more scrutiny: if knowledge can be unified inside one model, then capability should become unified too.
+Large models invite a seductive picture of unified intelligence. Keep adding parameters, data, and inference time, and perhaps we will eventually obtain one system capable of solving every problem.
 
-I am not sure that follows.
+Yet no matter how large a model becomes, it is still a computational process. Whether a problem can be solved depends first on whether some computational process can represent and solve it. It does not depend only on how many parameters the model has, how much data it has seen, or how long it is allowed to think.
 
-## Knowledge may share a foundation while capability remains representation-dependent
+There is a hidden leap here. Because more and more knowledge can be compressed into one model, we begin to assume that more and more capabilities can be unified as well. We may even start to treat every problem as something that will eventually yield to more computation.
 
-The public record of human knowledge is unusually suited to broad, lossy statistical compression. Books, papers, webpages, code, and conversations have different structures, but each can become training signal. A foundation model is defined by this broad training and its adaptability across many downstream tasks. [Bommasani et al., 2021](https://arxiv.org/abs/2108.07258)
+But these are three different claims: that knowledge can share a representation, that capabilities can share an implementation, and that a problem is computationally solvable in the first place.
 
-Capability, however, is not merely a question of whether relevant information exists somewhere in the parameters. It also depends on whether a task is easy to express, search, execute, and verify inside the current system.
+The deeper question may not be how universal a model can become. It may be:
 
-Python, SQL, Lean, and assembly can all describe complex computations, but they offer different primitives. SQL exposes relations, selection, and joins. Lean exposes propositions, types, and proof obligations. A coding agent's repository browser, shell, filesystem, test runner, and patch tool transform the vague intention to fix a bug into a sequence of executable operations.
+> **How much of the capability space can one computational paradigm cover? What determines its boundary? When we reach that boundary, what new structures, representations, and ways of interacting with the world will be required?**
 
-Matthias Felleisen's classic treatment of programming-language expressiveness separates two ideas that are often confused. Two languages may compute the same functions in principle, while a construct in one language still cannot be expressed locally and naturally in the other without reorganizing the whole program. [Felleisen, 1991](https://www.sciencedirect.com/science/article/pii/016764239190036W)
+## Knowledge can share a foundation while capability depends on representation
 
-The central question about capability may therefore be more than:
+One of the most fascinating things about foundation models is that they seem to demonstrate how much heterogeneous knowledge can fit inside one shared base.
 
-> Can this system, in principle, complete task f?
+Books, papers, webpages, code, and conversations have very different structures, yet all can become training signals and flow into one set of parameters. In a sense, this is the central promise of a foundation model: train one broad base, then adapt it across many downstream tasks. [1]
 
-A more useful question is:
+But there is an easy mistake to make:
 
-> Under representation R, how easy is task f to describe, discover, execute, and verify?
+> **Knowledge can share a foundation without every capability naturally sharing the same representation.**
 
-As provisional notation rather than an established metric, it is better to treat these costs as a profile than to add quantities with different units:
+Whether a system knows something is not the same as whether it can perform a task efficiently.
 
-> C_R(f) := (L_R(f), S_R(f), E_R(f), V_R(f))
+Capability depends not only on whether relevant information exists somewhere in the parameters. It also depends on whether a task is easy to **represent, search, execute, and verify** within the current system.
 
-Here L is description length, S is the cost of searching for a solution, E is execution cost, and V is verification cost. One representation may shorten the answer while making verification harder. Another may execute slowly while making proof easier. The important question is how a representation redistributes these difficulties, not whether they can be collapsed into one elegant score.
+Programming languages make this especially clear.
 
-This may be part of the geometry of intelligence. Intelligence is not only a set of possible computations. It is also a structure that determines **which computations become short, natural, discoverable, and reusable.**
+Many languages can support complex computation, but they do not offer the same basic operations. A database language makes relations, filtering, and joins primitive. A proof language gives direct access to propositions, types, and proof goals. A coding agent with a repository browser, shell, filesystem, tests, and patch tools turns the vague intention to fix a bug into a sequence of local, executable, and checkable operations.
+
+The important difference is not simply what these systems can compute. It is:
+
+> **Which computations become natural under this representation?**
+
+Classic work on programming-language expressiveness already makes this distinction. Two languages may compute the same functions in principle while a construct in one still cannot be expressed locally and naturally in the other without reorganizing the whole program. [2]
+
+For an intelligent system, a more useful question is therefore not:
+
+> Can this system complete task *f* in principle?
+
+It is:
+
+> Under representation *R*, how easy is task *f* to describe, discover, execute, and verify?
+
+We can preserve this intuition with a provisional cost profile:
+
+> C_R(f) = (L_R(f), S_R(f), E_R(f), V_R(f))
+
+Here:
+
+- L_R(f) is the length required to describe the task or solution under representation *R*;
+- S_R(f) is the cost of searching for a solution;
+- E_R(f) is the computational cost of executing it;
+- V_R(f) is the cost of verifying that the result is correct.
+
+These quantities should not be collapsed too quickly into one score, because a representation redistributes difficulty.
+
+One representation may make an answer very short while leaving search almost impossible. Another may execute more slowly but make verification easy. A third may introduce a new primitive that turns a large combinatorial search into one direct, local operation.
+
+The meaningful comparison is not only which system is stronger. It is:
+
+> **How does each representation reshape the difficulty structure of a task?**
+
+A Fourier transform does not enlarge the set of computable functions, but it turns some complicated operations into simple relations. Dynamic programming does not cross a boundary of computability, but it reorganizes repeated search into reusable states. A proof assistant does not create new logical truths, but it turns proofs into objects that can be constructed and checked mechanically.
+
+New capability, in other words, does not always come from more parameters, more data, or more computation.
+
+Sometimes it comes from a new coordinate system.
+
+This may reveal something basic about intelligence:
+
+> **Intelligence is not only what a system can compute. It is also the ability to find a representation in which important computations become short, natural, discoverable, executable, verifiable, and reusable.**
 
 ## Algorithms are compressions written in a human ontology
 
-Many formulas, algorithms, and scientific theories can be understood as forms of compression. F = ma summarizes a large family of possible motions. The central structure of quicksort covers indefinitely many concrete inputs. Rissanen's minimum description length principle turns a related intuition into a criterion for statistical modeling: a good model should minimize the combined description of the model and the data encoded through it. [Rissanen, 1978](https://www.sciencedirect.com/science/article/pii/0005109878900055)
+Many formulas, algorithms, and scientific theories can be understood as forms of compression.
 
-Human-readable algorithms have a special property. They are not merely short. They are written in a conceptual language closely matched to human cognition. Variables, functions, sets, recursion, objects, causality, probability, and proof are not the only coordinate system the universe permits. They are abstractions that humans gradually constructed through mathematics, logic, and scientific practice.
+*F = ma* condenses a large family of possible motions into one short relation. Quicksort covers indefinitely many inputs with a simple recursive structure. The minimum description length principle formalizes a related intuition: a good model should minimize the combined complexity of the model and the data described through it. [3]
 
-When we call an algorithm interpretable, the actual path may look like this:
+Human-readable algorithms, however, have a special property:
+
+**They are not only short. They are written in a conceptual language that fits human cognition.**
+
+Variables, functions, sets, recursion, objects, causality, probability, and proof are not the only coordinate system permitted by the universe.
+
+They are abstractions that humans gradually invented through mathematics, logic, and scientific practice.
+
+When we call an algorithm interpretable, the path may therefore look like this:
 
 > computation → human mathematical ontology → understanding
 
-We understand it not only because the program is short, but because it has already been translated into primitives we know how to think with.
+An algorithm is understandable not only because it is concise, but because it has already been expressed through primitives we know how to think with.
+
+The algorithm has not merely performed a computation.
+
+It has already performed part of the translation for us.
 
 ## A model also compresses, but it is not required to use our concepts
 
-A neural network also performs a kind of compression. Statistical structure in the training data becomes embedded in parameters and activations. Yet the optimization objective never asks the model to organize regularities through concepts such as variable, object, recursion, deception, or cause. It asks for lower loss.
+Neural networks compress too.
 
-That permits a stronger hypothesis:
+Recurring statistical structure in the training data becomes absorbed into parameters, activations, and intermediate representations. A capable model must form internal structure that supports prediction, generation, and reasoning. Otherwise, it could not generalize across such varied inputs.
 
-> The model may not lack abstraction. Its abstractions may be heterogeneous with ours.
+The crucial point is that the training objective never asks this structure to follow familiar human conceptual boundaries.
 
-The black-box problem may not be a simple absence of structure. The model may contain structure whose primitives are missing from our vocabulary.
+The objective does not require the model to form the internal objects we would have chosen.
 
-Imagine a geometric object that has a one-line equation in the right coordinates. After a complicated nonlinear change of coordinates, the same object can look hopelessly irregular. Some apparent neural complexity may likewise be coordinate complexity rather than intrinsic complexity.
+It asks only for better performance.
 
-A model might contain latent objects that are extremely natural for prediction but have never been named by humans. A single object could combine what we separately call syntax, semantics, causal structure, social relation, and uncertainty. Those belong to different disciplines for us. For the model, they may form one primitive.
+The black box may therefore not be empty of structure. Structure may be present while its basic units fail to match the ontology humans already possess.
 
-This does not imply that a clean secret science already exists inside every model. It makes a narrower point. Failure to find a human-readable label is not logically equivalent to absence of abstraction.
+There is a further possibility. The structure may become visible only at the right scale.
 
-## But an LLM is not a completely unfamiliar intelligence
+Physics offers many examples of this. At the microscopic level we find particles and local interactions. At the macroscopic level, variables such as temperature, pressure, and phase transitions appear.
 
-There is a strong objection that deserves a direct answer. An LLM learns mainly from language written by humans. Text has already been filtered through human concepts, and the training objective asks the model to keep producing tokens that people can understand. Compared with AlphaZero, which learns primarily through self-play, a language model is much more tightly constrained by a human ontology.
+Temperature is not a property of one particle.
 
-A completely heterogeneous ontology should therefore not be the default assumption for an LLM. A narrower and more plausible claim is that the model's inputs and outputs largely belong to human language, while the internal computational factorization that produces them need not reproduce human conceptual boundaries.
+It becomes a natural object only after many microscopic degrees of freedom have been coarse-grained in the right way.
 
-A compiler offers a useful analogy. It accepts programs written for humans and produces results that satisfy human specifications, while its intermediate representation may merge, split, or rearrange the high-level objects visible in the source. Likewise, a model can use irony or deception fluently without storing one clean and fixed internal object for each word.
+Neural networks may have a similar problem of scale.
 
-The possibility of divergence grows as we move away from text. A scientific model trained mainly on experimental data, an agent that learns through self-play, or an embodied AI acting over long periods may discover divisions that human language never needed. The interesting question is not whether a model has an alien language. It is **which training conditions pull machine representations toward human ones, and which conditions make them branch.**
+We often search for explanations at the level of one neuron, one local feature, or one named concept. The model's natural abstractions may instead live in higher-order subspaces, population activity, cross-layer computations, or dynamic trajectories.
 
-## From Chinese to English: translation is not word substitution
+Model opacity may therefore contain two different mismatches.
 
-As a native Chinese speaker learning English, it is easy at first to imagine the task as finding corresponding words. 狗 becomes dog, 桌子 becomes table, and the words are rearranged into a new order. The real difficulty quickly appears outside vocabulary.
+The first is an **ontological mismatch**. The objects through which a model organizes computation may not follow familiar human boundaries.
 
-Chinese and English do not always require speakers to make the same information explicit. Chinese can rely heavily on context, omit an already established subject, and frequently organize sentences around a topic. English more often requires the subject, tense, articles, and syntactic roles to appear in the surface form. Research on Chinese learners of English has observed the transfer of topic-prominent structures from Chinese into English, with that influence changing across the learning process. [Gong, 2019](https://www.benjamins.com/catalog/jsls.17016.gon)
+The second is a **scale mismatch**. The scale at which we inspect the model may not be the scale at which its abstractions actually emerge.
 
-Translating “这件事，我昨天已经处理好了” is therefore not a matter of moving each fragment into a fixed slot. The translator must reconstruct who becomes the grammatical subject, which information must be encoded explicitly, and which structure feels like a natural thought in the target language.
+A large model may be computing through a representational system unlike human mathematical ontology, while we have not even found the right resolution at which to observe it.
 
-This does not mean that a language determines which concepts its speakers can think. A more careful claim is that different languages ask speakers to attend to different information at the moment of speaking. Slobin calls this process **thinking for speaking**. When experience is organized into speakable form, grammar influences which features must be selected and encoded. [Slobin, 1987](https://spot.colorado.edu/~michaeli/courses/LAM5430/5430e_reserves/Thinking_for_Speaking.pdf)
+If so, interpretability should not stop at assigning a human label to an activation.
 
-Fluency is therefore not possession of a larger Chinese-English dictionary. It is the ability to reconstruct the same scene under two representational systems. Translation is not substitution. It is representation change.
+It needs to search for two things:
+
+> **The model's native conceptual structure, and the natural scale at which that structure appears.**
+
+## Language models have not escaped the human ontology
+
+The idea of a machine-native ontology can easily be made too strong.
+
+Today's language models did not grow up in a world independent of human concepts.
+
+Their main material is language written by people.
+
+Natural language already carries structures selected through long cultural, scientific, and social practice. We speak of objects, causes, promises, deception, functions, and proofs. These concepts appear throughout the training data and shape the language that a model must predict and generate.
+
+An LLM's internal representation is therefore unlikely to escape human ontology completely.
+
+But one distinction matters:
+
+> **A human semantic interface does not require a human internal decomposition.**
+
+The model must receive and produce human language, so some alignment with our conceptual system is unavoidable.
+
+It can still implement that semantic behavior through a very different decomposition.
+
+One human concept may split across several distributed variables. Several concepts that seem independent to us may share one set of underlying structures inside the model.
+
+A compiler provides a useful analogy.
+
+Loops, variables, and functions are high-level abstractions designed for humans. After optimization, an intermediate representation may unroll the loop, eliminate the variable, fuse operations, and completely alter the original module boundaries.
+
+The final program still satisfies the same goal without preserving the source code's conceptual decomposition.
+
+A language model may work in a similar way.
+
+It can use irony, deception, or causality fluently without containing one sharply bounded and permanently located object for each word.
+
+The relevant structure may be distributed, dependent on context, or stable only within a higher-level dynamic process.
+
+The better question is not:
+
+> Does an LLM possess an ontology completely independent of ours?
+
+It is:
+
+> **Under the strong semantic constraint of human language, how much representational freedom remains inside the model?**
+
+Which structures converge toward human concepts because of language supervision?
+
+Which structures are still reorganized in a way that is more natural for the machine?
+
+Which concepts are aligned only at the output, and which correspond to stable internal computations?
+
+## When will a machine form an ontology of its own?
+
+If language models remain constrained by the semantic interface of human language, a natural question follows:
+
+> **What happens as that constraint weakens?**
+
+The question may matter even more outside pure language models.
+
+A system that learns primarily from experimental measurements rather than human prose does not need to begin with our existing divisions. It may form latent variables that are highly natural for prediction but have never received separate human names.
+
+An agent that learns mainly through self-play may build representations for planning, strategy, and long-term credit assignment rather than for verbal expression.
+
+An embodied system acting in the physical world may discover state variables that are indispensable for control but do not correspond to any existing word.
+
+A structure that requires several human concepts to describe may be one directly usable object for the machine.
+
+As training shifts from imitating human text toward predicting the world, optimizing long-term reward, manipulating an environment, and performing experiments, the relation between machine and human representations may change systematically.
+
+Some human concepts may have stable counterparts inside a model. Some may split into several structures. Others that humans treat as separate may share one representation. Important machine-native abstractions may have no natural human names at all.
+
+The real question is:
+
+> **What determines convergence and divergence between machine and human representations?**
+
+Is it the data, objective, architecture, form of interaction, or the environment in which the system persists?
 
 ## Different capabilities may require different abstractions
 
-The capability profile introduced earlier suggests something else: there is no best representation apart from a task. Primitives suited to formal proof may be poor tools for understanding social relationships. A state space suited to molecular dynamics may not support long-horizon planning. A token sequence suited to language generation may not be the best representation for controlling a body.
+The preceding argument suggests something else:
 
-The future of AI may therefore involve more than scaling one foundation model indefinitely. Knowledge may share a broad foundation, while different capabilities require different forms of memory, tools, world models, time scales, training loops, and abstraction.
+> **There is no best representation independent of a task.**
 
-What emerges may not be one unified machine mind but many substantially different machine ontologies. An AI formed around mathematics, an AI that learns alongside cells and laboratories, and an AI that acts persistently in the physical world may possess not only different knowledge but different primitives for dividing reality.
+Primitives that support formal proof may be poor tools for understanding social relationships. A state space suited to molecular dynamics may not support long-horizon planning. A token sequence suited to language generation may not be the best representation for controlling a body.
 
-Their relationship to current models might be more than that of stronger successors. They may resemble new **cognitive species**, distinguished not by appearance but by what counts as primitive, which regularities are easy to discover, and which explanations feel natural inside them.
+The future of AI may therefore involve more than making one foundation model larger and larger.
 
-## A representation does not only compress answers. It shapes the search space
+Knowledge may share a broad base while different capabilities require different memory structures, tools, world models, time scales, training processes, and forms of abstraction.
 
-The argument can go one step further. A representation does not merely make an answer shorter after it has been found. It changes which candidate answers are close to one another, what counts as a single modification, and where a search process can move easily.
+What emerges may not be one unified machine mind, but many substantially different machine ontologies.
 
-Consider the same periodic pattern represented first as a list of sampled values and then through amplitude, frequency, and phase. Changing the frequency may require coordinated edits across many samples in the first representation. In the second, it requires changing one variable. Both representations describe the same signal, but they create entirely different neighborhoods for learning and reasoning.
+An AI formed around mathematics, one that learns alongside cells and laboratory instruments, and one that acts persistently in the physical world may possess not only different knowledge, but different basic units for dividing reality.
 
-Search cost should therefore be written more carefully as:
+Their relationship to present models may be more than that of stronger successors.
+
+They may resemble new **cognitive species**.
+
+The distinction would not be a matter of appearance. It would concern what counts as a basic object, which regularities are easy to discover, which explanations feel natural, and which questions are worth asking.
+
+## From representation to ontology: how intelligence reshapes a problem space
+
+A representation does more than shorten an answer after it has been found.
+
+It changes how a system searches for the answer.
+
+When the same problem is expressed differently, the meaning of one small step can change. Candidate solutions that were far apart may become neighbors. Regularities that were hidden may become easy to see.
+
+Consider one periodic signal. It can be represented as a long list of sampled values, or through amplitude, frequency, and phase.
+
+In the first representation, changing the frequency requires coordinated changes to many values. In the second, it requires changing one variable.
+
+The signal is the same, but the geometry of search is not.
+
+Search difficulty is therefore not a fixed property of task *f*. It depends on the task, representation, search procedure, and computational budget together:
 
 > S_R(f; A, B)
 
-It depends not only on task f and representation R, but also on search algorithm A and available budget B. A powerful abstraction moves solutions that were previously far apart into the same local neighborhood, allowing a finite agent to reach them through a small number of transformations.
+Here *R* is the representation, *A* is the search procedure, and *B* is the available budget.
 
-Information geometry offers a concrete warning. Under ordinary gradient descent, the apparent steepest direction depends on the parameter coordinates. Amari's natural gradient uses Fisher geometry so that an update reflects the local structure of the model distribution rather than an arbitrary parameterization. [Amari, 1998](https://direct.mit.edu/neco/article/10/2/251/6143/Natural-Gradient-Works-Efficiently-in-Learning) This does not prove that every cognitive representation problem reduces to optimization geometry. It does demonstrate a crucial point: coordinates do more than explain a result after the fact. They can alter the trajectory of learning.
+A good abstraction often does not help a system search the old space faster. It reorganizes the space.
 
-It helps to separate three levels:
+Solutions that were distant may become local neighbors. A transformation that required many operations may become one direct operation because the new representation treats it as primitive.
 
-- **Notation:** the primitives remain largely the same while their surface symbols change.
-- **Representation:** the objects remain similar, but their coordinates, decomposition, and neighborhood relations change.
-- **Ontology:** the system changes what counts as an object, relation, cause, or intervenable variable.
+Many important cognitive transitions work this way. They do not accelerate the old search. They make the old search unnecessary in its previous form.
 
-Differences between Chinese and English usually live mainly in the first two levels. The contrast between Python and SQL reaches more deeply into the second. The gap between a machine-native cognitive system and a human may extend into the third.
+Dynamic programming is a simple example. It does not change whether a problem is computable. By introducing states and subproblems, it rewrites repeated search as reusable local structure.
 
-Intelligent systems rarely solve only one isolated task. They repeatedly operate over a distribution of problems, while a representation itself has a cost to construct, learn, and maintain. A powerful abstraction can be expensive at first, yet that cost is amortized when it shortens description, search, execution, or verification across an entire family of tasks.
+A Fourier transform does something similar. It does not create new regularities in a signal. It turns relations that are complicated in the time domain into simpler ones in the frequency domain.
 
-The no-free-lunch results of Wolpert and Macready show that, under a particular averaging over all possible objective functions, no optimizer is unconditionally superior to every other one. [Wolpert & Macready, 1997](https://faculty.cc.gatech.edu/~isbell/reading/papers/nfl-optimization.pdf) This does not mean that every method performs equally in the real world. It means that an advantage must come from assumptions about the problem distribution. Representation is where many of those assumptions enter the system. It discards some distinctions, amplifies others, and bets that future tasks will repeat a particular structure.
+Representation is therefore not merely the language used to describe an answer.
+
+It also specifies how search happens.
+
+It determines:
+
+- what counts as a variable;
+- what counts as a local change;
+- which states are near one another;
+- which structures can be reused;
+- which directions are easy to explore.
+
+At this point, a finer distinction becomes important. When we say that a system uses a different representation, we may be referring to changes of very different depths.
+
+The first level is **notation**.
+
+The underlying objects and relations stay the same. Only the symbols change. Renaming *x* as *z* usually does not change the problem.
+
+The second level is **representation**.
+
+The objects remain broadly similar, but the coordinates, decomposition, and neighborhood relations change. The time and frequency domains describe the same signal, yet some operations are complicated in one and natural in the other.
+
+The third level is **ontology**.
+
+Now the system changes what counts as an object, relation, relevant factor, or intervenable variable.
+
+The three levels affect different things:
+
+> notation → how something is written
+
+> representation → how search happens
+
+> ontology → how the world is divided
+
+Notation changes expression. Representation changes the geometry of learning and search. Ontology changes the way a system divides the problem itself.
+
+Representation asks:
+
+> **How should the same world be organized?**
+
+Ontology asks:
+
+> **What is the world divided into in the first place?**
+
+This makes neural networks more interesting.
+
+If the difference between a model and a human remains at the level of representation, then the problem may mainly be one of coordinate transformation. With the right decoder, the model's structure may still map onto concepts that humans already have.
+
+If the difference reaches the level of ontology, the problem changes.
+
+The model may not be using different coordinates for our objects. It may be deciding differently:
+
+> **What counts as an object?**
+
+That is where a machine-native ontology becomes a serious possibility.
+
+Part of intelligence may therefore consist not in searching a fixed space more powerfully, but in discovering representations that bring distant solutions closer and turn long chains of reasoning into local, natural operations.
+
+A deeper intelligence may go further. It may alter the space itself by inventing new basic concepts, deciding that different objects deserve to be represented, and making previously awkward questions natural for the first time.
+
+The strongest intelligence may not only find answers faster.
+
+It may decide again:
+
+> **In which space should the answer be sought?**
 
 ## We may need a translator between humans and AI
 
-If humans and different AIs use different ontologies, interpretability cannot stop at attaching English labels to activations. We may need a bidirectional conceptual compiler:
+If humans and machines eventually form different ontologies, interpretability cannot mean only attaching a human label to an internal state.
 
-> human intention ↔ translator ↔ machine ontology
+We may need a bidirectional conceptual translation layer:
 
-It would translate a human question into a representation that an AI can search naturally, then translate the discovered structure back into concepts that humans can inspect, contest, and act upon. It would also need to state what was lost in translation instead of merely producing a plausible explanation.
+> human intention ↔ translation layer ↔ machine ontology
 
-The future may require more than human-to-AI translation. Different AIs may need translators between one another:
+In one direction, it would turn a human question into a form that the machine can naturally represent and search. In the other, it would return a machine discovery to a conceptual space where people can inspect, debate, and act on it.
 
-> O_human ↔ O_math-AI ↔ O_biology-AI ↔ O_embodied-AI
+The hard question is not simply whether translation is possible. It is:
 
-Multilingual machine translation has already explored interlingua-like representations that allow different languages to communicate through a shared latent space. [Lu et al., 2018](https://arxiv.org/abs/1804.08198) The interlingua imagined here would go deeper. It would connect not Chinese and English sentences, but the primitives through which different cognitive systems construct concepts, evidence, and causal relations.
+> **What should a translation preserve?**
 
-The difficult question is what a translation should preserve.
+A mapping may preserve prediction but not explanation, correlation but not intervention, or short-term action but not long-term value.
 
-A mapping may preserve prediction but not explanation, correlation but not intervention, or short-term action but not long-term value. If a machine concept m is translated into a human concept h, textual similarity is not enough. We should ask whether operational relations survive the mapping:
+A good translation cannot require only that two concepts sound similar.
 
-> T(Intervene_M(m, a)) ≈ Intervene_H(T(m), T(a))
+It should preserve their operational relations as far as possible.
 
-If we intervene on the machine concept, do the consequences remain valid after translation into the human model? Research on causal abstraction tries to formalize when a high-level explanation is a faithful simplification of a lower-level mechanism by studying relations among interventions rather than similarities among labels. [Geiger et al., 2023](https://arxiv.org/abs/2301.04709)
+If changing a machine concept produces a particular consequence, then after translating that concept into the human conceptual space, a corresponding change should produce a similar result.
 
-Translation loss should therefore be more than a vague warning. It should be decomposed into distinct losses:
+Translation must preserve more than names. It must preserve structure.
 
-> L(T) = (L_prediction, L_intervention, L_action, L_value)
+Work on causal abstraction has begun to formalize related questions. Whether a high-level description is faithful to a lower-level mechanism should not be judged only by label similarity. It should also be tested through the intervention relations that remain intact. [4]
 
-A translator might be useful for scientific prediction but unsafe for control. It might carry strategies between two models while failing to explain them to humans. A universal translator may not exist. There may instead be purpose-specific translation contracts that state explicitly what they preserve.
+Different translations may serve different purposes.
 
-We already have a few early tools. Centered Kernel Alignment can compare how similar two networks' representations are. [Kornblith et al., 2019](https://proceedings.mlr.press/v97/kornblith19a.html) Model stitching learns a connection between fragments of two networks and tests whether the combined system can still perform the task. [Csiszárik et al., 2021](https://proceedings.neurips.cc/paper/2021/hash/2cb274e6ce940f47beb8011d8ecb1462-Abstract.html)
+One may be appropriate for scientific prediction, another for safety control. One may transfer a strategy between two systems without being able to explain the reason to a person.
 
-Neither is an ontology translator. A similarity score does not produce a conceptual dictionary, and two networks that can be stitched together are not necessarily intelligible to a person. Still, these methods begin to turn the question of whether two internal languages can connect into an experiment rather than a metaphor.
+A reliable translation must tell us explicitly:
 
-## Real translation may require us to become bilingual
+> What did it preserve, and what did it lose?
 
-Natural-language translation is possible partly because speakers share bodies, environments, social practices, and an enormous supply of situations in which misunderstandings can be corrected. With a machine ontology, even that common background may be missing.
+## Understanding may require us to become bilingual
 
-The history of science offers a closer analogy. Kuhn's idea of incommensurability was not simply that old and new theories used different words. A scientific transformation could reorganize which questions mattered, which classifications were natural, and which observations counted as evidence. [Kuhn, 1962](https://press.uchicago.edu/ucp/books/book/chicago/S/bo13179781.html) The challenge in moving from Newtonian mass to Einsteinian mass is not finding a replacement word. The network of relations surrounding the concept has changed.
+Even if a machine concept can be converted into one clear human sentence, that does not mean we understand it.
 
-Human understanding of a machine-native concept may therefore require more than a plain-English paragraph. We may need to learn how to use the concept, judge new cases with it, make predictions through it, and observe where it fails under intervention. The goal would not be to make machines accommodate the existing human ontology forever. It would be to give humans a limited but operational bilingualism.
+Understanding a concept usually means more than knowing which word corresponds to it.
 
-Such a translator could itself become a new kind of AI. Its defining capability would be preserving structure across ontologies, proposing discriminating experiments, exposing translation loss, and discovering shared invariants. It would resemble a collaborator who is simultaneously a linguist, a compiler writer, and an experimental scientist rather than a dictionary.
+We need to know when it applies, which concepts are nearby, what happens when it changes, where it fails, and what new predictions it makes possible.
 
-It might also create **bridge concepts**. These would belong neither entirely to human language nor directly to the machine's internal primitives. They would be intermediate objects invented for collaboration. Mathematical notation is not the same as natural language, yet it lets speakers of different languages share a proof. A future human-machine language might likewise be a deliberately constructed public layer.
+Conceptual change in the history of science provides a closer analogy.
+
+The difference between two theories is often not merely that they use different words. A new theory can reorganize which questions matter, which classifications feel natural, and which observations count as evidence. [5]
+
+Human understanding of a machine-native concept may therefore not end when the model generates a plain explanation.
+
+We may have to learn how to use the concept.
+
+We would judge new examples with it, manipulate it in experiments, use it to predict structures we previously could not see, and gradually acquire a limited but operational bilingualism.
+
+The translator itself could become a new kind of intelligent system.
+
+Its primary task would not be solving one domain problem directly. It would search for shared structure across ontologies, propose experiments that distinguish competing explanations, expose translation loss, and help humans form new intermediate concepts.
+
+These concepts would belong neither entirely to existing human language nor directly reproduce a machine's internal structure.
+
+They would be **bridge concepts**.
+
+Mathematical notation is not natural language, yet it lets people who speak different languages share a proof. Humans and machines may eventually construct a similar common layer of abstraction.
 
 ## Will multiple intelligences diverge or converge?
 
-Two opposing pressures are at work.
+If tasks, training signals, and forms of interaction shape representation, a larger question follows:
 
-Divergence comes from different objectives, sensors, bodies, memories, time scales, and environments for action. Multi-agent research has found that agents can develop protocols that work well for a task without becoming naturally human-interpretable or compositional. [Kottur et al., 2017](https://aclanthology.org/D17-1321/) If a mathematical AI coevolves only with theorem provers while a biological AI coevolves only with laboratory instruments, their private languages may become increasingly specialized.
+> **Will different kinds of intelligence eventually form different ontologies?**
 
-Convergence comes from a shared reality. Any system that predicts the same planet, cell, or society will face constraints from stable structure. The systems may not use the same primitives, yet they may meet at symmetries, conservation relations, causal invariants, or reproducible experiments.
+Divergence is easy to imagine.
 
-The likely future may therefore contain neither one universal language nor completely isolated minds. It may have a layered linguistic architecture:
+A mathematical intelligence works with theorems, proofs, and symbolic structures. A biological intelligence works with experiments, molecular interactions, and causal interventions. An embodied intelligence lives with continuous control, noisy perception, and physical feedback.
 
-> private latent language → domain bridge language → public interlingua
+They optimize different objectives and possess different sensors, memories, time scales, and action spaces. There is no reason to assume that they will divide the world through the same basic concepts.
 
-The inner layer exists for the efficiency of one system. The middle layer connects neighboring specialist ontologies. The public layer preserves only the structure required for collaboration, verification, and governance. Modern computers already work this way. Transistors, machine code, programming languages, APIs, and natural language do not collapse into one representation. They cooperate through several interfaces.
+A machine trained alongside a theorem prover may develop internal objects suited to proof search. A system that operates laboratory equipment for years may form entirely different state variables and causal decompositions.
 
-The result may be neither humans finally decoding one machine language nor every machine converging on the same language. It may be an ecology of cognitive languages. Humans, mathematical AIs, biological AIs, and embodied AIs could collaborate through an evolving interlingua while retaining their most powerful abstractions.
+Multi-agent research has already shown that agents can develop communication protocols that are effective for a task without becoming naturally interpretable or compositional for humans. [6]
 
-That would be something new: not a single superintelligence, but a **plural intelligence ecology**.
+At the same time, there is an opposing force:
 
-## Existing evidence supports two opposing intuitions
+> **Convergence imposed by a shared reality.**
 
-Superposition supplies a concrete mechanism for why human concepts may not align neatly with individual neurons. When latent features are sparse and available dimensions are limited, a model can pack several features into shared directions. [Elhage et al., 2022](https://www.transformer-circuits.pub/2022/toy_model/) This can explain some polysemanticity and supports the intuition of coordinate complexity. It does not by itself establish a complete heterogeneous ontology.
+If two systems try to predict the same physical world, cell, or society, both must answer to some stable structures.
 
-Interpretability research has recovered structures that are more stable than individual neurons. Sparse autoencoders can decompose dense activations into sparser and relatively more monosemantic features. In some settings, the resulting features identify directions with causal roles in model behavior. [Cunningham et al., 2024](https://proceedings.iclr.cc/paper_files/paper/2024/hash/1fa1ab11f4bd5f94b2ec20e794dbfa3b-Abstract-Conference.html) Anthropic later scaled a related approach to Claude 3 Sonnet and extracted a very large dictionary of recognizable features. [Templeton et al., 2024](https://transformer-circuits.pub/2024/scaling-monosemanticity/)
+They may not use the same primitives, yet they may meet at invariants such as symmetries, conservation laws, causal structures, or reproducible experiments.
 
-Other work finds that some high-level concepts behave like directions in activation space. Yet the meaning of a linear representation depends on counterfactual definitions and on the inner product used to define the geometry. [Park, Choe & Veitch, 2023](https://arxiv.org/abs/2311.03658) Research on space and time has also identified linear structures that remain relatively stable across prompts and entity types in several language models. [Gurnee & Tegmark, 2024](https://openreview.net/forum?id=jE8xbmvFin)
+The future may therefore contain neither one universal ontology nor entirely private worlds that cannot communicate.
 
-These results show that model internals are not devoid of recoverable structure. They do not prove that the recovered structures are identical to the primitives the model actually uses. A sparse feature comes from a particular dictionary-learning objective. A linear direction depends on a chosen geometry. Our tools may reveal structure while simultaneously imposing the kind of structure we prefer.
+A more plausible pattern is:
 
-An intriguing counter-hypothesis points in the other direction. The Platonic Representation Hypothesis proposes that stronger models across architectures and modalities may converge toward a shared statistical model of reality. [Huh et al., 2024](https://proceedings.mlr.press/v235/huh24a.html) If broad convergence exists, a machine ontology may not be wholly alien. The world itself may exert common pressure on any effective representation.
+> **Highly divergent low-level representations, with partial convergence at higher-level regularities.**
 
-Research on AlphaZero puts both intuitions inside one system. McGrath and colleagues found that many familiar human chess concepts could be linearly decoded from a self-play-trained AlphaZero system and emerged gradually during training. [McGrath et al., 2022](https://pmc.ncbi.nlm.nih.gov/articles/PMC9704706/) A shared task can create pressure toward convergence even without supervision from human games.
+Different intelligences may divide the world differently while still aligning around some stable structure.
 
-Schut and colleagues also extracted strategic concepts from AlphaZero that did not already occupy the same place in the human chess vocabulary, then taught some of them to expert players. The players' judgments improved in the relevant positions. [Schut et al., 2023](https://arxiv.org/abs/2310.16410) This is not a complete alien theory of chess, but it comes close to a limited and operational bilingualism. A machine forms a structure, and people reshape it into a bridge concept they can actually learn.
+The future may not converge into one unified supermind.
 
-The real answer may therefore be neither complete identity nor complete difference. Human and machine representations may converge on some invariants while differing in how they divide, compose, and use them. What matters is whether that difference can become a new concept that people did not already possess but can learn to think with.
+Instead, several cognitive systems may continue to diverge along different tasks, bodies, environments, and time scales. Mathematical intelligences, biological intelligences, embodied intelligences, and scientific agents may each develop abstractions and ontologies fitted to their own problems.
 
-## Interpretability should not end too early at an English label
+Their difference will not be only a matter of which one is stronger.
 
-A common interpretability pipeline looks like this:
+They may resemble different cognitive species, distinguished by what counts as an object, which regularities are easy to discover, which explanations feel natural, and which questions are worth asking at all.
 
-> activation → English label
+> **That would be something new: not one superintelligence, but a plural ecology of intelligence.**
 
-We find a feature and ask whether it represents deception, France, quotation marks, or a grammatical pattern. This is useful because safety audits and human communication ultimately require language. But if the label arrives too early, a strange and richer structure may be projected into a concept we already know.
+This also pushes interpretability toward a harder problem.
 
-Another pipeline would look like this:
+If the future contains several heterogeneous cognitive ontologies, we will no longer be trying only to understand one neuron or one local feature inside one model.
 
-> activations → machine-native primitives → relations → machine-native theory → human translation
+The real question will be:
 
-Here the immediate goal is not to name every feature. It is to recover an ontology with predictive and causal power. Which primitives recur reliably? How do they compose? Which relations survive changes in layer, prompt, model seed, and architecture? How does intervening on them change behavior?
+> **How do we understand an intelligence that does not divide the world as humans do?**
 
-Only then do we study the mapping:
+The answer may not be to force every machine representation back into our existing concepts.
 
-> O_machine ↔ O_human
+We may first need to discover the basic objects, relations, invariants, and natural scales that remain stable inside the other system. Only then can we decide which parts map onto human concepts and which parts require us to learn something new.
 
-This resembles first contact with a genuinely unfamiliar scientific language. The first question should not be which word corresponds to our noun. It should be how the system divides the world into basic units in the first place.
+The hardest task of future interpretability may not be making machines resemble programs that can be read line by line.
 
-## A machine ontology will not reveal itself automatically
+It may be:
 
-The claim that everything becomes simple in the correct basis can also be too optimistic. Representations are usually not unique. The same function can be implemented through many invertible transformations of internal coordinates, each offering a different kind of sparsity or interpretability.
+> **Teaching us to understand a cognitive structure unlike our own.**
 
-Locatello and colleagues provide an important warning. Without additional inductive biases, unsupervised disentanglement is not identifiable in the general case from the observed distribution alone. [Locatello et al., 2019](https://proceedings.mlr.press/v97/locatello19a) The data may not determine which factorization contains the true factors.
+Perhaps the black box was never without a language.
 
-Our inability to read a model is therefore compatible with three very different stories. The model may have heterogeneous but stable abstractions. It may have no stable reusable abstractions at all. Or it may still rely on approximately human abstractions that our current decoders have not recovered. A feature that resists an English name does not establish the first story, and an attractive label does not establish the third.
+Perhaps it speaks one we have not yet learned to read.
 
-A model's own ontology cannot simply mean the most visually pleasing set of latent features. It should survive stricter tests:
+## References
 
-- **Stability:** Do the same relations recur across inputs, training seeds, layers, and neighboring models?
-- **Causality:** Do interventions produce predictable and localized changes in behavior?
-- **Compositionality:** Can the primitives generate higher-level regularities rather than merely collect correlated examples?
-- **Compression:** Does the representation yield a shorter and more accurate account of behavior or external data?
-- **Transfer:** Does the structure predict tasks that were not used to discover it?
-- **Translatability:** Can a human learn an approximate interface that preserves what matters and makes translation loss explicit?
-
-Machine-native does not mean exempt from human standards. An ontology gains meaning through prediction, intervention, compression, and transfer, not through an attractive feature visualization alone.
-
-## Computability is an extremely permissive common denominator
-
-If both human minds and models can ultimately be viewed as computations, do their representational differences become irrelevant? The opposite may be true.
-
-Universal computation tells us whether a process can be implemented in principle. It says nothing about required time or memory, and nothing about which representation makes a regularity easy to find, prove, or reuse. Computational complexity theory was created to study precisely this missing layer. [Hartmanis & Stearns, 1965](https://dl.acm.org/doi/10.1145/321250.321266)
-
-The computable world also contains general limits. Turing's classical result rules out a universal decision procedure that always settles the corresponding termination question for arbitrary programs and inputs. [Turing, 1936](https://londmathsoc.onlinelibrary.wiley.com/doi/abs/10.1112/plms/s2-42.1.230)
-
-Therefore:
-
-> universal computation ≠ universal prediction
-
-The shortest-program perspective is even more directly connected to abstraction. For an object x, we can ask how short the shortest program that generates it is under a universal machine U:
-
-> K_U(x) = min |p| such that U(p) = x
-
-This turns optimal compression into a mathematical object. Chaitin's work on program size for finite binary sequences is one of the foundations of this theory. [Chaitin, 1966](https://dl.acm.org/doi/10.1145/321356.321363) Yet Kolmogorov complexity itself is uncomputable. No general algorithm can guarantee the shortest description of every arbitrary object.
-
-There is another subtlety. K_U(x) is relative to the description language U. The invariance theorem says that changing universal languages changes complexity by a language-dependent additive constant. For finite tasks in the real world, that constant can matter enormously. A short explanation never exists independently of a representation.
-
-Several distinctions must therefore remain intact:
-
-> computable ≠ efficiently computable
-
-> computable ≠ predictable
-
-> compressible ≠ able to discover the compression
-
-> internally represented ≠ humanly understandable
-
-A system may be capable of a computation without completing it under realistic resources. A regularity may have a short description without any learner finding it. A model may contain structure that no concept in the current human ontology can express faithfully.
-
-## A research program for machine-native science
-
-This idea can become more concrete than the instruction to name neurons.
-
-First, search for **invariant structure** rather than the most interesting English label. Train different models on the same task. Vary seeds, architectures, modalities, and objectives. Then ask which geometric relations, composition rules, or intervention effects remain.
-
-Second, separate feature discovery from relation discovery. The important object may not be an isolated primitive but an algebra, graph, or dynamic transformation among primitives. An ontology is not only a vocabulary. It also contains a grammar that specifies valid compositions and inferences.
-
-Third, build a bidirectional translator. Human concepts should project into machine-native structure, and machine structures should be approximately translatable back. Both directions should report information loss instead of producing only a fluent explanation.
-
-Fourth, validate through intervention rather than aesthetic appeal. If a candidate primitive belongs to the model's computation, changing it should produce predictable effects across contexts while minimizing unrelated damage.
-
-Finally, test whether the recovered structure can create a **new concept**. A latent structure becomes scientifically interesting if it shortens the description of data, proposes an experimental distinction that did not exist before, or helps humans solve new problems after they learn to use it. Only then might it be more than an internal shortcut. It might deserve a place in a shared language.
-
-## A deeper intelligence may be the ability to invent representations
-
-If the preceding argument is correct, ordinary measures of intelligence capture only half of the phenomenon. Benchmarks usually fix the problem format, input space, and evaluation criteria, then ask whether a system can find answers inside that given representation.
-
-Many of the most important human cognitive advances did not come from searching an old space faster. They changed the space in which the problem was posed. Negative numbers, calculus, probability, vectors, genes, entropy, and algorithmic complexity were not merely additional facts. They introduced primitives that made entire families of previously awkward or even inexpressible questions operational.
-
-We can therefore separate two capabilities:
-
-> object-level intelligence: solving f inside a given R
-
-> meta-intelligence: discovering, inventing, or learning a better R
-
-The second capability does not necessarily reduce the loss on one immediate problem. It pays a representation cost once in exchange for shortening many future tasks. It may even change which problems the system is capable of seeing.
-
-If recursive self-improvement occurs, its most important stages may not look like one model running the same reasoning process faster and faster. Larger transitions could come from inventing new internal primitives, memory organizations, proof languages, or human-machine interfaces. Each successful representation change could compress a region that required a long search for one generation into a single step for the next.
-
-This is also why the translator is not an auxiliary explanation tool. A system that can optimize only within its private ontology may be extremely capable while remaining unable to bring its new capability into a shared world. Translation allows a new abstraction to be tested, transmitted, combined, and inherited. It may become epistemic infrastructure among different cognitive species.
-
-## Intelligence may be a geometry of computation
-
-Human mathematics is an extraordinarily powerful compression language. Algorithms are shareable and checkable compressions written in that language. A large model may be another kind of compression machine. It forms representations from data without any obligation to rediscover our conceptual boundaries.
-
-Model opacity therefore need not imply internal chaos. A more interesting and unsettling possibility is that regularities exist inside the model, but their language has not yet been translated.
-
-The deepest goal of future interpretability may not be to force every machine structure back into concepts humans already possess. It may be to let machines demonstrate that our way of dividing the world is not the only one.
-
-The most important product of AI for science might then be more than a theorem, a molecule, or a prediction. It might be a new concept, first discovered by a machine and only later learned by humans. What matters most may not be how many old questions the machine answers for us, but whether it enlarges the space of questions humans can ask.
-
-At that point, AI would no longer be helping us compute within existing mathematics. It would be participating in the creation of a new language:
-
-> a shared language of abstraction between humans and machines.
+- [1] [Bommasani et al., *On the Opportunities and Risks of Foundation Models* (2021)](https://arxiv.org/abs/2108.07258)
+- [2] [Felleisen, *On the Expressive Power of Programming Languages* (1991)](https://www.sciencedirect.com/science/article/pii/016764239190036W)
+- [3] [Rissanen, *Modeling by Shortest Data Description* (1978)](https://www.sciencedirect.com/science/article/pii/0005109878900055)
+- [4] [Geiger et al., *Causal Abstraction for Faithful Model Interpretation* (2023)](https://arxiv.org/abs/2301.04709)
+- [5] [Kuhn, *The Structure of Scientific Revolutions* (1962)](https://press.uchicago.edu/ucp/books/book/chicago/S/bo13179781.html)
+- [6] [Kottur et al., *Natural Language Does Not Emerge Naturally in Multi-Agent Dialog* (2017)](https://aclanthology.org/D17-1321/)
