@@ -141,19 +141,13 @@ The cognitive gap may grow across generations. Generation \(i\) might understand
 
 This record would act as an epistemic checksum. It cannot make every successor fully interpretable, but it can keep changes connected to inspectable reasons, external tests, and historical counterfactuals. Verification should also not be delegated solely to the direct predecessor. Independent evaluators, reviewers built from different architectures, human institutions, and the external world should remain cross-generational anchors. Otherwise each generation is certified only by its parent, and errors inherit the same bloodline.
 
-## Perhaps the thing that must scale is verifiable improvement
+## These questions are better treated as a research checklist
 
-These six questions point toward one conclusion. Recursive self-improvement is not one model climbing upward alone. It is an ecology composed of models, data, memory, tools, evaluators, environments, and other actors. Measuring whether the next generation scores higher on one benchmark misses the most consequential parts of the loop.
+Putting these six groups of questions together is not meant to produce one grand conclusion about recursive self-improvement. The phrase “a system becomes stronger and then becomes better at making itself stronger” is so broad that almost any outcome can fit inside it. The useful move is to separate it into claims that can fail independently: whether the system becomes better at proposing changes, whether its evaluator remains trustworthy, whether new capability depends on new evidence from the world, whether an update damages other capabilities, whether agreement among agents is merely correlated error, and whether a successor preserves enough of its design rationale to be examined by its predecessor and by people.
 
-A better unit of progress may not be the score gained from one generation to the next. It may be whether an improvement survives tasks that did not participate in selection, withstands independent evaluation, remains effective after population deployment, leaves enough evidence for later generations to audit it, and can be rolled back safely when new evidence reveals a mistake.
+For any update described as self-improvement, I would rather begin with a set of ordinary questions. Which layer actually changed? Relative to which tasks and time scale is it an improvement? Who supplied the evaluation standard? How much information and bias do the evaluator and the evaluated system share? What new evidence arrived from the environment, and which abilities may have deteriorated outside the aggregate metric? We should also record whether the update can be reversed and whether its strategy remains effective as more agents adopt it. Following these answers across generations may help distinguish genuine recursive accumulation from local optimization on a fixed benchmark or error amplified by the system's own feedback.
 
-In other words, the part of recursive self-improvement that most needs to scale may not be generation. It may be:
-
-$$
-\boxed{\text{verifiable improvement across environmental and generational distance}}
-$$
-
-If that cannot scale, faster self-modification only lets a lineage move more quickly away from progress we can confirm. If it can scale, recursive self-improvement may become more than a succession of stronger systems. It may become a lineage of knowledge that remains connected to reality, reasons, and responsibility.
+For now, I would treat recursive self-improvement as an experimental object rather than a future curve whose shape is already known. It may accelerate quickly in some parts of the loop while remaining constrained by environmental feedback in others. It may also oscillate, branch, or collapse. The open questions above are useful not because they jointly reveal a new answer, but because different experimental results would change our beliefs about different mechanisms and make the claim that “a system is improving itself” progressively more precise.
 
 ## References
 
