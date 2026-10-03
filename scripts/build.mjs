@@ -30,6 +30,7 @@ const thoughts = fs.readdirSync(contentDirectory)
   .filter((file) => file.endsWith(".md"))
   .sort()
   .map((file) => parseThought(path.join(contentDirectory, file)))
+  .filter(({ placeholder }) => !placeholder)
   .map(({ body, sourceFile, ...metadata }) => {
     const translations = translationsBySlug.get(metadata.slug) || {};
     return {

@@ -6,7 +6,7 @@ The name keeps a family resemblance with [Flow of Thoughts](https://github.com/m
 
 Live site: <https://mkj69.github.io/thoughts-in-passing/>
 
-> Preview status: the four initial sample entries are explicitly labeled `placeholder`. Real published notes appear without that label.
+> The four initial sample entries remain in the repository as content-model references, but entries marked `placeholder: true` are excluded from the public build.
 
 ## What the site supports
 

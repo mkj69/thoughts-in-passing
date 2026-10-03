@@ -143,7 +143,7 @@ function filteredThoughts() {
 
 function openThought(slug, options = {}) {
   const thought = state.thoughts.find((item) => item.slug === slug);
-  if (!thought) return;
+  if (!thought) return false;
   if (options.updateHash !== false) history.pushState({ slug }, "", `#thought/${slug}`);
 
   const versions = thoughtVersions(thought);
@@ -170,14 +170,12 @@ function openThought(slug, options = {}) {
       <div class="article-meta">
         <time datetime="${thought.date}">${formatDate(thought.date, activeLanguage)}</time>
         <span class="maturity-badge">${escapeHtml(maturityLabel(thought.maturity, activeLanguage))}</span>
-        ${thought.placeholder ? '<span class="placeholder-badge">placeholder</span>' : ""}
       </div>
       ${languageSwitcher}
       <h1>${escapeHtml(version.title)}</h1>
       <p class="article-excerpt">${escapeHtml(version.excerpt)}</p>
       <ul class="article-tags" aria-label="Tags">${tags}</ul>
     </header>
-    ${thought.placeholder ? '<div class="placeholder-callout"><strong>Placeholder:</strong> this sample note demonstrates the content model and should be replaced with real writing.</div>' : ""}
     <div class="article-body">${version.html}</div>
   `;
   const articleBody = elements.article.querySelector(".article-body");
@@ -201,6 +199,7 @@ function openThought(slug, options = {}) {
   });
   renderConnections(thought, activeLanguage);
   if (!options.preserveScroll) window.scrollTo({ top: 0, behavior: options.instant ? "auto" : "smooth" });
+  return true;
 }
 
 function closeThought(options = {}) {
@@ -256,7 +255,6 @@ function renderStream() {
     time.dateTime = thought.date;
     time.textContent = formatDate(thought.date);
     card.querySelector(".maturity-badge").textContent = thought.maturity;
-    card.querySelector(".placeholder-badge").hidden = !thought.placeholder;
     const titleButton = card.querySelector(".thought-link");
     titleButton.textContent = version.title;
     titleButton.addEventListener("click", () => openThought(thought.slug));
@@ -283,8 +281,13 @@ function escapeHtml(value) {
 
 function syncRoute(options = {}) {
   const match = location.hash.match(/^#thought\/(.+)$/);
-  if (match) openThought(decodeURIComponent(match[1]), { updateHash: false, instant: options.instant });
-  else closeThought({ updateHash: false, instant: options.instant });
+  if (match) {
+    const opened = openThought(decodeURIComponent(match[1]), { updateHash: false, instant: options.instant });
+    if (!opened) {
+      closeThought({ updateHash: false, instant: true });
+      history.replaceState({}, "", `${location.pathname}${location.search}#stream`);
+    }
+  } else closeThought({ updateHash: false, instant: options.instant });
 }
 
 elements.search.addEventListener("input", (event) => {
