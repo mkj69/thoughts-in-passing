@@ -28,6 +28,11 @@ If any part of this loop fails to scale with the others, recursion can turn into
 
 ## 1. Along which dimensions does recursive self-improvement scale?
 
+**Original questions**
+
+- What are the different dimensions along which recursive self-improvement can scale?
+- What will be its main bottleneck?
+
 Scaling recursive self-improvement is not the same as increasing parameter count or compute. At least six different capacities may need to grow: the search capacity that produces candidate improvements, the evaluation capacity that distinguishes progress from exploitation, the transfer capacity that carries local gains to new tasks, the bandwidth for obtaining evidence from the environment, the memory capacity that consolidates experience across long periods, and the coordination capacity among systems and people. These capacities interact, but they do not automatically grow together.
 
 The main bottleneck may therefore keep moving. At first, the system may be unable to propose useful changes. Once proposals become cheap, evaluation may dominate. Once automated evaluation improves, the bottleneck may move to physical experiments, rare failures, long-term consequences, or judgments that humans cannot supply quickly. A system that can propose ten thousand updates per minute but reliably evaluate only ten has not gained ten thousand useful opportunities. It has created more chances for its evaluator to be fooled by accident.
@@ -35,6 +40,12 @@ The main bottleneck may therefore keep moving. At first, the system may be unabl
 Research should therefore measure the marginal return to each part of the loop rather than plotting only generation number against aggregate capability. One useful experiment would hold most of the loop fixed while scaling candidate search, evaluation budget, environmental interaction, or memory capacity one at a time. We could then observe where gains saturate and where errors begin to compound. The important object may not be one permanent bottleneck, but the **law by which bottlenecks migrate**. If scaling one component repeatedly pushes pressure onto the next, the long-run speed of recursive self-improvement will be set by the feedback channel that is hardest to expand and hardest to counterfeit.
 
 ## 2. Can recursive self-improvement collapse?
+
+**Original questions**
+
+- Could recursive self-improvement collapse?
+- If collapse can happen, can we predict it or test for it early?
+- If scaling is hard to demonstrate, would it be easier to show that collapse can happen?
 
 Collapse need not look like a system suddenly losing every capability. A more dangerous form would continue improving on its central metrics while gradually losing tail behavior, diversity, sensitivity to error, or contact with reality. Existing work shows that when generative models repeatedly train on data produced by previous models, low-probability regions of the original distribution can disappear across generations, eventually producing model collapse. [3] In recursive self-improvement, related degeneration could occur in the evaluator, the search procedure, or the whole lineage.
 
@@ -46,6 +57,13 @@ Scientifically, showing that collapse can happen is usually easier than showing 
 
 ## 3. Where should different kinds of knowledge and capability be updated?
 
+**Original questions**
+
+- Should different kinds of knowledge and capabilities use different update methods?
+- What should go into model weights, and what should stay in memory, context, retrieval, or tools?
+- How should recursive self-improvement update itself across different time scales?
+- Which parts of the self-improvement loop must be specified by humans, and which parts can the system learn for itself?
+
 Self-improvement should not be identified with continually changing model weights. Knowledge differs in half-life, provenance, and mode of verification, so it should also differ in where and how it is updated. Stable, broadly reusable skills and inductive biases may enter weights after careful validation. Rapidly changing facts that need provenance are better kept in external memory and retrieval. Temporary task state belongs in context. Procedures that can be tested and composed can live in tools or code. Objectives, permissions, and protected boundaries should not be rewritten as casually as ordinary experience.
 
 Retrieval-augmented generation already illustrates how parametric and external non-parametric memory can play different roles. Weights provide compressed general capability, while an external knowledge store lets facts be inspected, replaced, and traced to sources. [4] This separation becomes even more important in long-horizon recursive self-improvement. Putting everything into weights makes updates hard to audit and reverse, and may cause catastrophic forgetting. Keeping everything outside the model prevents recurring experience from consolidating into genuinely reusable competence.
@@ -53,6 +71,17 @@ Retrieval-augmented generation already illustrates how parametric and external n
 Updates should also occur on different time scales. Context can change within one episode. Episodic memory and tools can evolve across days. Patterns supported by repeated independent evidence may eventually enter long-term parameters. Ontology, evaluators, and objective structure should change more slowly and conservatively. The central design question is not whether a system can learn every rule. It is which invariants humans must specify, which changes the system may propose, and which changes require external authorization. A system can learn how to route memories, design experiments, and improve search. The authority to revise the evaluator, permission boundaries, or stopping conditions should not belong entirely to the same loop being judged.
 
 ## 4. Can a model know what it does not know?
+
+**Original questions**
+
+- Can a model know what it does not know?
+- Can it decide what data or feedback it should get next?
+- Does a model need feedback from the environment to realize what it does not know?
+- Does long-term recursive self-improvement need a loop between the agent and the environment, rather than self-training alone?
+- Humans rely heavily on social learning. Does this mean recursive self-improvement may not be a fully self-contained process?
+- Do we need multiple agents for a recursive self-improvement system to discover its own blind spots?
+- Humans often learn after surprise, failure, conflict, or curiosity. Could these also be useful triggers for model updates?
+- Humans actively ask questions, run experiments, search for information, and talk to other people. Does this make active data collection essential for recursive self-improvement?
 
 Knowing that one does not know is not equivalent to attaching a confidence number to an answer. A system may be uncertain about an answer but unaware that it omitted a variable. It may be calibrated on a familiar distribution but unable to recognize that the environment has changed. It may be confident about the questions it can already formulate while never discovering the question that matters. Work on language model confidence suggests that models can sometimes express informative uncertainty, but calibration depends strongly on training and on how confidence is elicited. [5] Confidence is one projection of the unknown, not the unknown itself.
 
@@ -76,6 +105,15 @@ Human learning is rarely self-contained either. We discover blind spots through 
 
 ## 5. Does agreement among many systems count as independent evidence?
 
+**Original questions**
+
+- If different laboratories train different models on different data, could they still make very similar decisions?
+- If they do, is that because they found the same real pattern, or because they are all being pushed toward the same kind of behavior?
+- If many agents agree, can we really treat that agreement as independent evidence?
+- If many agents make the same decision and act on it, could they change the environment enough to make that decision stop working?
+- Could a strategy work when only a few agents use it, but fail once everyone uses it?
+- Could stronger recursive self-improvement systems create stronger negative feedback because they react faster and more similarly?
+
 Models trained by different laboratories may make similar decisions. There are two very different explanations for that convergence. The systems may have independently discovered the same regularity in the world, or they may share data, architectures, benchmarks, evaluators, and commercial incentives that push them toward the same behavior. Surface agreement cannot distinguish these cases.
 
 To treat agreement as evidence, we need to estimate the correlation among errors. Systems can be trained with isolated data sources, different architectures, and different objectives, then tested under counterfactual inputs, environmental interventions, and distribution shifts. If only systems with shared data and evaluators converge, their agreement looks more like copying. If systems that arrived by different paths continue to predict the same intervention relationships, convergence is better evidence that they found something real.
@@ -85,6 +123,15 @@ There is a further complication. Model decisions can change the environment they
 Stronger recursive systems may generate stronger negative feedback because they react faster, update more frequently, and may synchronize through similar training. Static single-agent benchmarks are therefore insufficient for population deployment. Evaluation should vary adoption rate, system diversity, and response latency, then observe how a strategy changes the environment as it spreads from a few users to an entire ecology. Recursive self-improvement does not face a fixed task distribution. It faces a world jointly shaped by many learning systems.
 
 ## 6. Can a designer understand a successor that has become more capable?
+
+**Original questions**
+
+- When generation \(i\) designs generation \(i+1\), does it have a special advantage in understanding its successor?
+- Does that understanding quickly fade as we move across further generations?
+- Can a system design a successor that is more capable than itself but that it can no longer fully understand?
+- Once generation \(i+1\) becomes more capable than generation \(i\), how can generation \(i\) reliably evaluate or verify it?
+- Could the cognitive gap between generations become larger over time?
+- Does recursive self-improvement need to preserve not only the capabilities of each new generation, but also the reasoning behind why the previous generation designed it that way?
 
 Generation \(i\) does possess a special advantage. It knows why a change was proposed, has access to training traces and rejected candidates, and can inspect the successor's code and evaluations. Yet constructing, predicting, understanding, and verifying are different abilities. A system can discover a design more capable than itself through search, just as evolutionary processes can produce structures no single step fully understands. The successor may also form representations and strategies its designer did not anticipate, so causal proximity does not guarantee cognitive transparency.
 
