@@ -25,17 +25,17 @@ defaultLanguage: "zh"
 
 一个模型的权重文件，本质上不过是大量数字：
 
-$
+$$
 \theta=(w_1,w_2,\ldots,w_N)
-$
+$$
 
 为什么这些数字一定要通过 gradient descent 得到？
 
 为什么 Agent 不能直接打开权重文件，分析其中的数值关系，然后决定：
 
-$
+$$
 w_{135728}:0.032\rightarrow0.047
-$
+$$
 
 如果修改代码可以改进 Agent，直接修改权重为什么不可以？
 
@@ -53,14 +53,14 @@ $
 
 假设我们收集大量不同能力、不同训练阶段的模型：
 
-$
+$$
 \mathcal D=\{
 (\theta_1,R_1),
 (\theta_2,R_2),
 \ldots,
 (\theta_n,R_n)
 \}
-$
+$$
 
 其中 \(\theta_i\) 是模型权重，\(R_i\) 是模型的性能或行为描述。
 
@@ -88,7 +88,7 @@ $
 
 整个过程可能是：
 
-$
+$$
 \text{Observe}
 \rightarrow
 \text{Hypothesize}
@@ -98,7 +98,7 @@ $
 \text{Evaluate}
 \rightarrow
 \text{Revise}
-$
+$$
 
 假设小模型总是在某类数学问题上出错。
 
@@ -130,25 +130,25 @@ Agent 可以尝试定位相关的计算电路，预测某个权重修改会产�
 
 假设我们保存某个模型在训练不同阶段的 checkpoint：
 
-$
+$$
 \theta_0,\theta_1,\theta_2,\ldots,\theta_T
-$
+$$
 
 传统训练通过梯度更新：
 
-$
+$$
 \theta_{t+1}
 =
 \theta_t-\eta\nabla_\theta\mathcal L(\theta_t)
-$
+$$
 
 但有没有可能直接学习一种权重演化规律？
 
 例如：
 
-$
+$$
 \frac{d\theta_t}{dt}=v_\phi(\theta_t,t)
-$
+$$
 
 然后给定一个较弱模型，通过学习到的向量场，直接得到一个更强的模型？
 
@@ -162,9 +162,9 @@ $
 
 但如果目标是让模型变得更聪明，我们真正希望学习的是：
 
-$
+$$
 p(\Delta\theta\mid\theta,\text{Desired Capability})
-$
+$$
 
 也就是：给定当前模型及希望改进的能力，直接产生有效的权重修改。
 
@@ -186,21 +186,21 @@ $
 
 我们使用高级编程语言：
 
-$
+$$
 \text{Source Code}
 \xrightarrow{\text{Compiler}}
 \text{Machine Instructions}
-$
+$$
 
 那么，神经网络能否有类似的过程？
 
-$
+$$
 \boxed{
 \text{Neural Program}
 \xrightarrow{\text{Compiler}}
 \text{Neural Network Weights}
 }
-$
+$$
 
 我们不再手动决定每一个浮点数应该是多少，而是用一种更高级的语言描述希望实现的计算。
 
@@ -256,23 +256,23 @@ Google DeepMind 的 [Tracr](https://github.com/google-deepmind/tracr) 可以将 
 
 设第 \(t\) 代 Agent 的神经程序为 \(\mathcal P_t\)，对应的模型权重为：
 
-$
+$$
 \theta_t=C(\mathcal P_t)
-$
+$$
 
 Agent 可以分析当前能力，提出新的程序：
 
-$
+$$
 \mathcal P_{t+1}
 =
 A_t(\mathcal P_t,\text{Failures},\text{Experiments})
-$
+$$
 
 再重新编译：
 
-$
+$$
 \theta_{t+1}=C(\mathcal P_{t+1})
-$
+$$
 
 经过验证，如果新版本确实更强，就将其保留下来。
 
@@ -306,15 +306,15 @@ RASP 能够描述部分序列计算，但怎样描述更复杂的知识、概念
 
 如果编译方向是：
 
-$
+$$
 \mathcal P\rightarrow\theta
-$
+$$
 
 那么我们能否研究反方向：
 
-$
+$$
 \theta\rightarrow\hat{\mathcal P}
-$
+$$
 
 这与 mechanistic interpretability 有直接联系，但需要面对表示冗余以及复杂网络未必具有简洁程序解释的问题。
 
