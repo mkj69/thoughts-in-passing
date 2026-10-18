@@ -8,7 +8,7 @@ related: [open-questions-on-recursive-self-improvement, why-the-rsi-bottleneck-k
 excerpt: "我们为什么默认智能只能通过训练被写入神经网络？从让 Agent 研究和修改权重，到学习权重演化，再到将 Neural Program 编译成模型权重，这是一条关于神经网络可编程性的研究猜想。"
 placeholder: false
 language: "zh"
-defaultLanguage: "zh"
+defaultLanguage: "en"
 ---
 
 *What If Neural Network Weights Could Be Programmed?*
