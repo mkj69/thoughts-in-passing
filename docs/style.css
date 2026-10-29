@@ -222,7 +222,12 @@ body.detail-open .garden { display: none; }
   .site-footer { flex-direction: column; }
 }
 
+.article-figure { margin: 2rem 0 1rem; }
+.article-figure a { display: block; }
+.article-figure img { display: block; width: 100%; height: auto; border-radius: 8px; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+

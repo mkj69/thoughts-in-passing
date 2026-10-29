@@ -81,6 +81,12 @@ export function markdownToHtml(markdown) {
     } else if (!line.trim()) {
       flushParagraph();
       flushList();
+    } else if (/^!\[[^\]]*\]\((?:https?:\/\/|assets\/)[^\s)]+\)$/.test(line.trim())) {
+      flushParagraph();
+      flushList();
+      const [, alt, src] = line.trim().match(/^!\[([^\]]*)\]\(([^\s)]+)\)$/);
+      const safeSrc = escapeHtml(src);
+      blocks.push(`<figure class="article-figure"><a href="${safeSrc}" target="_blank" rel="noreferrer"><img src="${safeSrc}" alt="${escapeHtml(alt)}" loading="lazy" decoding="async"></a></figure>`);
     } else if (line.startsWith("## ")) {
       flushParagraph();
       flushList();
@@ -105,7 +111,7 @@ export function markdownToHtml(markdown) {
 
 export function plainText(markdown) {
   return markdown
-    .replace(/\[([^\]]+)\]\([^\)]+\)/g, "$1")
+    .replace(/!?\[([^\]]+)\]\([^\)]+\)/g, "$1")
     .replace(/\\text\{([^}]*)\}/g, "$1")
     .replace(/\$\$|\\\(|\\\)/g, " ")
     .replace(/\\(?:left|right|longrightarrow|longleftrightarrow|begin|end|,)/g, " ")
@@ -114,3 +120,4 @@ export function plainText(markdown) {
     .replace(/\s+/g, " ")
     .trim();
 }
+
