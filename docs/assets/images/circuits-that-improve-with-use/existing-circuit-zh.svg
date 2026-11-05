@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="746" viewBox="0 0 760 746" role="img" aria-labelledby="title desc" lang="zh">
+<title id="title">同一个模型，逐次修改已有权重</title>
+<desc id="desc">Verified experience guides local edits to existing model weights. Failed candidates are revised; accepted edits are saved for later tasks. Architecture stays fixed.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#6f8175"/></marker></defs>
+<rect x="1" y="1" width="758" height="744" rx="16" fill="#f8f7f2" stroke="#dddcd2"/>
+<g font-family="Inter, Arial, Noto Sans CJK SC, sans-serif">
+<text x="380" y="44" text-anchor="middle" font-size="26" font-weight="600" fill="#313b37">同一个模型，逐次修改已有权重</text>
+<rect x="150" y="78" width="460" height="92" rx="12" fill="#edf1eb" stroke="#c8d1ca" stroke-width="1.5"/>
+<text x="380" y="113" text-anchor="middle" font-size="24" font-weight="600" fill="#313b37">原模型 θₜ</text>
+<text x="380" y="143" text-anchor="middle" font-size="17" font-weight="400" fill="#313b37">层数、维度与参数形状保持不变</text>
+<rect x="150" y="211" width="460" height="66" rx="12" fill="#ffffff" stroke="#c8d1ca" stroke-width="1.5"/>
+<text x="380" y="251" text-anchor="middle" font-size="21" font-weight="600" fill="#313b37">使用中的样本与验证反馈</text>
+<rect x="54" y="326" width="300" height="92" rx="12" fill="#ffffff" stroke="#c8d1ca" stroke-width="1.5"/>
+<text x="204" y="361" text-anchor="middle" font-size="21" font-weight="600" fill="#313b37">定位已有回路</text>
+<text x="204" y="392" text-anchor="middle" font-size="16" font-weight="400" fill="#313b37">干预、对照与泛化检查</text>
+<rect x="406" y="326" width="300" height="92" rx="12" fill="#ffffff" stroke="#c8d1ca" stroke-width="1.5"/>
+<text x="556" y="361" text-anchor="middle" font-size="21" font-weight="600" fill="#313b37">提出局部权重补丁</text>
+<text x="556" y="392" text-anchor="middle" font-size="16" font-weight="400" fill="#313b37">只修改选定的已有参数</text>
+<rect x="150" y="464" width="460" height="80" rx="12" fill="#ffffff" stroke="#c8d1ca" stroke-width="1.5"/>
+<text x="380" y="497" text-anchor="middle" font-size="21" font-weight="600" fill="#313b37">独立评估候选版本</text>
+<text x="380" y="526" text-anchor="middle" font-size="17" font-weight="400" fill="#313b37">新输入 · 保留能力 · 实际计算成本</text>
+<rect x="150" y="596" width="460" height="88" rx="12" fill="#e8efe7" stroke="#78927e" stroke-width="1.5"/>
+<text x="380" y="633" text-anchor="middle" font-size="24" font-weight="600" fill="#313b37">保存 θₜ₊₁ = θₜ + Δθ</text>
+<text x="380" y="662" text-anchor="middle" font-size="17" font-weight="400" fill="#313b37">后续任务由修改后的原模型完成</text>
+<g stroke="#6f8175" stroke-width="2" fill="none" marker-end="url(#arrow)"><path d="M380 170 V211"/><path d="M380 277 V300 H204 V326"/><path d="M354 372 H406"/><path d="M556 418 V443 H380 V464"/><path d="M380 544 V596"/><path d="M610 505 H732 V372 H706"/><path d="M150 640 H26 V124 H150"/></g>
+<text x="412" y="578" text-anchor="middle" font-size="16" font-weight="600" fill="#4a7254">通过</text>
+<text x="674" y="492" text-anchor="middle" font-size="16" font-weight="400" fill="#313b37">未通过</text>
+<text x="674" y="517" text-anchor="middle" font-size="15" font-weight="400" fill="#313b37">修订补丁</text>
+<text transform="translate(18 505) rotate(-90)" text-anchor="middle" font-size="15" fill="#67776c">继续使用</text>
+<text x="380" y="720" text-anchor="middle" font-size="16" font-weight="400" fill="#67776c">分析与编辑工具不成为新增的推理模块</text>
+</g></svg>

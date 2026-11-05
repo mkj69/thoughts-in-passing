@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="746" viewBox="0 0 760 746" role="img" aria-labelledby="title desc" lang="en">
+<title id="title">The same model, with targeted weight updates</title>
+<desc id="desc">Verified experience guides local edits to existing model weights. Failed candidates are revised; accepted edits are saved for later tasks. Architecture stays fixed.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#6f8175"/></marker></defs>
+<rect x="1" y="1" width="758" height="744" rx="16" fill="#f8f7f2" stroke="#dddcd2"/>
+<g font-family="Inter, Arial, Noto Sans CJK SC, sans-serif">
+<text x="380" y="44" text-anchor="middle" font-size="26" font-weight="600" fill="#313b37">The same model, with targeted weight updates</text>
+<rect x="150" y="78" width="460" height="92" rx="12" fill="#edf1eb" stroke="#c8d1ca" stroke-width="1.5"/>
+<text x="380" y="113" text-anchor="middle" font-size="24" font-weight="600" fill="#313b37">Original model θₜ</text>
+<text x="380" y="143" text-anchor="middle" font-size="17" font-weight="400" fill="#313b37">Fixed layers, dimensions, and parameter shapes</text>
+<rect x="150" y="211" width="460" height="66" rx="12" fill="#ffffff" stroke="#c8d1ca" stroke-width="1.5"/>
+<text x="380" y="251" text-anchor="middle" font-size="21" font-weight="600" fill="#313b37">Examples and verified feedback</text>
+<rect x="54" y="326" width="300" height="92" rx="12" fill="#ffffff" stroke="#c8d1ca" stroke-width="1.5"/>
+<text x="204" y="361" text-anchor="middle" font-size="21" font-weight="600" fill="#313b37">Locate the circuit</text>
+<text x="204" y="392" text-anchor="middle" font-size="16" font-weight="400" fill="#313b37">Interventions and held-out checks</text>
+<rect x="406" y="326" width="300" height="92" rx="12" fill="#ffffff" stroke="#c8d1ca" stroke-width="1.5"/>
+<text x="556" y="361" text-anchor="middle" font-size="21" font-weight="600" fill="#313b37">Propose a weight patch</text>
+<text x="556" y="392" text-anchor="middle" font-size="16" font-weight="400" fill="#313b37">Edit selected existing parameters</text>
+<rect x="150" y="464" width="460" height="80" rx="12" fill="#ffffff" stroke="#c8d1ca" stroke-width="1.5"/>
+<text x="380" y="497" text-anchor="middle" font-size="21" font-weight="600" fill="#313b37">Independent evaluation</text>
+<text x="380" y="526" text-anchor="middle" font-size="17" font-weight="400" fill="#313b37">New inputs · Retention · Actual compute cost</text>
+<rect x="150" y="596" width="460" height="88" rx="12" fill="#e8efe7" stroke="#78927e" stroke-width="1.5"/>
+<text x="380" y="633" text-anchor="middle" font-size="24" font-weight="600" fill="#313b37">Save θₜ₊₁ = θₜ + Δθ</text>
+<text x="380" y="662" text-anchor="middle" font-size="17" font-weight="400" fill="#313b37">The edited original model handles later tasks</text>
+<g stroke="#6f8175" stroke-width="2" fill="none" marker-end="url(#arrow)"><path d="M380 170 V211"/><path d="M380 277 V300 H204 V326"/><path d="M354 372 H406"/><path d="M556 418 V443 H380 V464"/><path d="M380 544 V596"/><path d="M610 505 H732 V372 H706"/><path d="M150 640 H26 V124 H150"/></g>
+<text x="412" y="578" text-anchor="middle" font-size="16" font-weight="600" fill="#4a7254">Pass</text>
+<text x="674" y="492" text-anchor="middle" font-size="16" font-weight="400" fill="#313b37">Fail</text>
+<text x="674" y="517" text-anchor="middle" font-size="15" font-weight="400" fill="#313b37">Revise</text>
+<text transform="translate(18 505) rotate(-90)" text-anchor="middle" font-size="15" fill="#67776c">Continue use</text>
+<text x="380" y="720" text-anchor="middle" font-size="16" font-weight="400" fill="#67776c">Analysis and editing tools add no inference modules</text>
+</g></svg>
